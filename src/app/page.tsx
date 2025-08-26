@@ -3,6 +3,9 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import img from "../../public/Black_Full_Name-removebg-preview-cropped.svg"
 import Image from "next/image";
+import client from "./util/strepiClient";
+
+import About from "./modules/about/views/AboutView";
 
 interface Section {
   id: string;
@@ -12,9 +15,9 @@ interface Section {
 
 const SECTIONS: Section[] = [
   { id: "home", label: "Home", emoji: "🏠" },
+  { id: "about", label: "about", emoji: "❓" },
   { id: "features", label: "Services", emoji: "✨" },
   // { id: "pricing", label: "Pricing", emoji: "💸" },
-  { id: "faq", label: "FAQ", emoji: "❓" },
   { id: "contact", label: "Contact", emoji: "📬" },
 ];
 
@@ -235,22 +238,8 @@ export default function SmoothScrollNavbarDemo() {
         </div>
       </section>
 
-      <section id="faq" className="scroll-mt-24 border-t border-white/5">
-        <div className="mx-auto max-w-5xl px-4 py-24">
-          <h2 className="text-3xl sm:text-4xl font-semibold">FAQ</h2>
-          <div className="mt-6 space-y-4">
-            {[1, 2, 3].map((n) => (
-              <details key={n} className="group rounded-2xl border border-white/10 p-5">
-                <summary className="cursor-pointer list-none font-medium marker:content-none">
-                  Apa itu pertanyaan #{n}?
-                </summary>
-                <p className="mt-2 text-slate-300">
-                  Jawaban singkat untuk pertanyaan #{n}. Tambahkan detail sesuai kebutuhan.
-                </p>
-              </details>
-            ))}
-          </div>
-        </div>
+      <section id="about" className="scroll-mt-24 border-t border-white/5">
+          {<About/>}
       </section>
 
       <section id="contact" className="scroll-mt-24 border-t border-white/5">
