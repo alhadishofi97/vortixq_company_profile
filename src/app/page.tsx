@@ -3,9 +3,11 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import img from "../../public/Black_Full_Name-removebg-preview-cropped.svg"
 import Image from "next/image";
-import client from "./util/strepiClient";
+import Lightning from "./modules/home/views/Lightning";
+import Silk from "./modules/home/views/Silk";
 
 import About from "./modules/about/views/AboutView";
+import Home from "./modules/home/views/HomeView";
 
 interface Section {
   id: string;
@@ -14,11 +16,11 @@ interface Section {
 }
 
 const SECTIONS: Section[] = [
-  { id: "home", label: "Home", emoji: "🏠" },
-  { id: "about", label: "about", emoji: "❓" },
-  { id: "features", label: "Services", emoji: "✨" },
+  { id: "home", label: "Home", emoji:''},
+  { id: "about", label: "about", emoji: '' },
+  { id: "Services", label: "Services", emoji: '' },
   // { id: "pricing", label: "Pricing", emoji: "💸" },
-  { id: "contact", label: "Contact", emoji: "📬" },
+  { id: "contact", label: "Contact", emoji: '' },
 ];
 
 function isSandboxed(): boolean {
@@ -142,7 +144,24 @@ export default function SmoothScrollNavbarDemo() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen text-slate-100">
+      
+        <div className="absolute inset-0 -z-10" style={{height:"100%"}}>
+          <Lightning
+        hue={220}
+        xOffset={0}
+        speed={1}
+        intensity={1}
+        size={1}
+      /> 
+      {/* <Silk
+        speed={5}
+        scale={1}
+        color="#818669"
+        noiseIntensity={1.5}
+        rotation={0}
+      />  */}
+        </div>
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 bg-slate-900/80 border-b border-white/10">
         <nav
           ref={navRef}
@@ -167,42 +186,16 @@ export default function SmoothScrollNavbarDemo() {
         </nav>
       </header>
 
-      <section id="home" className="scroll-mt-24">
-        <div className="mx-auto max-w-5xl px-4 py-24 sm:py-28">
-          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight">
-            Smooth Scroll Navbar
-          </h1>
-          <p className="mt-4 max-w-2xl text-slate-300">
-            Klik item navbar untuk <em>smooth scroll</em>. Link aktif akan di-highlight otomatis saat menggulir.
-          </p>
-          <div className="mt-8 grid gap-4 sm:flex">
-            <a
-              href="#features"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick("features");
-              }}
-              className="rounded-2xl px-5 py-3 bg-indigo-500 hover:bg-indigo-600 transition shadow"
-            >
-              Lihat Features
-            </a>
-            <a
-              href="#pricing"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick("pricing");
-              }}
-              className="rounded-2xl px-5 py-3 bg-white/10 hover:bg-white/15 transition"
-            >
-              Cek Pricing
-            </a>
-          </div>
-        </div>
+      <section id="home" className="scroll-mt-30 border-t border-white/5">
+        <Home/>
+      </section>
+      <section id="about" className="scroll-mt-24 border-t border-white/5">
+          {<About/>}
       </section>
 
-      <section id="features" className="scroll-mt-24 border-t border-white/5">
+      <section id="Services" className="scroll-mt-10 border-t border-white/5">
         <div className="mx-auto max-w-5xl px-4 py-24">
-          <h2 className="text-3xl sm:text-4xl font-semibold">Features</h2>
+          <h2 className="text-3xl sm:text-4xl font-semibold">Services</h2>
           <ul className="mt-6 grid gap-6 sm:grid-cols-2">
             {["Smooth scroll", "Active highlight", "Hash sync (safe)", "A11y friendly", "Framer Motion", "Tailwind only"].map((f) => (
               <li key={f} className="rounded-2xl border border-white/10 p-5">
@@ -215,8 +208,11 @@ export default function SmoothScrollNavbarDemo() {
           </ul>
         </div>
       </section>
+      <section id="contact" className="scroll-mt-24 border-t border-white/5">
+          contact
+      </section>
 
-      <section id="pricing" className="scroll-mt-24 border-t border-white/5">
+      {/* <section id="pricing" className="scroll-mt-24 border-t border-white/5">
         <div className="mx-auto max-w-5xl px-4 py-24">
           <h2 className="text-3xl sm:text-4xl font-semibold">Pricing</h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-3">
@@ -236,23 +232,9 @@ export default function SmoothScrollNavbarDemo() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
-      <section id="about" className="scroll-mt-24 border-t border-white/5">
-          {<About/>}
-      </section>
-
-      <section id="contact" className="scroll-mt-24 border-t border-white/5">
-        <div className="mx-auto max-w-5xl px-4 py-24">
-          <h2 className="text-3xl sm:text-4xl font-semibold">Contact</h2>
-          <form className="mt-6 grid gap-4 sm:max-w-md">
-            <input className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 outline-none focus:border-indigo-400" placeholder="Nama" />
-            <input className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 outline-none focus:border-indigo-400" placeholder="Email" />
-            <textarea className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 outline-none focus:border-indigo-400" rows={4} placeholder="Pesan" />
-            <button className="rounded-xl bg-indigo-500 px-4 py-2 font-medium hover:bg-indigo-600 w-fit">Kirim</button>
-          </form>
-        </div>
-      </section>
+   
 
       <footer className="border-t border-white/10 py-10 text-center text-sm text-slate-400">
         © {new Date().getFullYear()} YourBrand. All rights reserved.
