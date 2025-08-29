@@ -3,8 +3,9 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import img from "../../public/Black_Full_Name-removebg-preview-cropped.svg"
 import Image from "next/image";
-import Lightning from "./modules/home/views/Lightning";
-import Silk from "./modules/home/views/Silk";
+import Lightning from "./util/reactBits/Lightning";
+import Silk from "./util/reactBits/Silk";
+import CurvedLoop from './util/reactBits/CurvedLoop';
 
 import About from "./modules/about/views/AboutView";
 import Home from "./modules/home/views/HomeView";
@@ -147,20 +148,20 @@ export default function SmoothScrollNavbarDemo() {
     <div className="min-h-screen text-slate-100">
       
         <div className="absolute inset-0 -z-10" style={{height:"100%"}}>
-          <Lightning
+          {/* <Lightning
         hue={220}
         xOffset={0}
         speed={1}
         intensity={1}
         size={1}
-      /> 
-      {/* <Silk
+      />  */}
+      <Silk
         speed={5}
         scale={1}
         color="#818669"
         noiseIntensity={1.5}
         rotation={0}
-      />  */}
+      /> 
         </div>
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 bg-slate-900/80 border-b border-white/10">
         <nav
@@ -186,8 +187,19 @@ export default function SmoothScrollNavbarDemo() {
         </nav>
       </header>
 
-      <section id="home" className="scroll-mt-30 border-t border-white/5">
+      <section id="home" className="scroll-mt-30 h-screen border-t border-white/5">
         <Home/>
+      </section>
+      <section id="client" className="scroll-mt-30 h-screen border-t border-white/5">
+      
+        <CurvedLoop 
+                marqueeText="PERTAMINA ✦ PETRONAS ✦ ASTRA ✦ HONDA ✦ KYMCO ✦"
+                speed={2}
+                curveAmount={0}
+                direction="right"
+                interactive={true}
+                className="custom-text-style h-fit"
+              />
       </section>
       <section id="about" className="scroll-mt-24 border-t border-white/5">
           {<About/>}
