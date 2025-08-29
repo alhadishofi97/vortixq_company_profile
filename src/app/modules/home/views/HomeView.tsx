@@ -3,14 +3,16 @@ import React, { useEffect, useState } from "react";
 import { getHome } from "../controllers/HomeController";
 import { Container, Typography, Box, Button, Grid, Card, CardContent } from "@mui/material";
 import { Star, FlashOn, Build } from "@mui/icons-material";
-import Lightning from "./Lightning";
-import Prism from "./Prism";
-import Silk from "./Silk";
+import Lightning from "../../../util/reactBits/Lightning";
+import Prism from "../../../util/reactBits/Prism";
+import Silk from "../../../util/reactBits/Silk";
+import ShinyText from "../../../util/reactBits/Shiny";
+import BlurText from "../../../util/reactBits/BlurText";
 
 const Home = () => {
-  const [judul,setJudul] = useState('judul')
-  const [subjudul,setSubJudul] = useState('sub judul')
-  const [narasi,setNarasi] = useState('narasi')
+  const [judul,setJudul] = useState('')
+  const [subjudul,setSubJudul] = useState('')
+  const [narasi,setNarasi] = useState('')
 
   useEffect(()=>{
     getData()
@@ -19,8 +21,26 @@ const Home = () => {
   const getData = async()=>{
     const data = await getHome();
     console.log('data',data)
+    try {
+      setJudul(data.data[0]?.Judul)
+      setSubJudul(data.data[0]?.subjudul)
+      const elmNarasi = []
+      await data.data[0].narasi[0]?.children.map((val,i)=>{
+        if(val.bold){
+          elmNarasi.push(<b>{val.text}</b>)
+        }else{
+          elmNarasi.push(val.text)
+        }
+      })
+      setNarasi(elmNarasi)
+    } catch (error) {
+      
+    }
   }
-  
+
+  const handleAnimationComplete = () => {
+    console.log('Animation completed!');
+  };
 
   return (
        <div className="top-0" style={{ width: '100%', height: '600px', position: 'relative' }}>
@@ -55,52 +75,50 @@ const Home = () => {
       /> */}
         
         <Box
-         sx={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      zIndex: 1, // lebih tinggi dari Lightning
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "white",
-      textAlign: "center",
-      padding: "20px",
-    }}>
+          sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 1, // lebih tinggi dari Lightning
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+          textAlign: "center",
+          padding: "20px",
+        }}>
       {/* Hero Section */}
-      <Container maxWidth="md" sx={{ textAlign: "center", mb: 8 }}>
+      <Container maxWidth="md" sx={{ textAlign: "left", mb: 8 }}>
 
-        <Typography variant="h2" component="h1" fontWeight="bold" gutterBottom>
-          {judul}
-        </Typography>
-        <Typography
-          variant="h5"
-          component="h2"
-          sx={{ color: "primary.main", mb: 3 }}
-        >
-          {subjudul}
-        </Typography>
-        <Typography variant="body1" sx={{ color: "grey.300", mb: 4 }}>
-          {narasi}
-        </Typography>
-
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          sx={{ borderRadius: 3, px: 4, mr: 2 }}
-        >
-          Mulai Sekarang
-        </Button>
+    <Typography variant="h1" component="h1" className="flex items-center pt-10 text-6xl font-extrabold text-white drop-shadow-lg" fontWeight="bold">
+      {judul}
+    </Typography>
+    <Typography variant="h2" component="h2" className="text-6xl font-extrabold drop-shadow-lg text-[#b86735]" fontWeight="bold" gutterBottom>
+      {subjudul}
+    </Typography>
+    <Typography variant="body1" className="text-center" sx={{ color: "grey.300", mb: 4 }}>
+      <p className="">
+      {narasi !== '' && (
+        <BlurText
+        text={narasi.toString()}
+        delay={150}
+        animateBy="words"
+        direction="top"
+        onAnimationComplete={handleAnimationComplete}
+        className="text-center font-sans"
+        />
+      )}
+      </p>
+    </Typography>
         <Button
           variant="outlined"
           color="inherit"
           size="large"
           sx={{ borderRadius: 3, px: 4 }}
         >
-          Pelajari Lebih Lanjut
+          Learn More
         </Button>
       </Container>
       </Box>
