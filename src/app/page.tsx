@@ -60,7 +60,9 @@ function useScrollSpy(ids: string[], options: IntersectionObserverInit = {}): st
         }
         setActiveId(current);
       };
-      window.addEventListener("scroll", onScroll, { passive: true });
+      // window.addEventListener("scroll", onScroll, { passive: true });
+      (window as Window).addEventListener("scroll", onScroll, { passive: true });
+
       onScroll();
       return () => window.removeEventListener("scroll", onScroll);
     }

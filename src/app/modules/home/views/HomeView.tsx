@@ -12,7 +12,7 @@ import BlurText from "../../../util/reactBits/BlurText";
 const Home = () => {
   const [judul,setJudul] = useState('')
   const [subjudul,setSubJudul] = useState('')
-  const [narasi,setNarasi] = useState('')
+  const [narasi,setNarasi] = useState<string>("");
 
   useEffect(()=>{
     getData()
@@ -24,15 +24,18 @@ const Home = () => {
     try {
       setJudul(data.data[0]?.Judul)
       setSubJudul(data.data[0]?.subjudul)
-      const elmNarasi = []
-      await data.data[0].narasi[0]?.children.map((val,i)=>{
+      const elmNarasi: string[]=[] ;
+      await data.data[0].narasi[0]?.children.map((val:any,i:any)=>{
         if(val.bold){
-          elmNarasi.push(<b>{val.text}</b>)
+          elmNarasi.push(`<b>${val.text}</b>`)
+      
+          
         }else{
           elmNarasi.push(val.text)
+      
         }
       })
-      setNarasi(elmNarasi)
+      setNarasi(elmNarasi.join(" "))
     } catch (error) {
       
     }
