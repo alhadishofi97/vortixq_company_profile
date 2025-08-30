@@ -5,21 +5,31 @@ import MagicBento from "@/app/util/reactBits/MagicBento";
 import CurvedLoop from "@/app/util/reactBits/CurvedLoop";
 
 const About = () => {
-  const [elmAbount, setelmAbount] = useState<JSX.Element[] | null>(null);
+  const [elmAbount, setelmAbount] = useState<React.ReactElement[] | null>(null);
   const [elmTitle, setelmTitle] = useState();
 
   useEffect(() => {
     generateData();
   }, []);
 
+ 
   const generateData = async () => {
-    const datax = await getAbount()
-    setelmTitle(datax.data?.title)
+  try {
+    const datax = await getAbount();
 
-    let elm = datax.data.blocks.map((val)=>val.body)
-    
+    // ambil title pertama
+    const aboutx = datax.data[0]?.attributes.title;
+    setelmTitle(aboutx);
+
+    // ambil blocks pertama
+    let elm = datax.data[0]?.attributes.blocks.map((val:any) => val.body);
     setelmAbount(elm);
-  };
+
+  } catch (error) {
+    console.log("err", error);
+  }
+};
+
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">
