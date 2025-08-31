@@ -3,6 +3,23 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --card-bg: #f8fafc;
+  --border: #e2e8f0;
+  --muted: #64748b;
+  --accent: #3b82f6;
+  --text-primary: #171717;
+  --text-secondary: #64748b;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card-bg: #1e293b;
+  --border: #334155;
+  --muted: #94a3b8;
+  --accent: #60a5fa;
+  --text-primary: #ededed;
+  --text-secondary: #94a3b8;
 }
 
 @theme inline {
@@ -12,15 +29,61 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme-aware background utilities */
+.bg-slate-900\/60 {
+  background-color: rgba(15, 23, 42, 0.6);
+}
+
+.dark .bg-slate-900\/60 {
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
+.bg-slate-900\/80 {
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
+.dark .bg-slate-900\/80 {
+  background-color: rgba(15, 23, 42, 0.95);
+}
+
+/* Light mode specific backgrounds */
+.light .bg-slate-800\/60 {
+  background-color: rgba(30, 41, 59, 0.6);
+}
+
+.light .bg-slate-900\/60 {
+  background-color: rgba(15, 23, 42, 0.6);
+}
+
+/* Dark mode specific backgrounds */
+.dark .bg-slate-800\/60 {
+  background-color: rgba(30, 41, 59, 0.8);
+}
+
+.dark .bg-slate-900\/60 {
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
+/* Ensure proper text contrast in both themes */
+.light .text-slate-100 {
+  color: #f1f5f9;
+}
+
+.dark .text-slate-100 {
+  color: #f1f5f9;
+}
+
+.light .text-slate-400 {
+  color: #94a3b8;
+}
+
+.dark .text-slate-400 {
+  color: #94a3b8;
 }
