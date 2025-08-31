@@ -1,35 +1,23 @@
+
 "use client";
 import React, { useEffect, useState } from "react";
 import { getAbount } from "../controllers/AboutController";
 import MagicBento from "@/app/util/reactBits/MagicBento";
-import CurvedLoop from "@/app/util/reactBits/CurvedLoop";
 
 const About = () => {
-  const [elmAbount, setelmAbount] = useState<React.ReactElement[] | null>(null);
-  const [elmTitle, setelmTitle] = useState();
+  const [elmTitle, setelmTitle] = useState<string | undefined>();
 
   useEffect(() => {
     generateData();
   }, []);
 
- 
   const generateData = async () => {
-  try {
-    const datax = await getAbount();
-
-    // ambil title pertama
-    const aboutx = datax.data[0]?.attributes.title;
-    setelmTitle(aboutx);
-
-    // ambil blocks pertama
-    let elm = datax.data[0]?.attributes.blocks.map((val:any) => val.body);
-    setelmAbount(elm);
-
-  } catch (error) {
-    console.log("err", error);
-  }
-};
-
+    const datax = await getAbount()
+    console.log('About data:', datax)
+    if (datax.data && Array.isArray(datax.data) && datax.data.length > 0) {
+      setelmTitle(datax.data[0]?.title)
+    }
+  };
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">

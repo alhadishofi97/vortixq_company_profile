@@ -1,18 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { getHome } from "../controllers/HomeController";
-import { Container, Typography, Box, Button, Grid, Card, CardContent } from "@mui/material";
-import { Star, FlashOn, Build } from "@mui/icons-material";
-import Lightning from "../../../util/reactBits/Lightning";
-import Prism from "../../../util/reactBits/Prism";
-import Silk from "../../../util/reactBits/Silk";
-import ShinyText from "../../../util/reactBits/Shiny";
+import { Container, Typography, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
 
+interface NarasiChild {
+  text: string;
+  bold?: boolean;
+}
+
+interface NarasiBlock {
+  children: NarasiChild[];
+}
+
+interface HomeData {
+  Judul?: string;
+  subjudul?: string;
+  narasi?: NarasiBlock[];
+}
+
 const Home = () => {
-  const [judul,setJudul] = useState('')
-  const [subjudul,setSubJudul] = useState('')
-  const [narasi,setNarasi] = useState<string>("");
+  const [judul,setJudul] = useState<string>('')
+  const [subjudul,setSubJudul] = useState<string>('')
+  const [narasi,setNarasi] = useState<(string | React.ReactElement)[]>([])
 
   useEffect(()=>{
     getData()
@@ -22,22 +32,23 @@ const Home = () => {
     const data = await getHome();
     console.log('data',data)
     try {
-      setJudul(data.data[0]?.Judul)
-      setSubJudul(data.data[0]?.subjudul)
-      const elmNarasi: string[]=[] ;
-      await data.data[0].narasi[0]?.children.map((val:any,i:any)=>{
-        if(val.bold){
-          elmNarasi.push(`<b>${val.text}</b>`)
+      const homeData = data.data[0] as HomeData;
+      setJudul(homeData?.Judul || '')
+      setSubJudul(homeData?.subjudul || '')
       
-          
-        }else{
-          elmNarasi.push(val.text)
-      
-        }
-      })
-      setNarasi(elmNarasi.join(" "))
-    } catch (error) {
-      
+      if (homeData?.narasi && homeData.narasi[0]?.children) {
+        const elmNarasi: (string | React.ReactElement)[] = []
+        homeData.narasi[0].children.forEach((val: NarasiChild) => {
+          if(val.bold){
+            elmNarasi.push(<b key={val.text}>{val.text}</b>)
+          }else{
+            elmNarasi.push(val.text)
+          }
+        })
+        setNarasi(elmNarasi)
+      }
+    } catch {
+      // Handle error silently
     }
   }
 
@@ -103,7 +114,7 @@ const Home = () => {
     </Typography>
     <Typography variant="body1" className="text-center" sx={{ color: "grey.300", mb: 4 }}>
       <p className="">
-      {narasi !== '' && (
+      {narasi.length > 0 && (
         <BlurText
         text={narasi.toString()}
         delay={150}
