@@ -3,12 +3,15 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import img from "../../public/Black_Full_Name-removebg-preview-cropped.svg"
 import Image from "next/image";
-import Lightning from "./util/reactBits/Lightning";
 import Silk from "./util/reactBits/Silk";
 import CurvedLoop from './util/reactBits/CurvedLoop';
 
 import About from "./modules/about/views/AboutView";
 import Home from "./modules/home/views/HomeView";
+import ServiceCards from "./modules/services/views/ServiceCards";
+import ThemeToggle from "./modules/theme/ThemeToggle";
+import ContactView from "./modules/contact/views/ContactView";
+
 
 interface Section {
   id: string;
@@ -17,9 +20,9 @@ interface Section {
 }
 
 const SECTIONS: Section[] = [
-  { id: "home", label: "Home", emoji:''},
-  { id: "about", label: "about", emoji: '' },
-  { id: "Services", label: "Services", emoji: '' },
+  { id: "home", label: "Home", emoji:'',},
+  { id: "about", label: "About", emoji: '' },
+  { id: "services", label: "Services", emoji: '' },
   // { id: "pricing", label: "Pricing", emoji: "💸" },
   { id: "contact", label: "Contact", emoji: '' },
 ];
@@ -41,7 +44,9 @@ function safeUpdateHash(id: string) {
     } else {
       window.location.hash = id;
     }
-  } catch (_) {}
+  } catch {
+    // Handle error silently
+  }
 }
 
 function useScrollSpy(ids: string[], options: IntersectionObserverInit = {}): string {
@@ -49,24 +54,7 @@ function useScrollSpy(ids: string[], options: IntersectionObserverInit = {}): st
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (!("IntersectionObserver" in window)) {
-      const onScroll = () => {
-        let current = ids[0];
-        for (const id of ids) {
-          const el = document.getElementById(id);
-          if (!el) continue;
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= window.innerHeight * 0.35) current = id;
-        }
-        setActiveId(current);
-      };
-      // window.addEventListener("scroll", onScroll, { passive: true });
-      (window as Window).addEventListener("scroll", onScroll, { passive: true });
-
-      onScroll();
-      return () => window.removeEventListener("scroll", onScroll);
-    }
-
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -86,7 +74,7 @@ function useScrollSpy(ids: string[], options: IntersectionObserverInit = {}): st
     });
 
     return () => observer.disconnect();
-  }, [ids.join("|")]);
+  }, [ids, options]);
 
   return activeId;
 }
@@ -147,7 +135,8 @@ export default function SmoothScrollNavbarDemo() {
   }, []);
 
   return (
-    <div className="min-h-screen text-slate-100">
+    <div className="min-h-screen text-slate-100 bg-slate-900 dark:bg-slate-900">
+      <ThemeToggle variant="fixed" />
       
         <div className="absolute inset-0 -z-10" style={{height:"100%"}}>
           {/* <Lightning
@@ -165,7 +154,7 @@ export default function SmoothScrollNavbarDemo() {
         rotation={0}
       /> 
         </div>
-      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 bg-slate-900/80 border-b border-white/10">
+      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 dark:bg-slate-900/80 bg-slate-800/60 dark:bg-slate-900/80 border-b border-white/10">
         <nav
           ref={navRef}
           className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-3"
@@ -185,6 +174,8 @@ export default function SmoothScrollNavbarDemo() {
                 onClick={handleNavClick}
               />
             ))}
+            {/* Theme Toggle in navbar */}
+            {/* <ThemeToggle variant="navbar" /> */}
           </div>
         </nav>
       </header>
@@ -192,8 +183,8 @@ export default function SmoothScrollNavbarDemo() {
       <section id="home" className="scroll-mt-30 h-screen border-t border-white/5">
         <Home/>
       </section>
-      <section id="client" className="scroll-mt-30 h-screen border-t border-white/5">
       
+      {/* <section id="client" className="scroll-mt-30 h-screen border-t border-white/5">
         <CurvedLoop 
                 marqueeText="PERTAMINA ✦ PETRONAS ✦ ASTRA ✦ HONDA ✦ KYMCO ✦"
                 speed={2}
@@ -202,28 +193,17 @@ export default function SmoothScrollNavbarDemo() {
                 interactive={true}
                 className="custom-text-style h-fit"
               />
-      </section>
+      </section> */}
+
       <section id="about" className="scroll-mt-24 border-t border-white/5">
           {<About/>}
       </section>
 
-      <section id="Services" className="scroll-mt-10 border-t border-white/5">
-        <div className="mx-auto max-w-5xl px-4 py-24">
-          <h2 className="text-3xl sm:text-4xl font-semibold">Services</h2>
-          <ul className="mt-6 grid gap-6 sm:grid-cols-2">
-            {["Smooth scroll", "Active highlight", "Hash sync (safe)", "A11y friendly", "Framer Motion", "Tailwind only"].map((f) => (
-              <li key={f} className="rounded-2xl border border-white/10 p-5">
-                <div className="text-lg font-medium">{f}</div>
-                <p className="mt-2 text-sm text-slate-300">
-                  Deskripsi singkat fitur {f}.
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <section id="services" className="scroll-mt-10 border-t border-white/5">
+        <ServiceCards/>
       </section>
       <section id="contact" className="scroll-mt-24 border-t border-white/5">
-          contact
+          <ContactView/>
       </section>
 
       {/* <section id="pricing" className="scroll-mt-24 border-t border-white/5">
