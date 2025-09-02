@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,ReactNode } from "react";
 import { getHome } from "../controllers/HomeController";
 import { Container, Typography, Box, Button, Grid, Card, CardContent } from "@mui/material";
 import { Star, FlashOn, Build } from "@mui/icons-material";
@@ -8,11 +8,14 @@ import Prism from "../../../util/reactBits/Prism";
 import Silk from "../../../util/reactBits/Silk";
 import ShinyText from "../../../util/reactBits/Shiny";
 import BlurText from "../../../util/reactBits/BlurText";
+import AnimatedContent from "@/app/util/reactBits/AnimatedContent";
+import FadeContent from "@/app/util/reactBits/FadeContent";
+
 
 const Home = () => {
-  const [judul,setJudul] = useState('')
-  const [subjudul,setSubJudul] = useState('')
-  const [narasi,setNarasi] = useState<string>("");
+  const [judul,setJudul] = useState<ReactNode>(null);
+  const [subjudul,setSubJudul] = useState<ReactNode>(null);
+  const [narasi,setNarasi] = useState<ReactNode>(null);
 
   useEffect(()=>{
     getData()
@@ -22,21 +25,35 @@ const Home = () => {
     const data = await getHome();
     console.log('data',data)
     try {
-      setJudul(data.data[0]?.Judul)
-      setSubJudul(data.data[0]?.subjudul)
-      const elmNarasi: string[]=[] ;
+    
+      setJudul( <Typography variant="h1" component="h1" className="flex items-center pt-10 text-6xl font-extrabold text-white drop-shadow-lg" fontWeight="bold">{data.data[0]?.Judul}</Typography>)
+      const elmSub = <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}><Typography variant="h4" component="h4" className="text-6xl font-extrabold drop-shadow-lg text-[#b86735]" fontWeight="bold" gutterBottom>{data.data[0]?.subjudul}</Typography></FadeContent>
+      setSubJudul(elmSub)
+      
+      const elmNarasi: ReactNode[]=[] ;
       await data.data[0].narasi[0]?.children.map((val:any,i:any)=>{
-        if(val.bold){
-          elmNarasi.push(`<b>${val.text}</b>`)
-      
-          
-        }else{
-          elmNarasi.push(val.text)
-      
-        }
-      })
-      setNarasi(elmNarasi.join(" "))
-    } catch (error) {
+          if(val.bold){
+            elmNarasi.push(`<b>${val.text}</b>`)
+          }else{
+            elmNarasi.push(val.text)
+        
+          }
+        })
+       
+        setNarasi( 
+        <Typography variant="body1" className="text-center" sx={{ color: "grey.300", mb: 4 }}>
+          <p className="">
+            <BlurText
+            text={elmNarasi.join(" ")}
+            delay={0}
+            animateBy="words"
+            direction="top"
+            onAnimationComplete={handleAnimationComplete}
+            className="text-center font-sans"
+            />
+          </p>
+        </Typography>)
+      } catch (error) {
       
     }
   }
@@ -44,6 +61,7 @@ const Home = () => {
   const handleAnimationComplete = () => {
     console.log('Animation completed!');
   };
+
 
   return (
        <div className="top-0" style={{ width: '100%', height: '600px', position: 'relative' }}>
@@ -95,30 +113,20 @@ const Home = () => {
       {/* Hero Section */}
       <Container maxWidth="md" sx={{ textAlign: "left", mb: 8 }}>
 
-    <Typography variant="h1" component="h1" className="flex items-center pt-10 text-6xl font-extrabold text-white drop-shadow-lg" fontWeight="bold">
-      {judul}
-    </Typography>
-    <Typography variant="h2" component="h2" className="text-6xl font-extrabold drop-shadow-lg text-[#b86735]" fontWeight="bold" gutterBottom>
-      {subjudul}
-    </Typography>
-    <Typography variant="body1" className="text-center" sx={{ color: "grey.300", mb: 4 }}>
-      <p className="">
-      {narasi !== '' && (
-        <BlurText
-        text={narasi.toString()}
-        delay={150}
-        animateBy="words"
-        direction="top"
-        onAnimationComplete={handleAnimationComplete}
-        className="text-center font-sans"
-        />
-      )}
-      </p>
-    </Typography>
+    {judul}
+    {subjudul}
+    {narasi}
+
+  
+    
         <Button
           variant="outlined"
           color="inherit"
           size="large"
+          onClick={()=>{
+              const section = document.getElementById("about");
+              section?.scrollIntoView({ behavior: "smooth" });
+          }}
           sx={{ borderRadius: 3, px: 4 }}
         >
           Learn More

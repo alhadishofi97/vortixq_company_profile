@@ -5,6 +5,8 @@ import img from "../../public/Black_Full_Name-removebg-preview-cropped.svg"
 import Image from "next/image";
 import Lightning from "./util/reactBits/Lightning";
 import Silk from "./util/reactBits/Silk";
+// import Threads from "./util/reactBits/Thread";
+import Threads from "@/Backgrounds/Threads/Threads";
 import CurvedLoop from './util/reactBits/CurvedLoop';
 
 import About from "./modules/about/views/AboutView";
@@ -157,13 +159,20 @@ export default function SmoothScrollNavbarDemo() {
         intensity={1}
         size={1}
       />  */}
-      <Silk
+      {/* <Silk
         speed={5}
         scale={1}
         color="#818669"
         noiseIntensity={1.5}
         rotation={0}
-      /> 
+      />  */}
+      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <Threads
+          amplitude={3}
+          distance={0.5}
+          enableMouseInteraction={true}
+        />
+      </div>
         </div>
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 bg-slate-900/80 border-b border-white/10">
         <nav
@@ -191,17 +200,6 @@ export default function SmoothScrollNavbarDemo() {
 
       <section id="home" className="scroll-mt-30 h-screen border-t border-white/5">
         <Home/>
-      </section>
-      <section id="client" className="scroll-mt-30 h-screen border-t border-white/5">
-      
-        <CurvedLoop 
-                marqueeText="PERTAMINA ✦ PETRONAS ✦ ASTRA ✦ HONDA ✦ KYMCO ✦"
-                speed={2}
-                curveAmount={0}
-                direction="right"
-                interactive={true}
-                className="custom-text-style h-fit"
-              />
       </section>
       <section id="about" className="scroll-mt-24 border-t border-white/5">
           {<About/>}
