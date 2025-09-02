@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import img from "../../public/Black_Full_Name-removebg-preview-cropped.svg"
 import Image from "next/image";
 import Silk from "./util/reactBits/Silk";
-// import Threads from "./util/reactBits/Thread";
-import Threads from "@/Backgrounds/Threads/Threads";
+import Threads from "./util/reactBits/Thread";
+// import Threads from "@/Backgrounds/Threads/Threads";
+// import Threads from "@/Backgrounds/Threads/Threads";
 import CurvedLoop from './util/reactBits/CurvedLoop';
 
 import About from "./modules/about/views/AboutView";
@@ -137,7 +138,7 @@ export default function SmoothScrollNavbarDemo() {
   }, []);
 
   return (
-    <div className="min-h-screen text-slate-100 bg-slate-900 dark:bg-slate-900">
+    <div className="min-h-screen text-slate-100">
       <ThemeToggle variant="fixed" />
       
         <div className="absolute inset-0 -z-10" style={{height:"100%"}}>
@@ -148,14 +149,14 @@ export default function SmoothScrollNavbarDemo() {
         intensity={1}
         size={1}
       />  */}
+      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
       {/* <Silk
         speed={5}
         scale={1}
         color="#818669"
         noiseIntensity={1.5}
         rotation={0}
-      />  */}
-      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+        />  */}
         <Threads
           amplitude={3}
           distance={0.5}
