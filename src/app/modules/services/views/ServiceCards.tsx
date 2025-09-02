@@ -25,7 +25,7 @@ const ServiceCards: React.FC = () => {
   };
 
   const triggerCyberAnimation = () => {
-    console.log('Triggering Cyber animation...');
+    // console.log('Triggering Cyber animation...');
     setCyberVisible(false);
     setTimeout(() => {
       setCyberAnimationKey(prev => prev + 1);
