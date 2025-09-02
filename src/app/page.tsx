@@ -157,11 +157,14 @@ export default function SmoothScrollNavbarDemo() {
         noiseIntensity={1.5}
         rotation={0}
         />  */}
+       <div className="absolute inset-0 -z-10 bg-black">
         <Threads
           amplitude={3}
           distance={0.5}
           enableMouseInteraction={true}
+          color={[12,0, 0]} // normalisasi warna (0–1)
         />
+      </div>
       </div>
         </div>
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 dark:bg-slate-900/80 bg-slate-800/60 dark:bg-slate-900/80 border-b border-white/10">
