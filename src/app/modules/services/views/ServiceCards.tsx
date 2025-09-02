@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import CardSwap from "@/app/util/reactBits/CardSwap";
+import CardSwap from "../../../util/reactBits/CardSwap";
 import BlurText from "@/app/util/reactBits/BlurText";
 import ExpandableServiceCard from "./ExpandableServiceCard";
 
@@ -25,7 +25,7 @@ const ServiceCards: React.FC = () => {
   };
 
   const triggerCyberAnimation = () => {
-    console.log('Triggering Cyber animation...');
+    // console.log('Triggering Cyber animation...');
     setCyberVisible(false);
     setTimeout(() => {
       setCyberAnimationKey(prev => prev + 1);
@@ -80,12 +80,12 @@ const ServiceCards: React.FC = () => {
                 {aiVisible && (
                   <BlurText
                     key={`ai-${aiAnimationKey}`}
-                    text="AI Integration & Process Transformation"
+                    text="AI Integration & Process  Transformation"
                     delay={100}
                     animateBy="letters"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="text-2xl font-bold text-white mb-4"
+                    className="text-4xl font-bold text-white mb-4 text-center"
                   />
                 )}
               </div>
@@ -172,9 +172,9 @@ const ServiceCards: React.FC = () => {
               </CardSwap>
               
               {/* Card Counter */}
-              <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+              {/* <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
                 {aiAnimationKey + 1}/6
-              </div>
+              </div> */}
             </div>
           </div>
         ) : (
@@ -192,7 +192,7 @@ const ServiceCards: React.FC = () => {
                     animateBy="letters"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="text-2xl font-bold text-white mb-4"
+                    className="text-4xl font-bold text-white mb-4 text-center"
                   />
                 )}
               </div>
@@ -300,9 +300,9 @@ const ServiceCards: React.FC = () => {
               </CardSwap>
               
               {/* Card Counter */}
-              <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+              {/* <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
                 {cyberAnimationKey + 1}/6
-              </div>
+              </div> */}
             </div>
           </div>
         )}

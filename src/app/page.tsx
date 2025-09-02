@@ -9,6 +9,9 @@ import CurvedLoop from './util/reactBits/CurvedLoop';
 import About from "./modules/about/views/AboutView";
 import Home from "./modules/home/views/HomeView";
 import ServiceCards from "./modules/services/views/ServiceCards";
+import ThemeToggle from "./modules/theme/ThemeToggle";
+import ContactView from "./modules/contact/views/ContactView";
+
 
 interface Section {
   id: string;
@@ -17,8 +20,8 @@ interface Section {
 }
 
 const SECTIONS: Section[] = [
-  { id: "home", label: "Home", emoji:''},
-  { id: "about", label: "about", emoji: '' },
+  { id: "home", label: "Home", emoji:'',},
+  { id: "about", label: "About", emoji: '' },
   { id: "services", label: "Services", emoji: '' },
   // { id: "pricing", label: "Pricing", emoji: "💸" },
   { id: "contact", label: "Contact", emoji: '' },
@@ -132,7 +135,8 @@ export default function SmoothScrollNavbarDemo() {
   }, []);
 
   return (
-    <div className="min-h-screen text-slate-100">
+    <div className="min-h-screen text-slate-100 bg-slate-900 dark:bg-slate-900">
+      <ThemeToggle variant="fixed" />
       
         <div className="absolute inset-0 -z-10" style={{height:"100%"}}>
           {/* <Lightning
@@ -150,7 +154,7 @@ export default function SmoothScrollNavbarDemo() {
         rotation={0}
       /> 
         </div>
-      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 bg-slate-900/80 border-b border-white/10">
+      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 dark:bg-slate-900/80 bg-slate-800/60 dark:bg-slate-900/80 border-b border-white/10">
         <nav
           ref={navRef}
           className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-3"
@@ -170,6 +174,8 @@ export default function SmoothScrollNavbarDemo() {
                 onClick={handleNavClick}
               />
             ))}
+            {/* Theme Toggle in navbar */}
+            {/* <ThemeToggle variant="navbar" /> */}
           </div>
         </nav>
       </header>
@@ -177,8 +183,8 @@ export default function SmoothScrollNavbarDemo() {
       <section id="home" className="scroll-mt-30 h-screen border-t border-white/5">
         <Home/>
       </section>
-      <section id="client" className="scroll-mt-30 h-screen border-t border-white/5">
       
+      {/* <section id="client" className="scroll-mt-30 h-screen border-t border-white/5">
         <CurvedLoop 
                 marqueeText="PERTAMINA ✦ PETRONAS ✦ ASTRA ✦ HONDA ✦ KYMCO ✦"
                 speed={2}
@@ -187,7 +193,8 @@ export default function SmoothScrollNavbarDemo() {
                 interactive={true}
                 className="custom-text-style h-fit"
               />
-      </section>
+      </section> */}
+
       <section id="about" className="scroll-mt-24 border-t border-white/5">
           {<About/>}
       </section>
@@ -196,7 +203,7 @@ export default function SmoothScrollNavbarDemo() {
         <ServiceCards/>
       </section>
       <section id="contact" className="scroll-mt-24 border-t border-white/5">
-          contact
+          <ContactView/>
       </section>
 
       {/* <section id="pricing" className="scroll-mt-24 border-t border-white/5">
