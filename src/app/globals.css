@@ -1,25 +1,25 @@
-@import './fonts.css'; /* Import Iosevka font */
+@import './fonts.css'; /* Import fonts */
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --card-bg: #f8fafc;
-  --border: #e2e8f0;
-  --muted: #64748b;
-  --accent: #3b82f6;
-  --text-primary: #171717;
-  --text-secondary: #64748b;
+  --background: #0a0a0a; /* use dark-first aesthetic like peris.ai */
+  --foreground: #e6e7eb;
+  --card-bg: #0f172a;
+  --border: #1f2937;
+  --muted: #94a3b8;
+  --accent: #00E5FF; /* cyan accent */
+  --text-primary: #e6e7eb;
+  --text-secondary: #94a3b8;
 }
 
 .dark {
   --background: #0a0a0a;
-  --foreground: #ededed;
-  --card-bg: #1e293b;
-  --border: #334155;
+  --foreground: #e6e7eb;
+  --card-bg: #0f172a;
+  --border: #1f2937;
   --muted: #94a3b8;
-  --accent: #60a5fa;
-  --text-primary: #ededed;
+  --accent: #00E5FF;
+  --text-primary: #e6e7eb;
   --text-secondary: #94a3b8;
 }
 
@@ -34,18 +34,18 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-iosevka), 'JetBrains Mono', 'Iosevka', monospace;
+  font-family: var(--font-geist-sans), Inter, system-ui, Arial, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Make all elements use monospace font by default */
+/* Default to modern sans */
 * {
-  font-family: var(--font-iosevka), 'JetBrains Mono', 'Iosevka', monospace;
+  font-family: var(--font-geist-sans), Inter, system-ui, Arial, sans-serif;
 }
 
 /* Override for specific elements that need different fonts */
 .font-sans {
-  font-family: var(--font-sans), 'roboto', sans-serif;
+  font-family: var(--font-sans), Inter, system-ui, Arial, sans-serif;
 }
 
 /* Ensure sections inherit proper background */
@@ -56,7 +56,7 @@ section {
 /* Dark theme specific overrides */
 .dark body {
   background: #0a0a0a;
-  color: #ededed;
+  color: #e6e7eb;
 }
 
 .light body {

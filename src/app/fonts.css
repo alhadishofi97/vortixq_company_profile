@@ -1,6 +1,5 @@
-/* Import Iosevka font from Google Fonts or local files */
-/* Note: Iosevka is not available on Google Fonts, so we'll use a similar monospace font */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
+/* Import key fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
 
 /* Alternative: If you have local Iosevka font files, use this instead:
 @font-face {
@@ -33,5 +32,5 @@
 
 /* Define CSS custom properties for monospace font */
 :root {
-  --font-iosevka: 'JetBrains Mono', 'Iosevka', 'Courier New', monospace;
+  --font-iosevka: 'Iosevka', 'JetBrains Mono', 'Courier New', monospace;
 }

@@ -1,14 +1,8 @@
 "use client";
-import React, { useEffect, useState,ReactNode } from "react";
+import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import { getHome } from "../controllers/HomeController";
-import { Container, Typography, Box, Button, Grid, Card, CardContent } from "@mui/material";
-import { Star, FlashOn, Build } from "@mui/icons-material";
-import Lightning from "../../../util/reactBits/Lightning";
-import Prism from "../../../util/reactBits/Prism";
-import Silk from "../../../util/reactBits/Silk";
-import ShinyText from "../../../util/reactBits/Shiny";
+import { Container, Typography, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
-import AnimatedContent from "@/app/util/reactBits/AnimatedContent";
 import FadeContent from "@/app/util/reactBits/FadeContent";
 
 
@@ -17,48 +11,64 @@ const Home = () => {
   const [subjudul,setSubJudul] = useState<ReactNode>(null);
   const [narasi,setNarasi] = useState<ReactNode>(null);
 
-  useEffect(()=>{
-    getData()
-  },[])
-
-  const getData = async()=>{
+  const getData = useCallback(async () => {
     const data = await getHome();
-    console.log('data',data)
+    console.log('data', data);
+    type NarasiChild = { text: string; bold?: boolean };
+    type HomeRecord = {
+      Judul?: string;
+      subjudul?: string;
+      narasi?: Array<{ children?: Array<NarasiChild> }>;
+    };
+    type HomeResponse = { data?: Array<HomeRecord> };
     try {
-    
-      // setJudul( <Typography variant="h1" component="h1" className="flex items-center pt-10 text-6xl font-extrabold text-white drop-shadow-lg" fontWeight="bold">{data.data[0]?.Judul}</Typography>)
-      setJudul( <h1 className="flex items-center pt-10 text-6xl font-extrabold text-white drop-shadow-lg" >{data.data[0]?.Judul}</h1>)
-      // const elmSub = <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}><Typography variant="h4" component="h4" className="text-6xl font-extrabold drop-shadow-lg text-[#b86735]" fontWeight="bold" gutterBottom>{data.data[0]?.subjudul}</Typography></FadeContent>
-      const elmSub = <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}><h4  className="text-4xl font-extrabold drop-shadow-lg text-[#b86735]" >{data.data[0]?.subjudul}</h4></FadeContent>
-      setSubJudul(elmSub)
-      
-      const elmNarasi: ReactNode[]=[] ;
-      await data.data[0].narasi[0]?.children.map((val:any,i:any)=>{
-          if(val.bold){
-            elmNarasi.push(`<b>${val.text}</b>`)
-          }else{
-            elmNarasi.push(val.text)
-        
-          }
-        })
-       
-        setNarasi( 
+      setJudul(
+        <h1 className="flex items-center pt-10 text-6xl font-extrabold text-white tracking-tight">
+          {(data as HomeResponse).data?.[0]?.Judul}
+        </h1>
+      );
+
+      const elmSub = (
+        <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
+          <h4 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan to-brand-purple">
+            {(data as HomeResponse).data?.[0]?.subjudul}
+          </h4>
+        </FadeContent>
+      );
+      setSubJudul(elmSub);
+
+      const children = ((data as HomeResponse).data?.[0]?.narasi?.[0]?.children ?? []) as NarasiChild[];
+      const elmNarasi: ReactNode[] = [];
+      children.forEach((val) => {
+        if (val.bold) {
+          elmNarasi.push(`<b>${val.text}</b>`);
+        } else {
+          elmNarasi.push(val.text);
+        }
+      });
+
+      setNarasi(
         <Typography variant="body1" className="text-center" sx={{ color: "grey.300", mb: 4 }}>
           <p className="">
             <BlurText
-            text={elmNarasi.join(" ")}
-            delay={0}
-            animateBy="words"
-            direction="top"
-            onAnimationComplete={handleAnimationComplete}
-            className="text-center font-sans"
+              text={elmNarasi.join(" ")}
+              delay={0}
+              animateBy="words"
+              direction="top"
+              onAnimationComplete={handleAnimationComplete}
+              className="text-center font-sans"
             />
           </p>
-        </Typography>)
-      } catch (error) {
-      
+        </Typography>
+      );
+    } catch (error) {
+      console.error(error);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   const handleAnimationComplete = () => {
     console.log('Animation completed!');
@@ -129,7 +139,7 @@ const Home = () => {
               const section = document.getElementById("about");
               section?.scrollIntoView({ behavior: "smooth" });
           }}
-          sx={{ borderRadius: 3, px: 4 }}
+          sx={{ borderRadius: 3, px: 4, borderColor: 'rgba(0,229,255,0.5)', color: '#00E5FF', '&:hover': { borderColor: 'rgba(124,58,237,0.6)', color: '#a78bfa' } }}
         >
           Learn More
         </Button>

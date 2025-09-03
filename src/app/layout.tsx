@@ -28,8 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >
+        {/* Background layers inspired by peris.ai */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+          <div className="absolute inset-0 bg-grid-slate opacity-[0.12]" style={{ backgroundSize: '24px 24px' }} />
+          <div className="absolute inset-0 bg-radial-faded" />
+        </div>
         <ThemeProvider>
           {children}
         </ThemeProvider>

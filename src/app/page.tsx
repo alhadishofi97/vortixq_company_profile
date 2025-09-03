@@ -108,7 +108,7 @@ const NavLink: React.FC<NavLinkProps> = ({ id, label, emoji, isActive, onClick }
       {isActive && (
         <motion.span
           layoutId="activePill"
-          className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-indigo-500 to-fuchsia-500 shadow-md"
+          className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-purple shadow-soft"
           transition={{ type: "spring", stiffness: 500, damping: 40 }}
         />
       )}
@@ -167,7 +167,7 @@ export default function SmoothScrollNavbarDemo() {
       </div>
       </div>
         </div>
-      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 dark:bg-slate-900/80 bg-slate-800/60 dark:bg-slate-900/80 border-b border-white/10">
+      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 dark:bg-slate-900/70 bg-slate-800/50 border-b border-white/10">
         <nav
           ref={navRef}
           className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-3"
