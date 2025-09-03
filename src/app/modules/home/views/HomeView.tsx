@@ -26,8 +26,10 @@ const Home = () => {
     console.log('data',data)
     try {
     
-      setJudul( <Typography variant="h1" component="h1" className="flex items-center pt-10 text-6xl font-extrabold text-white drop-shadow-lg" fontWeight="bold">{data.data[0]?.Judul}</Typography>)
-      const elmSub = <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}><Typography variant="h4" component="h4" className="text-6xl font-extrabold drop-shadow-lg text-[#b86735]" fontWeight="bold" gutterBottom>{data.data[0]?.subjudul}</Typography></FadeContent>
+      // setJudul( <Typography variant="h1" component="h1" className="flex items-center pt-10 text-6xl font-extrabold text-white drop-shadow-lg" fontWeight="bold">{data.data[0]?.Judul}</Typography>)
+      setJudul( <h1 className="flex items-center pt-10 text-6xl font-extrabold text-white drop-shadow-lg" >{data.data[0]?.Judul}</h1>)
+      // const elmSub = <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}><Typography variant="h4" component="h4" className="text-6xl font-extrabold drop-shadow-lg text-[#b86735]" fontWeight="bold" gutterBottom>{data.data[0]?.subjudul}</Typography></FadeContent>
+      const elmSub = <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}><h4  className="text-4xl font-extrabold drop-shadow-lg text-[#b86735]" >{data.data[0]?.subjudul}</h4></FadeContent>
       setSubJudul(elmSub)
       
       const elmNarasi: ReactNode[]=[] ;

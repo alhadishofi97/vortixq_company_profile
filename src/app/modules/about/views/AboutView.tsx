@@ -27,24 +27,30 @@ const About = () => {
     (await (datax.data as any)?.OurMission)?.map((val:any,i:any)=>{
       elmOurMission.push(
         <Box key={`OurMission${i}`} className="pb-10">
-          <Typography
+          {/* <Typography
             variant="h6"
             align="center"
             gutterBottom
             sx={{ fontWeight: 700, letterSpacing: 0.2 }}
             >
             {val.title}
-            </Typography>
+            </Typography> */}
+          <h1 className="flex justify-center items-center text-lg">
+            {val.title}
+          </h1>
 
 
             {/* Narasi di bawah judul */}
-            <Typography
+            {/* <Typography
             variant="body2"
             align="center"
             sx={{maxWidth: 720, mx: "auto" }}
             >
              {val.body}
-          </Typography>
+          </Typography> */}
+            <p className="flex justify-center align-center items-center text-center text-sm">
+             {val.body}
+          </p>
         </Box>)
     })
 
