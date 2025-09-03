@@ -26,7 +26,7 @@ const ContactView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-24">
+    <div className="mx-auto max-w-5xl px-4 py-24 bg-transparent">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -71,8 +71,8 @@ const ContactView: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-white font-medium text-lg">Phone</h3>
-                <p className="text-slate-300">+60-123 563 137</p>
+                <h3 className="text-white font-medium text-lg " style={{ fontFamily: 'var(--)' }}>Phone</h3>
+                <p className="text-slate-300 " style={{ fontFamily: 'var(--)' }}>+60-123 563 137</p>
               </div>
             </div>
 
@@ -85,8 +85,8 @@ const ContactView: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <h3 className="text-white font-medium text-lg">Office</h3>
-                <p className="text-slate-300">
+                <h3 className="text-white font-medium text-lg " style={{ fontFamily: 'var(--)' }}>Office</h3>
+                <p className="text-slate-300 " style={{ fontFamily: 'var(--)' }}>
                   C4-3-5 Solaris Dutamas No. 1 Jalan Dutamas 50480, Kuala Lumpur
                 </p>
               </div>
@@ -101,14 +101,14 @@ const ContactView: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="bg-slate-700/50 dark:bg-slate-800/80 rounded-2xl p-8 border border-white/10"
         >
-          <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-6 " style={{ fontFamily: 'var(--)' }}>
             Send us a message
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>
-              <label htmlFor="name" className="block text-white font-medium mb-2">
+              <label htmlFor="name" className="block text-white font-medium mb-2 " style={{ fontFamily: 'var(--)' }}>
                 Name
               </label>
               <input
@@ -118,14 +118,15 @@ const ContactView: React.FC = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 "
+                style={{ fontFamily: 'var(--)' }}
                 placeholder="Your name"
               />
             </div>
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-white font-medium mb-2">
+              <label htmlFor="email" className="block text-white font-medium mb-2 " style={{ fontFamily: 'var(--)' }}>
                 Email
               </label>
               <input
@@ -135,14 +136,15 @@ const ContactView: React.FC = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 "
+                style={{ fontFamily: 'var(--)' }}
                 placeholder="your.email@example.com"
               />
             </div>
 
             {/* Message Field */}
             <div>
-              <label htmlFor="message" className="block text-white font-medium mb-2">
+              <label htmlFor="message" className="block text-white font-medium mb-2 " style={{ fontFamily: 'var(--)' }}>
                 Message
               </label>
               <textarea
@@ -152,7 +154,8 @@ const ContactView: React.FC = () => {
                 onChange={handleInputChange}
                 required
                 rows={4}
-                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none "
+                style={{ fontFamily: 'var(--)' }}
                 placeholder="Tell us about your project..."
               />
             </div>
@@ -162,7 +165,8 @@ const ContactView: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full bg-white text-slate-900 font-semibold py-3 px-6 rounded-xl hover:bg-slate-100 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                              className="w-full bg-white text-slate-900 font-semibold py-3 px-6 rounded-xl hover:bg-slate-100 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl "
+                style={{ fontFamily: 'var(--)' }}
             >
               <span>Send Message</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
