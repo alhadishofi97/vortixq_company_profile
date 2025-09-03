@@ -141,12 +141,19 @@ const Threads: React.FC<ThreadsProps> = ({
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    const renderer = new Renderer({ alpha: true });
-    const gl = renderer.gl;
-    gl.clearColor(0, 0, 0, 0);
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    container.appendChild(gl.canvas);
+    try {
+      const renderer = new Renderer({ alpha: true });
+      const gl = renderer.gl;
+      
+      if (!gl) {
+        console.warn('WebGL not supported, falling back to static background');
+        return;
+      }
+      
+      gl.clearColor(0, 0, 0, 0);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      container.appendChild(gl.canvas);
 
     const geometry = new Triangle(gl);
     const program = new Program(gl, {
@@ -215,18 +222,26 @@ const Threads: React.FC<ThreadsProps> = ({
     }
     animationFrameId.current = requestAnimationFrame(update);
 
-    return () => {
-      if (animationFrameId.current)
-        cancelAnimationFrame(animationFrameId.current);
-      window.removeEventListener("resize", resize);
+      return () => {
+        if (animationFrameId.current)
+          cancelAnimationFrame(animationFrameId.current);
+        window.removeEventListener("resize", resize);
 
-      if (enableMouseInteraction) {
-        container.removeEventListener("mousemove", handleMouseMove);
-        container.removeEventListener("mouseleave", handleMouseLeave);
-      }
-      if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
-    };
+        if (enableMouseInteraction) {
+          container.removeEventListener("mousemove", handleMouseMove);
+          container.removeEventListener("mouseleave", handleMouseLeave);
+        }
+        if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
+        gl.getExtension("WEBGL_lose_context")?.loseContext();
+      };
+    } catch (error) {
+      console.warn('WebGL initialization failed:', error);
+      // Fallback: just return a cleanup function
+      return () => {
+        if (animationFrameId.current)
+          cancelAnimationFrame(animationFrameId.current);
+      };
+    }
   }, [color, amplitude, distance, enableMouseInteraction]);
 
   return <div ref={containerRef} className="threads-container" {...rest} />;

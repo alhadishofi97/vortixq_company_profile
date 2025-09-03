@@ -44,16 +44,17 @@ const ServiceCards: React.FC = () => {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-24">
-      <h2 className="text-3xl sm:text-4xl font-semibold">Our Services</h2>
+      <h2 className="text-3xl sm:text-4xl font-semibold font-mono" style={{ fontFamily: 'var(--font-mono)' }}>Our Services</h2>
 
       <div className="mt-6 inline-flex rounded-xl border border-white/10 p-1 bg-slate-900/50">
         <button
           type="button"
           onClick={() => setActiveTab("ai")}
           className={[
-            "px-4 py-2 rounded-lg text-sm transition-colors",
+            "px-4 py-2 rounded-lg text-sm transition-colors font-mono",
             activeTab === "ai" ? "bg-white/10 text-white" : "text-slate-300 hover:text-white"
           ].join(" ")}
+          style={{ fontFamily: 'var(--font-mono)' }}
         >
           AI Integration & Process Transformation
         </button>
@@ -61,9 +62,10 @@ const ServiceCards: React.FC = () => {
           type="button"
           onClick={() => setActiveTab("cyber")}
           className={[
-            "px-4 py-2 rounded-lg text-sm transition-colors",
+            "px-4 py-2 rounded-lg text-sm transition-colors font-mono",
             activeTab === "cyber" ? "bg-white/10 text-white" : "text-slate-300 hover:text-white"
           ].join(" ")}
+          style={{ fontFamily: 'var(--font-mono)' }}
         >
           Cybersecurity
         </button>
@@ -85,11 +87,11 @@ const ServiceCards: React.FC = () => {
                     animateBy="letters"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="text-4xl font-bold text-white mb-4 text-center"
+                    className="text-4xl font-bold text-white mb-4 text-center font-mono"
                   />
                 )}
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-300 leading-relaxed font-mono" style={{ fontFamily: 'var(--font-mono)' }}>
                 Comprehensive AI integration services to transform your business processes and drive innovation.
               </p>
             </div>
@@ -192,11 +194,11 @@ const ServiceCards: React.FC = () => {
                     animateBy="letters"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="text-4xl font-bold text-white mb-4 text-center"
+                    className="text-4xl font-bold text-white mb-4 text-center font-mono"
                   />
                 )}
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-slate-300 leading-relaxed font-mono" style={{ fontFamily: 'var(--font-mono)' }}>
                 Comprehensive cybersecurity services to protect your organization and ensure compliance with industry standards.
               </p>
               

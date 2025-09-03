@@ -1,11 +1,9 @@
 "use client";
 import React, { useEffect, useState,ReactNode  } from "react";
 import { getAbount } from "../controllers/AboutController";
-import MagicBento from "@/app/util/reactBits/MagicBento";
-import CurvedLoop from "@/app/util/reactBits/CurvedLoop";
 import SpotlightCard from "@/Components/SpotlightCard/SpotlightCard";
 import AnalyticsIcon from '@mui/icons-material/Analytics';
-import { Container, Box, Typography, CssBaseline, Paper } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 
 
 
@@ -75,8 +73,8 @@ const About = () => {
 
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10">
-      <h2 className="text-3xl sm:text-4xl font-semibold pb-10">{elmTitle}</h2>
+    <div className="mx-auto max-w-5xl px-4 py-10 bg-transparent">
+      <h2 className="text-3xl sm:text-4xl font-semibold pb-10 text-white">{elmTitle}</h2>
       <div className="grid grid-cols-1 gap-0 min-h-screen">
         <div className="flex">
           <Container maxWidth="md" sx={{ py: { xs: 6, md: 10 } }}>
