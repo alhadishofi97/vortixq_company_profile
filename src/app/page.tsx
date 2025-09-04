@@ -1,19 +1,15 @@
 "use client"
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import img from "../../public/Black_Full_Name-removebg-preview-cropped.svg"
-import Image from "next/image";
-import Silk from "./util/reactBits/Silk";
-import Threads from "./util/reactBits/Thread";
-// import Threads from "@/Backgrounds/Threads/Threads";
-// import Threads from "@/Backgrounds/Threads/Threads";
-import CurvedLoop from './util/reactBits/CurvedLoop';
 
 import About from "./modules/about/views/AboutView";
 import Home from "./modules/home/views/HomeView";
 import ServiceCards from "./modules/services/views/ServiceCards";
-import ThemeToggle from "./modules/theme/ThemeToggle";
+import ProductsView from "./modules/products/views/ProductsView";
+
+import Navbar from "./components/Navbar";
 import ContactView from "./modules/contact/views/ContactView";
+import GlassMorphismBackground from "../Components/GlassMorphismBackground/GlassMorphismBackground";
 
 
 interface Section {
@@ -26,7 +22,7 @@ const SECTIONS: Section[] = [
   { id: "home", label: "Home", emoji:'',},
   { id: "about", label: "About", emoji: '' },
   { id: "services", label: "Services", emoji: '' },
-  // { id: "pricing", label: "Pricing", emoji: "💸" },
+  { id: "products", label: "Products", emoji: '' },
   { id: "contact", label: "Contact", emoji: '' },
 ];
 
@@ -82,44 +78,10 @@ function useScrollSpy(ids: string[], options: IntersectionObserverInit = {}): st
   return activeId;
 }
 
-interface NavLinkProps {
-  id: string;
-  label: string;
-  emoji: string;
-  isActive: boolean;
-  onClick: (id: string) => void;
-}
-
-const NavLink: React.FC<NavLinkProps> = ({ id, label, emoji, isActive, onClick }) => {
-  return (
-    <button
-      onClick={() => onClick(id)}
-      className={[
-        "relative px-3 py-2 rounded-xl transition-colors",
-        isActive ? "text-white" : "text-slate-400 hover:text-slate-100",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400",
-      ].join(" ")}
-      aria-current={isActive ? "page" : undefined}
-    >
-      <span className="mr-1" aria-hidden>
-        {emoji}
-      </span>
-      {label}
-      {isActive && (
-        <motion.span
-          layoutId="activePill"
-          className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-brand-cyan to-brand-purple shadow-soft"
-          transition={{ type: "spring", stiffness: 500, damping: 40 }}
-        />
-      )}
-    </button>
-  );
-};
 
 export default function SmoothScrollNavbarDemo() {
   const sectionIds = useMemo(() => SECTIONS.map((s) => s.id), []);
   const activeId = useScrollSpy(sectionIds);
-  const navRef = useRef<HTMLElement | null>(null);
 
   const handleNavClick = (id: string) => {
     const el = typeof document !== "undefined" ? document.getElementById(id) : null;
@@ -138,62 +100,12 @@ export default function SmoothScrollNavbarDemo() {
   }, []);
 
   return (
-    <div className="min-h-screen text-slate-100">
-      <ThemeToggle variant="fixed" />
-      
-        <div className="absolute inset-0 -z-10" style={{height:"100%"}}>
-          {/* <Lightning
-        hue={220}
-        xOffset={0}
-        speed={1}
-        intensity={1}
-        size={1}
-      />  */}
-      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-      {/* <Silk
-        speed={5}
-        scale={1}
-        color="#818669"
-        noiseIntensity={1.5}
-        rotation={0}
-        />  */}
-       <div className="absolute inset-0 -z-10 bg-black">
-        <Threads
-          amplitude={3}
-          distance={0.5}
-          enableMouseInteraction={true}
-          color={[12,0, 0]} // normalisasi warna (0–1)
-        />
-      </div>
-      </div>
-        </div>
-      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-slate-900/60 dark:bg-slate-900/70 bg-slate-800/50 border-b border-white/10">
-        <nav
-          ref={navRef}
-          className="mx-auto flex max-w-5xl items-center justify-between gap-2 px-4 py-3"
-          aria-label="Primary"
-        >
-          <div className="font-semibold tracking-tight">
-            <Image src={img} height={30} alt="logo"></Image>
-          </div>
-          <div className="flex items-center gap-1">
-            {SECTIONS.map((s) => (
-              <NavLink
-                key={s.id}
-                id={s.id}
-                label={s.label}
-                emoji={s.emoji}
-                isActive={activeId === s.id}
-                onClick={handleNavClick}
-              />
-            ))}
-            {/* Theme Toggle in navbar */}
-            {/* <ThemeToggle variant="navbar" /> */}
-          </div>
-        </nav>
-      </header>
+    <div className="min-h-screen text-slate-100 font-sans">
+      {/* Glass Morphism Background */}
+      <GlassMorphismBackground />
+      <Navbar sections={SECTIONS} activeId={activeId} onNavClick={handleNavClick} />
 
-      <section id="home" className="scroll-mt-30 h-screen border-t border-white/5">
+      <section id="home" className="scroll-mt-30 min-h-[92vh] border-t border-white/5">
         <Home/>
       </section>
       <section id="about" className="scroll-mt-24 border-t border-white/5">
@@ -202,6 +114,9 @@ export default function SmoothScrollNavbarDemo() {
 
       <section id="services" className="scroll-mt-10 border-t border-white/5">
         <ServiceCards/>
+      </section>
+      <section id="products" className="scroll-mt-24 border-t border-white/5">
+        <ProductsView/>
       </section>
       <section id="contact" className="scroll-mt-24 border-t border-white/5">
           <ContactView/>
@@ -231,8 +146,8 @@ export default function SmoothScrollNavbarDemo() {
 
    
 
-      <footer className="border-t border-white/10 py-10 text-center text-sm text-slate-400">
-        © {new Date().getFullYear()} YourBrand. All rights reserved.
+      <footer className="border-t border-white/10 py-10 text-center text-sm text-text-secondary">
+        © {new Date().getFullYear()} Vortiqx. All rights reserved.
       </footer>
     </div>
   );

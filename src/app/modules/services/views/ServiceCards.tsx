@@ -43,8 +43,12 @@ const ServiceCards: React.FC = () => {
   }, [activeTab]);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-24">
-      <h2 className="text-3xl sm:text-4xl font-semibold font-sans tracking-tight">Our Services</h2>
+    <div className="relative mx-auto w-[90%] py-24">
+      {/* glow background */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute top-10 left-1/3 w-72 h-72 -translate-x-1/2 rounded-full bg-brand-cyan/15 blur-3xl animate-pulse-glow" />
+      </div>
+      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight">Our Services</h2>
 
       <div className="mt-6 inline-flex rounded-xl border border-white/10 p-1 bg-slate-900/50">
         <button
@@ -69,7 +73,7 @@ const ServiceCards: React.FC = () => {
         </button>
       </div>
 
-      <div className="relative mt-5 rounded-2xl border border-white/10 p-6">
+      <div className="relative mt-8 rounded-3xl border border-white/10 p-6">
         {activeTab === "ai" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             <div>
@@ -80,22 +84,22 @@ const ServiceCards: React.FC = () => {
                 {aiVisible && (
                   <BlurText
                     key={`ai-${aiAnimationKey}`}
-                    text="AI Integration & Process  Transformation"
+                    text="AI Integration & Process Transformation"
                     delay={100}
                     animateBy="letters"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="text-4xl font-bold text-white mb-4 text-center font-sans"
+                    className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 text-left leading-tight"
                   />
                 )}
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed font-sans">
+              <p className="text-sm sm:text-base text-text-secondary leading-relaxed font-sans">
                 Comprehensive AI integration services to transform your business processes and drive innovation.
               </p>
             </div>
 
             {/* AI Integration CardSwap Container */}
-            <div className="relative h-[320px] rounded-3xl border border-white/10 bg-slate-900/40 p-4 overflow-hidden">
+            <div className="relative h-[320px] rounded-3xl border border-white/10 bg-slate-900/40 p-4 overflow-hidden animate-float-slow">
               <CardSwap cardDistance={120} verticalDistance={100} delay={3000} pauseOnHover={true}>
                 <ExpandableServiceCard
                   icon={
@@ -192,11 +196,11 @@ const ServiceCards: React.FC = () => {
                     animateBy="letters"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="text-4xl font-bold text-white mb-4 text-center font-sans"
+                    className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 text-left leading-tight"
                   />
                 )}
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed font-sans">
+              <p className="text-sm sm:text-base text-text-secondary leading-relaxed font-sans">
                 Comprehensive cybersecurity services to protect your organization and ensure compliance with industry standards.
               </p>
               

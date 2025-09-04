@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState,ReactNode  } from "react";
-import { getAbount } from "../controllers/AboutController";
+import { getAbout } from "../controllers/AboutController";
 import SpotlightCard from "@/Components/SpotlightCard/SpotlightCard";
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import { Container, Box, Typography } from "@mui/material";
@@ -11,6 +11,7 @@ const About = () => {
   const [elmTitle, setelmTitle] = useState('About');
   const [ourMission, setourMission] = useState<ReactNode[]>([]);
   const [ourApproach, setourApproach] = useState<ReactNode[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     generateData();
@@ -19,7 +20,8 @@ const About = () => {
  
   const generateData = async () => {
   try {
-    const datax = await getAbount();
+    setIsLoading(true);
+    const datax = await getAbout();
     console.log('datax',datax)
 
     const elmOurMission: ReactNode[]=[] ;
@@ -78,26 +80,37 @@ const About = () => {
 };
 
 
+  if (isLoading) {
+    return (
+      <div className="relative mx-auto w-[90%] py-24 bg-transparent">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-highlight1 mx-auto mb-4"></div>
+          <p className="text-text-secondary">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 bg-transparent">
-      <h2 className="text-3xl sm:text-4xl font-semibold pb-10 text-white">
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan to-brand-purple">{elmTitle}</span>
+    <div className="relative mx-auto w-[90%] py-24 bg-transparent">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-10 right-1/4 w-64 h-64 rounded-full bg-brand-highlight1/15 blur-3xl animate-pulse-glow" />
+      </div>
+      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold pb-6 text-white leading-tight">
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-highlight1 to-brand-secondary">{elmTitle}</span>
       </h2>
-      <div className="grid grid-cols-1 gap-0 min-h-screen">
+      <div className="grid grid-cols-1 gap-0 min-h-[60vh]">
         <div className="flex">
-          <Container maxWidth="md" sx={{ py: { xs: 6, md: 10 } }}>
+          <Container maxWidth={false} sx={{ py: { xs: 6, md: 6 } }}>
              {ourMission}
           </Container>
-          
-          
         </div>
         <div className="flex">
            <div className="col-span-2 w-full">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               {ourApproach}
             </div>
           </div>
-          
         </div>
       </div>
     </div>

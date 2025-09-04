@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import { getHome } from "../controllers/HomeController";
-import { Container, Typography, Box, Button } from "@mui/material";
+import { Container, Typography, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
 import FadeContent from "@/app/util/reactBits/FadeContent";
 
@@ -10,27 +10,29 @@ const Home = () => {
   const [judul,setJudul] = useState<ReactNode>(null);
   const [subjudul,setSubJudul] = useState<ReactNode>(null);
   const [narasi,setNarasi] = useState<ReactNode>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getData = useCallback(async () => {
-    const data = await getHome();
-    console.log('data', data);
-    type NarasiChild = { text: string; bold?: boolean };
-    type HomeRecord = {
-      Judul?: string;
-      subjudul?: string;
-      narasi?: Array<{ children?: Array<NarasiChild> }>;
-    };
-    type HomeResponse = { data?: Array<HomeRecord> };
     try {
+      setIsLoading(true);
+      const data = await getHome();
+      console.log('data', data);
+      type NarasiChild = { text: string; bold?: boolean };
+      type HomeRecord = {
+        Judul?: string;
+        subjudul?: string;
+        narasi?: Array<{ children?: Array<NarasiChild> }>;
+      };
+      type HomeResponse = { data?: Array<HomeRecord> };
       setJudul(
-        <h1 className="flex items-center pt-10 text-6xl font-extrabold text-white tracking-tight">
+        <h1 className="font-display pt-16 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-tight">
           {(data as HomeResponse).data?.[0]?.Judul}
         </h1>
       );
 
       const elmSub = (
         <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
-          <h4 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-brand-cyan to-brand-purple">
+          <h4 className="mt-6 font-display text-xl sm:text-2xl md:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-brand-highlight1 to-brand-secondary leading-relaxed">
             {(data as HomeResponse).data?.[0]?.subjudul}
           </h4>
         </FadeContent>
@@ -48,17 +50,17 @@ const Home = () => {
       });
 
       setNarasi(
-        <Typography variant="body1" className="text-center" sx={{ color: "grey.300", mb: 4 }}>
-          <p className="">
+        <Typography variant="body1" className="" sx={{ color: "grey.300", mb: 4 }}>
+          <div className="mt-8 max-w-3xl text-left">
             <BlurText
               text={elmNarasi.join(" ")}
               delay={0}
               animateBy="words"
               direction="top"
               onAnimationComplete={handleAnimationComplete}
-              className="text-center font-sans"
+              className="font-sans text-3xl text-text-secondary leading-relaxed"
             />
-          </p>
+          </div>
         </Typography>
       );
     } catch (error) {
@@ -75,76 +77,39 @@ const Home = () => {
   };
 
 
+  if (isLoading) {
+    return (
+      <div className="min-h-[92vh] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-highlight1 mx-auto mb-4"></div>
+          <p className="text-text-secondary">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-       <div className="top-0" style={{ width: '100%', height: '600px', position: 'relative' }}>
-      {/* Background Lightning */}
-      {/* <Lightning
-        hue={220}
-        xOffset={0}
-        speed={1}
-        intensity={1}
-        size={1}
-        style={{ width: "100%", height: "100%" }}
-      /> */}
-
-        {/* <Prism
-        animationType="rotate"
-        timeScale={0.2}
-        scale={4.3}
-        height={6.6}
-        baseWidth={7}
-        noise={0}
-        glow={1}
-        hueShift={0.46}
-        colorFrequency={1}
-      /> */}
-
-      {/* <Silk
-        speed={5}
-        scale={1}
-        color="#818669"
-        noiseIntensity={1.5}
-        rotation={0}
-      /> */}
+    <div className="min-h-[92vh] flex items-center justify-center">
+      <Container maxWidth={false} sx={{ textAlign: "left", width: "90%", mx: "auto" }}>
+        {judul}
+        {subjudul}
+        {narasi}
         
-        <Box
-          sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 1, // lebih tinggi dari Lightning
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "white",
-          textAlign: "center",
-          padding: "20px",
-        }}>
-      {/* Hero Section */}
-      <Container maxWidth="md" sx={{ textAlign: "left", mb: 8 }}>
-
-    {judul}
-    {subjudul}
-    {narasi}
-
-  
-    
-        <Button
-          variant="outlined"
-          color="inherit"
-          size="large"
-          onClick={()=>{
-              const section = document.getElementById("about");
-              section?.scrollIntoView({ behavior: "smooth" });
-          }}
-          sx={{ borderRadius: 3, px: 4, borderColor: 'rgba(0,229,255,0.5)', color: '#00E5FF', '&:hover': { borderColor: 'rgba(124,58,237,0.6)', color: '#a78bfa' } }}
-        >
-          Learn More
-        </Button>
+        <div className="mt-8 flex items-center gap-3">
+          <Button
+            variant="outlined"
+            color="inherit"
+            size="large"
+            onClick={()=>{
+                const section = document.getElementById("about");
+                section?.scrollIntoView({ behavior: "smooth" });
+            }}
+            sx={{ borderRadius: 12, px: 4, borderColor: 'rgba(193,107,50,0.5)', color: '#C16B32', '&:hover': { borderColor: 'rgba(165,148,137,0.6)', color: '#A59489' } }}
+          >
+            Learn More
+          </Button>
+        </div>
       </Container>
-      </Box>
     </div>
   );
 };
