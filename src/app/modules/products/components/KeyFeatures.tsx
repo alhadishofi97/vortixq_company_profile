@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import ScrollStack, { ScrollStackItem } from "../../../../Components/ui/scroll-stack";
+import ScrollStack, { ScrollStackItem } from "./ScrollStack";
 import { 
   ShieldCheckIcon, 
   CpuChipIcon, 
@@ -74,10 +74,10 @@ const KeyFeatures: React.FC = () => {
         transition={{ duration: 0.6 }}
         className="text-center mb-16"
       >
-        <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+        <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-brand-highlight1 leading-tight mb-6">
           Key Features
         </h2>
-        <p className="text-text-secondary text-lg max-w-3xl mx-auto leading-relaxed">
+        <p className="text-text-secondary text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
           Discover the powerful capabilities that make our AI-native cybersecurity platform 
           the most advanced solution for modern organizations.
         </p>
@@ -85,17 +85,17 @@ const KeyFeatures: React.FC = () => {
       </motion.div>
 
       {/* ScrollStack Container */}
-      <div className="h-[80vh] rounded-3xl overflow-hidden border border-brand-highlight2/20 bg-black/20 backdrop-blur-sm">
+      <div className="h-[60vh] rounded-3xl overflow-hidden border border-brand-highlight2/20 bg-black/20 backdrop-blur-sm">
         <ScrollStack
           className="h-full"
-          itemDistance={80}
-          itemScale={0.05}
-          itemStackDistance={40}
-          stackPosition="25%"
-          scaleEndPosition="15%"
-          baseScale={0.9}
-          rotationAmount={2}
-          blurAmount={1}
+          itemDistance={50}
+          itemScale={0.02}
+          itemStackDistance={20}
+          stackPosition="15%"
+          scaleEndPosition="5%"
+          baseScale={0.98}
+          rotationAmount={0.5}
+          blurAmount={0.3}
           onStackComplete={() => console.log('Stack animation completed!')}
         >
           {features.map((feature, index) => (
@@ -105,16 +105,16 @@ const KeyFeatures: React.FC = () => {
             >
               <div className="flex flex-col h-full justify-center">
                 {/* Icon */}
-                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-r from-brand-highlight1/20 to-brand-secondary/20 mb-6">
-                  <feature.icon className="w-8 h-8 text-white" />
+                <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r from-brand-highlight1/20 to-brand-secondary/20 mb-4">
+                  <feature.icon className="w-6 h-6 text-white" />
                 </div>
 
                 {/* Content */}
-                <h3 className="font-display text-2xl sm:text-3xl font-bold text-white mb-4 leading-tight">
+                <h3 className="font-display text-base sm:text-xl md:text-2xl font-bold text-white mb-3 leading-tight">
                   {feature.title}
                 </h3>
                 
-                <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
+                <p className="text-text-secondary text-xs sm:text-sm md:text-base leading-relaxed">
                   {feature.description}
                 </p>
 

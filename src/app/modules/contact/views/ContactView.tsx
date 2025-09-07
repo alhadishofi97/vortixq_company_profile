@@ -8,6 +8,8 @@ const ContactView: React.FC = () => {
     email: '',
     message: ''
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<null | { ok: boolean; message: string }>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -17,12 +19,34 @@ const ContactView: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Here you can add your form submission logic
-    alert('Thank you for your message! We will get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+    setStatus(null);
+
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus({ ok: false, message: 'Semua field wajib diisi.' });
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (res.ok && data?.ok) {
+        setStatus({ ok: true, message: 'Terima kasih! Pesan Anda sudah terkirim.' });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus({ ok: false, message: data?.error || 'Gagal mengirim pesan.' });
+      }
+    } catch {
+      setStatus({ ok: false, message: 'Terjadi kesalahan jaringan.' });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -38,13 +62,13 @@ const ContactView: React.FC = () => {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:col-span-2 bg-slate-800/50 dark:bg-slate-900/80 rounded-2xl p-8 border border-white/10"
+          className="lg:col-span-2 bg-black/60 backdrop-blur-md rounded-2xl p-8 border border-white/10"
         >
-          <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-6">
+          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-6">
             Contact Information
           </h2>
           
-          <p className="text-slate-300 text-lg leading-relaxed mb-8">
+          <p className="text-slate-300 text-sm xs:text-base sm:text-lg md:text-xl leading-relaxed mb-8">
             Ready to transform your business with cutting-edge AI and robust cybersecurity solutions? 
             Reach out to our team of experts today.
           </p>
@@ -99,9 +123,9 @@ const ContactView: React.FC = () => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="bg-slate-700/50 dark:bg-slate-800/80 rounded-2xl p-8 border border-white/10"
+          className="bg-black/60 backdrop-blur-md rounded-2xl p-8 border border-white/10"
         >
-          <h2 className="text-3xl sm:text-4xl font-semibold text-white mb-6 ">
+          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-6 ">
             Send us a message
           </h2>
 
@@ -118,7 +142,7 @@ const ContactView: React.FC = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-transparent transition-all duration-200 "
+                className="w-full px-4 py-3 bg-black/40 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-highlight1 focus:border-transparent transition-all duration-200 "
                 placeholder="Your name"
               />
             </div>
@@ -135,7 +159,7 @@ const ContactView: React.FC = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-transparent transition-all duration-200 "
+                className="w-full px-4 py-3 bg-black/40 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-highlight1 focus:border-transparent transition-all duration-200 "
                 placeholder="your.email@example.com"
               />
             </div>
@@ -152,22 +176,29 @@ const ContactView: React.FC = () => {
                 onChange={handleInputChange}
                 required
                 rows={4}
-                className="w-full px-4 py-3 bg-slate-600/50 dark:bg-slate-700/50 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-cyan focus:border-transparent transition-all duration-200 resize-none "
+                className="w-full px-4 py-3 bg-black/40 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-highlight1 focus:border-transparent transition-all duration-200 resize-none "
                 placeholder="Tell us about your project..."
               />
             </div>
 
+            {status && (
+              <div className={`text-sm ${status.ok ? 'text-green-400' : 'text-red-400'}`}>{status.message}</div>
+            )}
+
             {/* Submit Button */}
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: submitting ? 1 : 1.02 }}
+              whileTap={{ scale: submitting ? 1 : 0.98 }}
+              disabled={submitting}
               type="submit"
-              className="w-full bg-gradient-to-r from-brand-cyan to-brand-purple text-white font-semibold py-3 px-6 rounded-xl hover:opacity-95 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl "
+              className="w-full bg-gradient-to-r from-brand-highlight1 to-brand-secondary text-white font-semibold py-3 px-6 rounded-xl hover:opacity-95 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:opacity-50"
             >
-              <span>Send Message</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-              </svg>
+              <span>{submitting ? 'Sending...' : 'Send Message'}</span>
+              {!submitting && (
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              )}
             </motion.button>
           </form>
         </motion.div>

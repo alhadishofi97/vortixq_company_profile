@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 import About from "./modules/about/views/AboutView";
 import Home from "./modules/home/views/HomeView";
@@ -80,10 +81,15 @@ function useScrollSpy(ids: string[], options: IntersectionObserverInit = {}): st
 
 
 export default function SmoothScrollNavbarDemo() {
-  const sectionIds = useMemo(() => SECTIONS.map((s) => s.id), []);
+  const router = useRouter();
+  const sectionIds = useMemo(() => ["home","about","contact"], []);
   const activeId = useScrollSpy(sectionIds);
 
   const handleNavClick = (id: string) => {
+    if (id.startsWith("/")) {
+      router.push(id);
+      return;
+    }
     const el = typeof document !== "undefined" ? document.getElementById(id) : null;
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -112,39 +118,18 @@ export default function SmoothScrollNavbarDemo() {
           {<About/>}
       </section>
 
+      {/* Services di-home dihapus, gunakan halaman /services */}
       <section id="services" className="scroll-mt-10 border-t border-white/5">
         <ServiceCards/>
       </section>
+
+      {/* Produk opsional, bisa diaktifkan jika diperlukan */}
       <section id="products" className="scroll-mt-24 border-t border-white/5">
         <ProductsView/>
       </section>
       <section id="contact" className="scroll-mt-24 border-t border-white/5">
           <ContactView/>
       </section>
-
-      {/* <section id="pricing" className="scroll-mt-24 border-t border-white/5">
-        <div className="mx-auto max-w-5xl px-4 py-24">
-          <h2 className="text-3xl sm:text-4xl font-semibold">Pricing</h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-3">
-            {["Starter", "Pro", "Enterprise"].map((tier, i) => (
-              <div key={tier} className="rounded-2xl border border-white/10 p-6">
-                <div className="text-xl font-semibold">{tier}</div>
-                <div className="mt-2 text-3xl font-bold">${(i + 1) * 9}</div>
-                <ul className="mt-4 space-y-2 text-sm text-slate-300">
-                  <li>Feature A</li>
-                  <li>Feature B</li>
-                  <li>Feature C</li>
-                </ul>
-                <button className="mt-6 w-full rounded-xl bg-indigo-500 px-4 py-2 font-medium hover:bg-indigo-600">
-                  Choose {tier}
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-   
 
       <footer className="border-t border-white/10 py-10 text-center text-sm text-text-secondary">
         © {new Date().getFullYear()} Vortiqx. All rights reserved.

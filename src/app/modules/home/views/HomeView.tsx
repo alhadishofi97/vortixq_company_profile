@@ -1,41 +1,52 @@
 "use client";
 import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import { getHome } from "../controllers/HomeController";
-import { Container, Typography, Button } from "@mui/material";
+import { Container, Typography, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
 import FadeContent from "@/app/util/reactBits/FadeContent";
+import TextType from "../components/title";
 
 
 const Home = () => {
   const [judul,setJudul] = useState<ReactNode>(null);
   const [subjudul,setSubJudul] = useState<ReactNode>(null);
   const [narasi,setNarasi] = useState<ReactNode>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   const getData = useCallback(async () => {
+    const data = await getHome();
+    console.log('data', data);
+    type NarasiChild = { text: string; bold?: boolean };
+    type HomeRecord = {
+      Judul?: string;
+      subjudul?: string;
+      narasi?: Array<{ children?: Array<NarasiChild> }>;
+    };
+    type HomeResponse = { data?: Array<HomeRecord> };
     try {
-      setIsLoading(true);
-      const data = await getHome();
-      console.log('data', data);
-      type NarasiChild = { text: string; bold?: boolean };
-      type HomeRecord = {
-        Judul?: string;
-        subjudul?: string;
-        narasi?: Array<{ children?: Array<NarasiChild> }>;
-      };
-      type HomeResponse = { data?: Array<HomeRecord> };
+      const judulText = (data as HomeResponse).data?.[0]?.Judul || "Welcome to Vortiqx";
       setJudul(
-        <h1 className="font-display pt-16 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-tight">
-          {(data as HomeResponse).data?.[0]?.Judul}
-        </h1>
+        <div className="font-display text-center mb-10 mt-12">
+          <BlurText
+            text={judulText}
+            delay={200}
+            animateBy="words"
+            direction="top"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight justify-center"
+          />
+        </div>
       );
 
+      const subjudulText = (data as HomeResponse).data?.[0]?.subjudul || "Innovative AI & Cybersecurity Solutions";
       const elmSub = (
-        <FadeContent blur={true} duration={1000} easing="ease-out" initialOpacity={0}>
-          <h4 className="mt-6 font-display text-xl sm:text-2xl md:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-brand-highlight1 to-brand-secondary leading-relaxed">
-            {(data as HomeResponse).data?.[0]?.subjudul}
-          </h4>
-        </FadeContent>
+        <div className="mt-6 font-display text-center">
+          <BlurText
+            text={subjudulText}
+            delay={200}
+            animateBy="words"
+            direction="bottom"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed bg-clip-text text-transparent bg-gradient-to-r from-brand-highlight1 to-brand-secondary"
+          />
+        </div>
       );
       setSubJudul(elmSub);
 
@@ -49,20 +60,20 @@ const Home = () => {
         }
       });
 
-      setNarasi(
-        <Typography variant="body1" className="" sx={{ color: "grey.300", mb: 4 }}>
-          <div className="mt-8 max-w-3xl text-left">
-            <BlurText
-              text={elmNarasi.join(" ")}
-              delay={0}
-              animateBy="words"
-              direction="top"
-              onAnimationComplete={handleAnimationComplete}
-              className="font-sans text-3xl text-text-secondary leading-relaxed"
-            />
-          </div>
-        </Typography>
-      );
+        setNarasi(
+          <Typography variant="body1" className="" sx={{ color: "grey.300", mb: 6, justifyContent: "center" }}>
+            <div className="max-w-4xl mx-auto text-center">
+              <BlurText
+                text={elmNarasi.join(" ")}
+                delay={20}
+                animateBy="letters"
+                direction="bottom"
+                onAnimationComplete={handleAnimationComplete}
+                className="font-sans text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-text-secondary leading-relaxed text-center justify-center"
+              />
+            </div>
+          </Typography>
+        );
     } catch (error) {
       console.error(error);
     }
@@ -77,39 +88,95 @@ const Home = () => {
   };
 
 
-  if (isLoading) {
-    return (
-      <div className="min-h-[92vh] flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-highlight1 mx-auto mb-4"></div>
-          <p className="text-text-secondary">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-[92vh] flex items-center justify-center">
-      <Container maxWidth={false} sx={{ textAlign: "left", width: "90%", mx: "auto" }}>
-        {judul}
-        {subjudul}
-        {narasi}
+       <div className="top-0" style={{ width: '100%', height: '600px', position: 'relative' }}>
+      {/* Background Lightning */}
+      {/* <Lightning
+        hue={220}
+        xOffset={0}
+        speed={1}
+        intensity={1}
+        size={1}
+        style={{ width: "100%", height: "100%" }}
+      /> */}
+
+        {/* <Prism
+        animationType="rotate"
+        timeScale={0.2}
+        scale={4.3}
+        height={6.6}
+        baseWidth={7}
+        noise={0}
+        glow={1}
+        hueShift={0.46}
+        colorFrequency={1}
+      /> */}
+
+      {/* <Silk
+        speed={5}
+        scale={1}
+        color="#818669"
+        noiseIntensity={1.5}
+        rotation={0}
+      /> */}
         
-        <div className="mt-8 flex items-center gap-3">
+        <Box
+          sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 1, // lebih tinggi dari Lightning
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+          textAlign: "center",
+          padding: "20px",
+        }}>
+      {/* Hero Section */}
+      <Container maxWidth={false} sx={{ textAlign: "center", width: "90%", mx: "auto", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "100vh", py: 4 }}>
+
+    {judul}
+    {subjudul}
+    {narasi}
+
+  
+    
+        <div className="mt-12 flex items-center justify-center gap-3">
           <Button
             variant="outlined"
             color="inherit"
             size="large"
             onClick={()=>{
-                const section = document.getElementById("about");
-                section?.scrollIntoView({ behavior: "smooth" });
+              const section = document.getElementById("about");
+              section?.scrollIntoView({ behavior: "smooth" });
             }}
             sx={{ borderRadius: 12, px: 4, borderColor: 'rgba(193,107,50,0.5)', color: '#C16B32', '&:hover': { borderColor: 'rgba(165,148,137,0.6)', color: '#A59489' } }}
           >
-            Learn More
+            <BlurText
+              text="Learn More"
+              delay={200}
+              animateBy="letters"
+              direction="top"
+              className="font-semibold"
+            />
           </Button>
         </div>
+        {/* <div className="mt-16 w-full flex justify-center">
+          <button
+            onClick={() => {
+              const section = document.getElementById("contact");
+              section?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="rounded-2xl px-6 py-3 bg-gradient-to-r from-brand-highlight1 to-brand-secondary text-white font-semibold shadow-lg hover:opacity-95 transition-all"
+          >
+            Hubungi kami hari ini
+          </button>
+        </div> */}
       </Container>
+      </Box>
     </div>
   );
 };

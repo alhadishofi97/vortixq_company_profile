@@ -48,7 +48,8 @@ const ServiceCards: React.FC = () => {
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute top-10 left-1/3 w-72 h-72 -translate-x-1/2 rounded-full bg-brand-cyan/15 blur-3xl animate-pulse-glow" />
       </div>
-      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight">Our Services</h2>
+      <h2 className="font-display text-base xs:text-lg sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-tight"
+      >Our Services</h2>
 
       <div className="mt-6 inline-flex rounded-xl border border-white/10 p-1 bg-slate-900/50">
         <button
@@ -85,17 +86,25 @@ const ServiceCards: React.FC = () => {
                   <BlurText
                     key={`ai-${aiAnimationKey}`}
                     text="AI Integration & Process Transformation"
-                    delay={100}
+                    delay={20}
                     animateBy="letters"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 text-left leading-tight"
+                    className="font-display text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-3xl font-bold text-white mb-4 text-left leading-tight break-words"
                   />
                 )}
               </div>
-              <p className="text-sm sm:text-base text-text-secondary leading-relaxed font-sans">
-                Comprehensive AI integration services to transform your business processes and drive innovation.
-              </p>
+              {aiVisible && (
+              <BlurText
+              key={`ai-${aiAnimationKey}`}
+              text="Comprehensive AI integration services to transform your business processes and drive innovation."
+              delay={20}
+              animateBy="letters"
+              direction="top"
+              onAnimationComplete={handleAnimationComplete}
+              className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-text-secondary leading-relaxed"
+              />
+              )}
             </div>
 
             {/* AI Integration CardSwap Container */}
@@ -192,18 +201,25 @@ const ServiceCards: React.FC = () => {
                   <BlurText
                     key={`cyber-${cyberAnimationKey}`}
                     text="Cybersecurity Consulting Services"
-                    delay={100}
+                    delay={20}
                     animateBy="letters"
                     direction="top"
                     onAnimationComplete={handleAnimationComplete}
-                    className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 text-left leading-tight"
+                    className="font-display text-base xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 text-left leading-tight break-words"
                   />
                 )}
               </div>
-              <p className="text-sm sm:text-base text-text-secondary leading-relaxed font-sans">
-                Comprehensive cybersecurity services to protect your organization and ensure compliance with industry standards.
-              </p>
-              
+              {cyberVisible && (
+              <BlurText
+              key={`cyber-${cyberAnimationKey}`}
+              text="Comprehensive cybersecurity services to protect your organization and ensure compliance with industry standards."
+              delay={20}
+              animateBy="letters"
+              direction="top"
+              onAnimationComplete={handleAnimationComplete}
+              className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-text-secondary leading-relaxed"
+              />
+              )}
               {/* Collapse/Expand Controls */}
               <div className="flex items-center gap-4 mt-4">
                 {/* <button
