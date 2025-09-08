@@ -5,12 +5,20 @@ import { Container, Typography, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
 import FadeContent from "@/app/util/reactBits/FadeContent";
 import TextType from "../components/title";
+import AnimatedSection from "../../../components/animations/AnimatedSection";
+import FloatingElements from "../../../components/animations/FloatingElements";
+import GlowingOrb from "../../../components/animations/GlowingOrb";
+import ParticleField from "../../../components/animations/ParticleField";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 
 const Home = () => {
   const [judul,setJudul] = useState<ReactNode>(null);
   const [subjudul,setSubJudul] = useState<ReactNode>(null);
   const [narasi,setNarasi] = useState<ReactNode>(null);
+  
+  const { scrollYProgress } = useScroll();
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   const getData = useCallback(async () => {
     const data = await getHome();

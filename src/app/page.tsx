@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 import About from "./modules/about/views/AboutView";
-import Home from "./modules/home/views/HomeView";
-import ServiceCards from "./modules/services/views/ServiceCards";
+import Home from "./modules/home/views/EnhancedHomeView";
+import ServiceCards from "./modules/services/views/EnhancedServiceCards";
 import ProductsView from "./modules/products/views/ProductsView";
 
 import Navbar from "./components/Navbar";

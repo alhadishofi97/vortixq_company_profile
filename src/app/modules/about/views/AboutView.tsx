@@ -1,8 +1,15 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import AnimatedSection from "../../../components/animations/AnimatedSection";
+import FloatingElements from "../../../components/animations/FloatingElements";
+import GlowingOrb from "../../../components/animations/GlowingOrb";
 
 const About = () => {
+  const { scrollYProgress } = useScroll();
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const videoScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.1, 1]);
+
   const features = [
     "Data Driven",
     "Future Ready", 
@@ -11,22 +18,40 @@ const About = () => {
   ];
 
   return (
-    <div className="relative mx-auto w-[90%] py-24 bg-transparent">
-      {/* Animated Background Blobs */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-10 right-1/4 w-64 h-64 rounded-full bg-brand-highlight1/10 blur-3xl animate-float-slow" />
-        <div className="absolute -bottom-10 left-1/4 w-80 h-80 rounded-full bg-brand-secondary/10 blur-3xl animate-float-slow" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 right-10 w-48 h-48 rounded-full bg-brand-highlight1/5 blur-2xl animate-pulse-glow" />
-      </div>
+    <div className="relative mx-auto w-[90%] py-24 bg-transparent overflow-hidden">
+      {/* Enhanced Animated Background */}
+      <motion.div 
+        style={{ y: backgroundY }}
+        className="absolute inset-0 -z-20"
+      >
+        <FloatingElements count={20} />
+      </motion.div>
+      
+      {/* Glowing Orbs */}
+      <GlowingOrb 
+        size={350} 
+        color="brand-highlight1" 
+        intensity={0.15}
+        className="top-0 right-1/4 -z-10"
+      />
+      <GlowingOrb 
+        size={400} 
+        color="brand-secondary" 
+        intensity={0.1}
+        className="bottom-0 left-1/4 -z-10"
+      />
+      <GlowingOrb 
+        size={250} 
+        color="brand-highlight1" 
+        intensity={0.08}
+        className="top-1/2 right-10 -z-10"
+      />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
-        {/* Left Section - Text Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-left"
-        >
+      <AnimatedSection animation="fadeInUp" className="relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
+          {/* Left Section - Text Content */}
+          <AnimatedSection animation="fadeInLeft" delay={0.2}>
+            <div className="text-left">
           {/* About Us Button */}
           {/* <div className="mb-6">
             <button className="px-4 py-2 border border-white/20 text-white text-sm rounded-lg hover:bg-white/10 transition-all duration-200">
@@ -45,8 +70,9 @@ const About = () => {
             We are dedicated to empowering organizations through strategic AI integration and comprehensive cybersecurity solutions. Our expertise bridges the gap between cutting-edge technology and practical business applications. With a team of industry experts, we deliver tailored consulting services that drive innovation, enhance security posture, and create sustainable competitive advantages for our clients.
           </p>
           {/* Features List */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {features.map((feature, index) => {
+          <AnimatedSection animation="stagger" staggerChildren={0.1} delay={0.4}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {features.map((feature, index) => {
               let icon;
               switch (feature) {
                 case "Data Driven":
@@ -88,53 +114,78 @@ const About = () => {
                   );
               }
 
-              return (
+  return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                  variants={{
+                    initial: { opacity: 0, y: 20 },
+                    animate: { opacity: 1, y: 0 }
+                  }}
                   className="flex items-center gap-3"
+                  whileHover={{ 
+                    scale: 1.05,
+                    transition: { duration: 0.2 }
+                  }}
                 >
-                  <div className="w-8 h-8 bg-gradient-to-br from-brand-highlight1 to-brand-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                  <motion.div 
+                    className="w-8 h-8 bg-gradient-to-br from-brand-highlight1 to-brand-secondary rounded-full flex items-center justify-center flex-shrink-0"
+                    whileHover={{ 
+                      rotate: 360,
+                      transition: { duration: 0.5 }
+                    }}
+                  >
                     <div className="text-white">
                       {icon}
-                    </div>
-                  </div>
+        </div>
+                  </motion.div>
                   <span className="text-white text-sm xs:text-base font-medium">{feature}</span>
                 </motion.div>
               );
             })}
+            </div>
+          </AnimatedSection>
           </div>
-        </motion.div>
+          </AnimatedSection>
 
-        {/* Right Section - Video Background with Glassmorphism Overlay */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center lg:justify-end"
-        >
-          <div className="relative w-full h-full rounded-3xl overflow-hidden">
-            {/* Background Video */}
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-              width={200}
-              height={200}
-              preload="auto"
-              onLoadStart={() => console.log('Video load started')}
-              onLoadedData={() => console.log('Video data loaded')}
-              onError={(e) => console.log('Video error:', e)}
-            >
-              <source src="/videos/brain.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </motion.div>
-      </div>
+          {/* Right Section - Enhanced Video Background */}
+          <AnimatedSection animation="fadeInRight" delay={0.4}>
+            <div className="flex justify-center lg:justify-end">
+              <motion.div 
+                className="relative w-full h-full rounded-3xl overflow-hidden"
+                style={{ scale: videoScale }}
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { duration: 0.3 }
+                }}
+              >
+                {/* Background Video */}
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                  width={200}
+                  height={200}
+                  preload="auto"
+                  onLoadStart={() => console.log('Video load started')}
+                  onLoadedData={() => console.log('Video data loaded')}
+                  onError={(e) => console.log('Video error:', e)}
+                >
+                  <source src="/videos/brain.mp4" type="video/mp4" />
+                </video>
+                
+                {/* Interactive Overlay */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-brand-highlight1/10 to-brand-secondary/10 opacity-0"
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </AnimatedSection>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ServiceCards from "./views/ServiceCards";
+import ServiceCards from "./views/EnhancedServiceCards";
 import GlassMorphismBackground from "@/Components/GlassMorphismBackground/GlassMorphismBackground";
 
 export default function ServicesPage() {

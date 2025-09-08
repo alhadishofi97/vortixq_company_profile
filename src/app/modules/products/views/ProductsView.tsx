@@ -1,19 +1,41 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import AnimatedSection from "../../../components/animations/AnimatedSection";
+import FloatingElements from "../../../components/animations/FloatingElements";
+import GlowingOrb from "../../../components/animations/GlowingOrb";
 
 const ProductsView: React.FC = () => {
   const router = useRouter();
+  const { scrollYProgress } = useScroll();
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const imageRotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
 
   return (
-    <div className="relative mx-auto w-[90%] py-24 bg-transparent">
-      {/* Animated background blobs */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full bg-brand-highlight1/10 blur-3xl animate-pulse-glow" />
-        <div className="absolute -bottom-20 -right-24 w-80 h-80 rounded-full bg-brand-secondary/10 blur-3xl animate-pulse-glow" />
-      </div>
+    <div className="relative mx-auto w-[90%] py-24 bg-transparent overflow-hidden">
+      {/* Enhanced Animated Background */}
+      <motion.div 
+        style={{ y: backgroundY }}
+        className="absolute inset-0 -z-20"
+      >
+        <FloatingElements count={15} />
+      </motion.div>
+      
+      {/* Glowing Orbs */}
+      <GlowingOrb 
+        size={350} 
+        color="brand-highlight1" 
+        intensity={0.12}
+        className="top-0 -left-16 -z-10"
+      />
+      <GlowingOrb 
+        size={400} 
+        color="brand-secondary" 
+        intensity={0.1}
+        className="bottom-0 -right-24 -z-10"
+      />
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -40,51 +62,71 @@ const ProductsView: React.FC = () => {
         </div>
 
         {/* AIRIS Product Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-16"
-        >
-          <div className="bg-gradient-to-r from-brand-highlight1/5 to-brand-secondary/5 rounded-3xl p-8 border border-white/10 backdrop-blur-sm">
+        <AnimatedSection animation="fadeInUp" delay={0.2}>
+          <div className="bg-gradient-to-r from-brand-highlight1/5 to-brand-secondary/5 rounded-3xl p-8 border border-white/10 backdrop-blur-sm mb-16">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               {/* Product Image */}
-              <div className="flex justify-start">
-                <div className="relative w-64 h-64 lg:w-80 lg:h-80">
-                  <Image
-                    src="/airis.png"
-                    alt="AIRIS Platform"
-                    fill
-                    className="object-contain rounded-2xl"
-                    priority
-                  />
+              <AnimatedSection animation="fadeInLeft" delay={0.4}>
+                <div className="flex justify-start">
+                  <motion.div 
+                    className="relative w-64 h-64 lg:w-80 lg:h-80"
+                    style={{ rotateY: imageRotate }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      rotateY: 15,
+                      transition: { duration: 0.3 }
+                    }}
+                  >
+                    <Image
+                      src="/airis.png"
+                      alt="AIRIS Platform"
+                      fill
+                      className="object-contain rounded-2xl"
+                      priority
+                    />
+                    {/* Interactive glow effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-br from-brand-highlight1/20 to-brand-secondary/20 rounded-2xl opacity-0"
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.div>
                 </div>
-              </div>
+              </AnimatedSection>
               
               {/* Product Description */}
-              <div className="text-left">
-                <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
-                  AIRIS Platform
-                </h3>
-                <p className="text-xs xs:text-sm sm:text-base md:text-lg text-text-secondary leading-relaxed mb-6 text-justify">
-                  A revolutionary AI-native cybersecurity and compliance platform, AIRIS provides real-time protection, compliance automation, and intelligent risk assessment for organizations of all sizes. An integrated solution that is proactive and continuously adapts to evolving threats.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-start">
-                  <button 
-                    onClick={() => router.push('/products/airis')}
-                    className="px-6 py-3 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer"
-                    // sx={{ borderRadius: 12, px: 4, borderColor: 'rgba(193,107,50,0.5)', color: '#C16B32', '&:hover': { borderColor: 'rgba(165,148,137,0.6)', color: '#A59489' } }}
-                  >
-                    Learn More
-                  </button>
-                  {/* <button className="px-6 py-3 border border-white/20 text-white font-semibold rounded-xl hover:bg-white/10 transition-all duration-200">
-                    Request Demo
-                  </button> */}
+              <AnimatedSection animation="fadeInRight" delay={0.6}>
+                <div className="text-left">
+                  <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+                    AIRIS Platform
+                  </h3>
+                  <p className="text-xs xs:text-sm sm:text-base md:text-lg text-text-secondary leading-relaxed mb-6 text-justify">
+                    A revolutionary AI-native cybersecurity and compliance platform, AIRIS provides real-time protection, compliance automation, and intelligent risk assessment for organizations of all sizes. An integrated solution that is proactive and continuously adapts to evolving threats.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-start">
+                    <motion.button 
+                      onClick={() => router.push('/products/airis')}
+                      className="px-6 py-3 border border-white/20 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg cursor-pointer relative overflow-hidden group"
+                      whileHover={{ 
+                        scale: 1.05,
+                        boxShadow: "0 10px 30px rgba(255, 255, 255, 0.1)"
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span className="relative z-10">Learn More</span>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-brand-highlight1/20 to-brand-secondary/20"
+                        initial={{ x: "100%" }}
+                        whileHover={{ x: "0%" }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.button>
+                  </div>
                 </div>
-              </div>
+              </AnimatedSection>
             </div>
           </div>
-        </motion.div>
+        </AnimatedSection>
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
