@@ -1,14 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import CardSwap from "../../../util/reactBits/CardSwap";
 import BlurText from "@/app/util/reactBits/BlurText";
-import ExpandableServiceCard from "./ExpandableServiceCard";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
 import FloatingElements from "../../../components/animations/FloatingElements";
 import GlowingOrb from "../../../components/animations/GlowingOrb";
-import AnimatedButton from "../../../components/animations/AnimatedButton";
 import ServiceTab from "../../../components/animations/ServiceTab";
-import AutoServiceCarousel from "../../../components/animations/AutoServiceCarousel";
+import SwipeServiceCarousel from "../../../components/animations/SwipeServiceCarousel";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const EnhancedServiceCards: React.FC = () => {
@@ -192,7 +189,7 @@ const EnhancedServiceCards: React.FC = () => {
   }, [activeTab]);
 
   return (
-    <div className="relative mx-auto w-[90%] py-24 overflow-hidden">
+    <div className="relative mx-auto w-[90%] pt-32 pb-16 overflow-hidden">
       {/* Enhanced Animated Background */}
       <motion.div 
         style={{ y: backgroundY }}
@@ -216,19 +213,19 @@ const EnhancedServiceCards: React.FC = () => {
       />
       
       <AnimatedSection animation="fadeInUp" className="relative z-10">
-        <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-tight text-white">
+        <h2 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-tight text-white">
           Our Services
         </h2>
       </AnimatedSection>
 
       <AnimatedSection animation="fadeInUp" delay={0.2} className="relative z-10">
-        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-4xl mx-auto">
           <ServiceTab
             label="AI Integration & Process Transformation"
             isActive={activeTab === "ai"}
             onClick={() => setActiveTab("ai")}
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
               </svg>
             }
@@ -238,7 +235,7 @@ const EnhancedServiceCards: React.FC = () => {
             isActive={activeTab === "cyber"}
             onClick={() => setActiveTab("cyber")}
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path fillRule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
               </svg>
             }
@@ -247,9 +244,9 @@ const EnhancedServiceCards: React.FC = () => {
       </AnimatedSection>
 
       <AnimatedSection animation="fadeInUp" delay={0.4} className="relative z-10">
-        <div className="relative mt-8 rounded-3xl border border-white/10 p-6 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
+        <div className="relative mt-6 rounded-3xl border border-white/10 p-4 sm:p-6 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
           {activeTab === "ai" ? (
-            <div className="space-y-8">
+            <div className="space-y-6">
               <AnimatedSection animation="fadeInUp" delay={0.6}>
                 <div className="text-center">
                   <div
@@ -261,7 +258,7 @@ const EnhancedServiceCards: React.FC = () => {
                         key={`ai-${aiAnimationKey}`}
                         text="AI Integration & Process Transformation"
                         delay={20}
-                        animateBy="letters"
+                        animateBy="words"
                         direction="top"
                         onAnimationComplete={handleAnimationComplete}
                         className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight"
@@ -273,7 +270,7 @@ const EnhancedServiceCards: React.FC = () => {
                       key={`ai-${aiAnimationKey}`}
                       text="Comprehensive AI integration services to transform your business processes and drive innovation."
                       delay={20}
-                      animateBy="letters"
+                      animateBy="words"
                       direction="top"
                       onAnimationComplete={handleAnimationComplete}
                       className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl mx-auto"
@@ -283,7 +280,7 @@ const EnhancedServiceCards: React.FC = () => {
               </AnimatedSection>
               
               <AnimatedSection animation="fadeInUp" delay={0.8}>
-                <AutoServiceCarousel 
+                <SwipeServiceCarousel 
                   services={aiServices} 
                   autoSlideInterval={5000}
                   pauseOnHover={true}
@@ -291,7 +288,7 @@ const EnhancedServiceCards: React.FC = () => {
               </AnimatedSection>
             </div>
           ) : (
-            <div className="space-y-8">
+            <div className="space-y-6">
               <AnimatedSection animation="fadeInUp" delay={0.6}>
                 <div className="text-center">
                   <div 
@@ -303,7 +300,7 @@ const EnhancedServiceCards: React.FC = () => {
                         key={`cyber-${cyberAnimationKey}`}
                         text="Cybersecurity Consulting Services"
                         delay={20}
-                        animateBy="letters"
+                        animateBy="words"
                         direction="top"
                         onAnimationComplete={handleAnimationComplete}
                         className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight"
@@ -315,7 +312,7 @@ const EnhancedServiceCards: React.FC = () => {
                       key={`cyber-${cyberAnimationKey}`}
                       text="Comprehensive cybersecurity services to protect your organization and ensure compliance with industry standards."
                       delay={20}
-                      animateBy="letters"
+                      animateBy="words"
                       direction="top"
                       onAnimationComplete={handleAnimationComplete}
                       className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl mx-auto"
@@ -325,7 +322,7 @@ const EnhancedServiceCards: React.FC = () => {
               </AnimatedSection>
               
               <AnimatedSection animation="fadeInUp" delay={0.8}>
-                <AutoServiceCarousel 
+                <SwipeServiceCarousel 
                   services={cyberServices} 
                   autoSlideInterval={5000}
                   pauseOnHover={true}
@@ -337,7 +334,7 @@ const EnhancedServiceCards: React.FC = () => {
       </AnimatedSection>
       
       {/* CTA Section with Animated Button */}
-      <AnimatedSection animation="fadeInUp" delay={0.8} className="relative z-10 mt-12">
+      <AnimatedSection animation="fadeInUp" delay={0.8} className="relative z-10 mt-8">
         <div className="text-center">
           {/* <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Transform Your Business?

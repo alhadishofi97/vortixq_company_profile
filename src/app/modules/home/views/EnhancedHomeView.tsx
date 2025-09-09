@@ -1,13 +1,10 @@
 "use client";
 import React, { useCallback, useEffect, useState, ReactNode, useRef } from "react";
 import { getHome } from "../controllers/HomeController";
-import { Container, Typography, Box, Button } from "@mui/material";
+import { Container, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
-import FadeContent from "@/app/util/reactBits/FadeContent";
-import TextType from "../components/title";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
 import FloatingElements from "../../../components/animations/FloatingElements";
-import GlowingOrb from "../../../components/animations/GlowingOrb";
 import ParticleField from "../../../components/animations/ParticleField";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -16,7 +13,6 @@ const EnhancedHome = () => {
   const [subjudul,setSubJudul] = useState<ReactNode>(null);
   const [narasi,setNarasi] = useState<ReactNode>(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   
   const { scrollYProgress } = useScroll();
@@ -129,44 +125,75 @@ const EnhancedHome = () => {
     getData();
   }, [getData]);
 
-  // Force video to play after component mounts
+  // Optimized video loading and play
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (videoRef.current) {
-        console.log('🎬 Attempting to play video...');
-        videoRef.current.play().catch((error) => {
-          console.error('🎬 Video play failed:', error);
-        });
-      }
-    }, 1000);
+    const video = videoRef.current;
+    if (!video) return;
 
-    return () => clearTimeout(timer);
+    // Set video quality and performance optimizations
+    video.defaultPlaybackRate = 1.0;
+    video.playbackRate = 1.0;
+    video.volume = 0; // Ensure muted
+    
+    // Intersection Observer for lazy loading
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && video.paused) {
+            video.play().catch((error) => {
+              console.error('🎬 Video play failed:', error);
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(video);
+
+    // Cleanup
+    return () => {
+      observer.disconnect();
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    };
   }, []);
 
-  // Additional video play attempt on user interaction
+  // User interaction handler for autoplay policies
   useEffect(() => {
     const handleUserInteraction = () => {
       if (videoRef.current && videoRef.current.paused) {
-        console.log('🎬 User interaction detected, attempting to play video...');
         videoRef.current.play().catch((error) => {
           console.error('🎬 Video play failed on user interaction:', error);
         });
       }
     };
 
-    document.addEventListener('click', handleUserInteraction);
-    document.addEventListener('touchstart', handleUserInteraction);
+    // Throttled event listeners
+    let timeoutId: NodeJS.Timeout;
+    const throttledHandler = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleUserInteraction, 100);
+    };
+
+    document.addEventListener('click', throttledHandler, { passive: true });
+    document.addEventListener('touchstart', throttledHandler, { passive: true });
+    document.addEventListener('scroll', throttledHandler, { passive: true });
 
     return () => {
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
+      clearTimeout(timeoutId);
+      document.removeEventListener('click', throttledHandler);
+      document.removeEventListener('touchstart', throttledHandler);
+      document.removeEventListener('scroll', throttledHandler);
     };
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden pt-20">
       {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }}>
+      <div className="absolute inset-0 w-full h-full video-container" style={{ zIndex: 0 }}>
         {/* Fallback Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800" style={{ zIndex: -700 }} />
         
@@ -176,8 +203,9 @@ const EnhancedHome = () => {
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover video-fade-in"
+          preload="metadata"
+          poster="/videos/bg-poster.jpg"
           style={{ 
             zIndex: 0,
             position: 'absolute',
@@ -186,46 +214,46 @@ const EnhancedHome = () => {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            opacity: 1,
-            transition: 'opacity 0.5s ease-in-out',
+            opacity: videoLoaded ? 1 : 0,
+            transition: 'opacity 0.8s ease-in-out',
             backgroundColor: 'transparent',
             display: 'block',
             visibility: 'visible',
             pointerEvents: 'none',
             transform: 'translateZ(0)',
-            willChange: 'transform',
+            willChange: videoLoaded ? 'auto' : 'transform',
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             WebkitTransform: 'translateZ(0)',
             WebkitPerspective: '1000px',
             perspective: '1000px',
-            WebkitFontSmoothing: 'antialiased'
+            WebkitFontSmoothing: 'antialiased',
+            imageRendering: 'crisp-edges'
           }}
           onLoadStart={() => {
-            console.log('🎬 Video load started');
             setVideoLoaded(false);
           }}
           onCanPlay={() => {
-            console.log('🎬 Video can play');
             setVideoLoaded(true);
           }}
           onLoadedData={() => {
-            console.log('🎬 Video data loaded');
             setVideoLoaded(true);
           }}
           onError={(e) => {
             console.error('🎬 Video error:', e);
-            console.error('🎬 Video error details:', e.currentTarget.error);
-            setVideoError(true);
-          }}
-          onLoad={() => {
-            console.log('🎬 Video load event');
           }}
           onPlay={() => {
-            console.log('🎬 Video started playing');
+            setVideoLoaded(true);
+          }}
+          onWaiting={() => {
+            setVideoLoaded(false);
+          }}
+          onStalled={() => {
+            setVideoLoaded(false);
           }}
         >
-          <source src="/videos/bg.mp4" type="video/mp4" />
+          <source src="/videos/bg1.mp4" type="video/mp4" />
+          {/* <source src="/videos/bg.webm" type="video/webm" /> */}
           Your browser does not support the video tag.
         </video>
         

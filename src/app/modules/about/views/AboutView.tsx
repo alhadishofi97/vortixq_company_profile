@@ -18,7 +18,7 @@ const About = () => {
   ];
 
   return (
-    <div className="relative mx-auto w-[90%] py-24 bg-transparent overflow-hidden">
+    <div className="relative mx-auto w-[90%] pt-32 pb-24 bg-transparent overflow-hidden">
       {/* Enhanced Animated Background */}
       <motion.div 
         style={{ y: backgroundY }}

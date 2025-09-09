@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ExpandableServiceCardProps {
@@ -18,18 +18,54 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
   className = "",
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [cardHeight, setCardHeight] = useState('auto');
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateCardHeight = () => {
+      if (cardRef.current) {
+        const allCards = document.querySelectorAll('[data-service-card]');
+        let maxHeight = 0;
+        
+        allCards.forEach(card => {
+          const cardElement = card as HTMLElement;
+          // Temporarily expand all cards to measure their full height
+          const originalHeight = cardElement.style.height;
+          cardElement.style.height = 'auto';
+          const height = cardElement.offsetHeight;
+          cardElement.style.height = originalHeight;
+          
+          if (height > maxHeight) {
+            maxHeight = height;
+          }
+        });
+        
+        if (maxHeight > 0) {
+          setCardHeight(`${maxHeight}px`);
+        }
+      }
+    };
+
+    // Update height after component mounts and when expanded state changes
+    const timeoutId = setTimeout(updateCardHeight, 100);
+    
+    return () => clearTimeout(timeoutId);
+  }, [isExpanded]);
 
   return (
     <motion.div
-      className={`relative h-full w-full flex-shrink-0 bg-gradient-to-br from-slate-800/80 to-gray-900/90 p-3 sm:p-4 md:p-6 shadow-2xl backdrop-blur-sm rounded-xl ${className}`}
+      ref={cardRef}
+      data-service-card
+      className={`relative w-full bg-gradient-to-br from-slate-800/80 to-gray-900/90 p-4 sm:p-5 md:p-6 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col ${className}`}
+      style={{ height: cardHeight }}
       layout
     >
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start justify-between gap-3 flex-shrink-0">
         <div className="flex items-start gap-3 flex-1 min-w-0">
           <div className="rounded-full bg-white/10 p-2 sm:p-3 text-white flex-shrink-0">
             {icon}
           </div>
-          <h3 className="text-sm xs:text-base sm:text-lg md:text-xl font-semibold text-white break-words leading-tight flex-1">{title}</h3>
+          <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-semibold text-white break-normal hyphens-auto leading-tight flex-1">{title}</h3>
         </div>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
@@ -64,9 +100,9 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-4 space-y-4 overflow-hidden"
+            className="mt-3 space-y-3 overflow-hidden flex-1 flex flex-col"
           >
-            <p className="text-xs xs:text-sm sm:text-base text-slate-300 leading-relaxed break-words overflow-hidden">
+            <p className="text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed break-normal hyphens-auto overflow-hidden">
               {fullDescription}
             </p>
             
@@ -98,7 +134,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-4 text-xs xs:text-sm sm:text-base text-slate-300 leading-relaxed overflow-hidden break-words"
+            className="mt-3 text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed overflow-hidden break-normal hyphens-auto flex-1 flex flex-col justify-center"
           >
             {shortDescription}
           </motion.p>

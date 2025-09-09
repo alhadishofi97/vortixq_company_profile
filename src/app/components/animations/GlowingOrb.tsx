@@ -23,7 +23,7 @@ const GlowingOrb: React.FC<GlowingOrbProps> = ({
       style={{
         width: size,
         height: size,
-        background: `radial-gradient(circle, var(--${color})/${intensity}, transparent 70%)`,
+        background: `radial-gradient(circle, var(--${color})/${intensity}, transparent 100%)`,
         filter: "blur(40px)",
       }}
       animate={animate ? {

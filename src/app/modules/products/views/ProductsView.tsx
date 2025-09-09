@@ -14,7 +14,7 @@ const ProductsView: React.FC = () => {
   const imageRotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
 
   return (
-    <div className="relative mx-auto w-[90%] py-24 bg-transparent overflow-hidden">
+    <div className="relative mx-auto w-[90%] pt-32 pb-24 bg-transparent overflow-hidden">
       {/* Enhanced Animated Background */}
       <motion.div 
         style={{ y: backgroundY }}
@@ -67,9 +67,9 @@ const ProductsView: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               {/* Product Image */}
               <AnimatedSection animation="fadeInLeft" delay={0.4}>
-                <div className="flex justify-start">
+                <div className="flex justify-center lg:justify-start">
                   <motion.div 
-                    className="relative w-64 h-64 lg:w-80 lg:h-80"
+                    className="relative w-48 h-48 xs:w-56 xs:h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 2xl:w-[28rem] 2xl:h-[28rem]"
                     style={{ rotateY: imageRotate }}
                     whileHover={{ 
                       scale: 1.05,
@@ -83,6 +83,7 @@ const ProductsView: React.FC = () => {
                       fill
                       className="object-contain rounded-2xl"
                       priority
+                      sizes="(max-width: 475px) 192px, (max-width: 640px) 224px, (max-width: 768px) 256px, (max-width: 1024px) 288px, (max-width: 1280px) 320px, (max-width: 1536px) 384px, 448px"
                     />
                     {/* Interactive glow effect */}
                     <motion.div

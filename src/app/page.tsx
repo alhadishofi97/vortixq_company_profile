@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useMemo, useState } from "react";
-import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 import About from "./modules/about/views/AboutView";
@@ -9,6 +8,7 @@ import ServiceCards from "./modules/services/views/EnhancedServiceCards";
 import ProductsView from "./modules/products/views/ProductsView";
 
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import ContactView from "./modules/contact/views/ContactView";
 import GlassMorphismBackground from "../Components/GlassMorphismBackground/GlassMorphismBackground";
 
@@ -106,7 +106,7 @@ export default function SmoothScrollNavbarDemo() {
   }, []);
 
   return (
-    <div className="min-h-screen text-slate-100 font-sans">
+    <div className="min-h-screen text-slate-100 font-sans relative">
       {/* Glass Morphism Background */}
       <GlassMorphismBackground />
       <Navbar sections={SECTIONS} activeId={activeId} onNavClick={handleNavClick} />
@@ -119,7 +119,7 @@ export default function SmoothScrollNavbarDemo() {
       </section>
 
       {/* Services di-home dihapus, gunakan halaman /services */}
-      <section id="services" className="scroll-mt-10 border-t border-white/5">
+      <section id="services" className="scroll-mt-32 border-t border-white/5">
         <ServiceCards/>
       </section>
 
@@ -131,9 +131,7 @@ export default function SmoothScrollNavbarDemo() {
           <ContactView/>
       </section>
 
-      <footer className="border-t border-white/10 py-10 text-center text-sm text-text-secondary">
-        © {new Date().getFullYear()} Vortiqx. All rights reserved.
-      </footer>
+      <Footer />
     </div>
   );
 }

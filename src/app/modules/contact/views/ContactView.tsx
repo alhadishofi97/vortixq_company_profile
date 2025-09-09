@@ -50,7 +50,7 @@ const ContactView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto w-[90%] py-24 bg-transparent">
+    <div className="mx-auto w-[90%] pt-32 pb-24 bg-transparent">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
