@@ -50,14 +50,11 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
 
   return (
     <motion.header 
-      className="navbar-fixed border-b border-white/5 backdrop-blur-md bg-black/20"
+      className="navbar-fixed bg-black/20 backdrop-blur-md"
       initial={{ y: -100, opacity: 0 }}
       animate={{ 
         y: isVisible ? 0 : -100,
-        opacity: isVisible ? 1 : 0,
-        boxShadow: isVisible 
-          ? "0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)" 
-          : "0 0 0 rgba(0, 0, 0, 0)"
+        opacity: isVisible ? 1 : 0
       }}
       transition={{ 
         duration: 0.4, 
@@ -91,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
 
         {/* Desktop Menu */}
         <motion.div 
-          className="hidden md:flex items-center gap-2 rounded-2xl bg-white/5 backdrop-blur-md p-1 border border-white/10"
+          className="hidden md:flex items-center gap-2 p-2 bg-black/30 backdrop-blur-sm rounded-full border border-white/10"
           initial={{ opacity: 0, y: -10, scale: 0.95 }}
           animate={{ 
             opacity: isVisible ? 1 : 0,
@@ -112,7 +109,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
                 onClick={() => onNavClick(s.id)}
                 className={[
                   "relative px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-sm sm:text-base md:text-lg font-medium transition-all duration-300",
-                  isActive ? "text-white" : "text-white/80 hover:text-white hover:bg-white/10"
+                  isActive ? "text-white bg-white/10" : "text-white/80 hover:text-white hover:bg-white/5"
                 ].join(" ")}
                 aria-current={isActive ? "page" : undefined}
                 whileHover={{ scale: 1.05 }}
@@ -138,7 +135,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
         {/* Mobile Hamburger */}
         <motion.button
           type="button"
-          className="md:hidden p-2 rounded-xl bg-white/5 backdrop-blur-sm text-white hover:bg-white/10 border border-white/10"
+          className="md:hidden p-2 rounded-xl bg-transparent text-white hover:bg-transparent border border-transparent"
           aria-label="Open menu"
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((v) => !v)}
@@ -164,13 +161,13 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
       {/* Mobile Dropdown */}
       {mobileOpen && (
         <motion.div 
-          className="md:hidden mx-auto w-[90%] mt-2 rounded-2xl bg-black/40 backdrop-blur-lg border border-white/20 p-2"
+          className="md:hidden mx-auto w-[90%] mt-2 rounded-2xl bg-transparent backdrop-blur-0 border-0 p-2"
           initial={{ opacity: 0, y: -20, scale: 0.95 }}
           animate={{ 
             opacity: 1, 
             y: 0, 
             scale: 1,
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)"
+            boxShadow: "0 0 0 rgba(0, 0, 0, 0)"
           }}
           exit={{ opacity: 0, y: -20, scale: 0.95 }}
           transition={{ 

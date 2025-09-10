@@ -148,13 +148,7 @@ const AirisProductPage: React.FC = () => {
                 Get started with a free consultation today.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button 
-                  onClick={() => {
-                    const section = document.getElementById("contact");
-                    section?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="px-8 py-3 border border-orange-500 text-orange-500 font-semibold rounded-xl hover:bg-orange-500 hover:text-white transition-all duration-200 shadow-lg hover:shadow-xl"
-                >
+                <button className="px-8 py-3 border border-brand-highlight2/20 text-white font-semibold rounded-xl hover:bg-brand-highlight2/10 transition-all duration-200">
                   Request Demo
                 </button>
                 {/* <button className="px-8 py-3 border border-brand-highlight2/20 text-white font-semibold rounded-xl hover:bg-brand-highlight2/10 transition-all duration-200">

@@ -49,19 +49,19 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         
         if (containerWidth < 640) { // Mobile
           newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 16, 320);
+          newCardWidth = Math.min(containerWidth - 16, 400);
         } else if (containerWidth < 768) { // Small tablet
           newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 32, 400);
+          newCardWidth = Math.min(containerWidth - 32, 450);
         } else if (containerWidth < 1024) { // Tablet
           newVisibleCards = 1;
           newCardWidth = Math.min(containerWidth - 48, 500);
         } else if (containerWidth < 1280) { // Small desktop
-          newVisibleCards = 2;
-          newCardWidth = Math.min((containerWidth - 48) / 2, 350);
+          newVisibleCards = 1;
+          newCardWidth = Math.min(containerWidth - 48, 600);
         } else { // Large desktop
-          newVisibleCards = 3;
-          newCardWidth = Math.min((containerWidth - 64) / 3, 320);
+          newVisibleCards = 2;
+          newCardWidth = Math.min((containerWidth - 64) / 2, 500);
         }
         
         setCardWidth(newCardWidth);
@@ -149,11 +149,11 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                index === currentIndex
-                  ? 'bg-orange-500 scale-125 shadow-lg shadow-orange-500/50'
-                  : 'bg-white/40 hover:bg-orange-500/60'
-              }`}
+            className={`w-3 h-3 rounded-full transition-all duration-200 ${
+              index === currentIndex
+                ? 'bg-orange-500 scale-125 shadow-lg shadow-orange-500/50'
+                : 'bg-orange-500/40 hover:bg-orange-500/60'
+            }`}
             />
           ))}
         </div>
@@ -199,7 +199,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       {/* Carousel Container */}
       <div 
         ref={carouselRef}
-        className="relative overflow-visible rounded-2xl mx-auto"
+        className="relative rounded-2xl mx-auto"
         style={{ width: '100%' }}
       >
         <motion.div

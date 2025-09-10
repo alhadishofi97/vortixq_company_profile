@@ -6,7 +6,7 @@ import FloatingElements from "../../../components/animations/FloatingElements";
 import GlowingOrb from "../../../components/animations/GlowingOrb";
 import ServiceTab from "../../../components/animations/ServiceTab";
 import SwipeServiceCarousel from "../../../components/animations/SwipeServiceCarousel";
-import Waves from "../../../components/animations/Waves";
+import Waves from "../../../../Components/Waves";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const EnhancedServiceCards: React.FC = () => {
@@ -190,23 +190,7 @@ const EnhancedServiceCards: React.FC = () => {
   }, [activeTab]);
 
   return (
-    <div className="relative mx-auto w-[90%] pt-32 pb-16 bg-transparent overflow-visible">
-      {/* Wave Lines Animation (Waves) */}
-      <Waves
-        lineColor="#ffffff22"
-        backgroundColor="transparent"
-        waveSpeedX={0.02}
-        waveSpeedY={0.01}
-        waveAmpX={40}
-        waveAmpY={20}
-        friction={0.9}
-        tension={0.01}
-        maxCursorMove={120}
-        xGap={12}
-        yGap={36}
-        className="-z-5"
-      />
-      
+    <div className="relative w-full pt-32 pb-16 overflow-hidden">
       {/* Enhanced Animated Background */}
       <motion.div 
         style={{ y: backgroundY }}
@@ -214,6 +198,24 @@ const EnhancedServiceCards: React.FC = () => {
       >
         <FloatingElements count={25} />
       </motion.div>
+      
+      {/* Waves Background */}
+      <Waves
+        lineColor="rgba(255,255,255,0.6)"
+        backgroundColor="transparent"
+        waveSpeedX={0.01}
+        waveSpeedY={0.005}
+        waveAmpX={28}
+        waveAmpY={12}
+        friction={0.93}
+        tension={0.006}
+        maxCursorMove={90}
+        xGap={12}
+        yGap={36}
+        lineWidth={0.5}
+        opacity={0.12}
+        className="absolute inset-0 -z-10"
+      />
       
       {/* Glowing Orbs */}
       <GlowingOrb 
@@ -229,39 +231,40 @@ const EnhancedServiceCards: React.FC = () => {
         className="bottom-20 right-1/4 -z-10"
       />
       
-      <AnimatedSection animation="fadeInUp" className="relative z-10">
-        <h2 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-tight text-white">
-          Our Services
-        </h2>
-      </AnimatedSection>
+      <div className="mx-auto w-[90%]">
+        <AnimatedSection animation="fadeInUp" className="relative z-10">
+          <h2 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-tight text-white">
+            Our Services
+          </h2>
+        </AnimatedSection>
 
-      <AnimatedSection animation="fadeInUp" delay={0.2} className="relative z-10">
-        <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-4xl mx-auto">
-          <ServiceTab
-            label="AI Integration & Process Transformation"
-            isActive={activeTab === "ai"}
-            onClick={() => setActiveTab("ai")}
-            icon={
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-              </svg>
-            }
-          />
-          <ServiceTab
-            label="Cybersecurity"
-            isActive={activeTab === "cyber"}
-            onClick={() => setActiveTab("cyber")}
-            icon={
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path fillRule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
-              </svg>
-            }
-          />
-        </div>
-      </AnimatedSection>
+        <AnimatedSection animation="fadeInUp" delay={0.2} className="relative z-10">
+          <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-4xl mx-auto">
+            <ServiceTab
+              label="AI Integration & Process Transformation"
+              isActive={activeTab === "ai"}
+              onClick={() => setActiveTab("ai")}
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              }
+            />
+            <ServiceTab
+              label="Cybersecurity"
+              isActive={activeTab === "cyber"}
+              onClick={() => setActiveTab("cyber")}
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path fillRule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
+                </svg>
+              }
+            />
+          </div>
+        </AnimatedSection>
 
-      <AnimatedSection animation="fadeInUp" delay={0.4} className="relative z-10">
-        <div className="relative mt-6 rounded-3xl border border-white/10 p-4 sm:p-6 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm">
+        <AnimatedSection animation="fadeInUp" delay={0.4} className="relative z-10">
+        <div className="relative mt-6 rounded-3xl border border-white/10 p-4 sm:p-6">
           {activeTab === "ai" ? (
             <div className="space-y-6">
               <AnimatedSection animation="fadeInUp" delay={0.6}>
@@ -353,27 +356,62 @@ const EnhancedServiceCards: React.FC = () => {
       {/* CTA Section with Animated Button */}
       <AnimatedSection animation="fadeInUp" delay={0.8} className="relative z-10 mt-8">
         <div className="text-center">
-          <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
+          {/* <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Transform Your Business?
           </h3>
           <p className="text-sm xs:text-base sm:text-lg text-white/80 mb-8 max-w-2xl mx-auto">
             Let's discuss how our AI integration and cybersecurity services can help your organization achieve its goals.
-          </p>
-          <div className="flex justify-center items-center">
-            <motion.button
+          </p> */}
+          {/* <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <AnimatedButton
+              variant="primary"
+              size="lg"
               onClick={() => {
                 const section = document.getElementById("contact");
                 section?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="px-8 py-3 border border-orange-500 text-orange-500 font-semibold rounded-xl hover:bg-orange-500 hover:text-white transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              showIndicator={true}
             >
-              <span>Get Started Today</span>
-            </motion.button>
-          </div>
+              Get Started Today
+            </AnimatedButton>
+            <AnimatedButton
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                const section = document.getElementById("about");
+                section?.scrollIntoView({ behavior: "smooth" });
+              }}
+              showIndicator={true}
+            >
+              Learn More
+            </AnimatedButton>
+          </div> */}
         </div>
       </AnimatedSection>
+
+        {/* Ready to Transform Section */}
+        <AnimatedSection animation="fadeInUp" delay={0.8} className="relative z-10 mt-20">
+        <div className="text-center">
+          <h2 className="font-display text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            Ready to Transform Your Business?
+          </h2>
+          <p className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Let's discuss how our AI integration and cybersecurity services can help your organization achieve its goals.
+          </p>
+          <motion.button
+            onClick={() => {
+              const section = document.getElementById("contact");
+              section?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="px-8 py-4 border border-orange-500 text-orange-500 font-semibold rounded-xl hover:bg-orange-500 hover:text-white transition-all duration-200 shadow-lg hover:shadow-xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Get Started Today
+          </motion.button>
+        </div>
+      </AnimatedSection>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import Waves from '../../../components/animations/Waves';
+import Waves from '../../../../Components/Waves';
 
 const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -51,29 +51,31 @@ const ContactView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto w-[90%] pt-32 pb-24 bg-transparent relative overflow-hidden">
-      {/* Wave Lines Animation (Waves) */}
+    <div className="relative w-full pt-32 pb-24 bg-transparent">
+      {/* Waves Background */}
       <Waves
-        lineColor="#ffffff22"
+        lineColor="rgba(255,255,255,0.6)"
         backgroundColor="transparent"
-        waveSpeedX={0.02}
-        waveSpeedY={0.01}
-        waveAmpX={40}
-        waveAmpY={20}
-        friction={0.9}
-        tension={0.01}
-        maxCursorMove={120}
+        waveSpeedX={0.01}
+        waveSpeedY={0.005}
+        waveAmpX={28}
+        waveAmpY={12}
+        friction={0.93}
+        tension={0.006}
+        maxCursorMove={90}
         xGap={12}
         yGap={36}
-        className="-z-5"
+        lineWidth={0.5}
+        opacity={0.12}
+        className="absolute inset-0 -z-10"
       />
-      
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-      >
+      <div className="mx-auto w-[90%]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+        >
         {/* Contact Information Panel - Left */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -206,7 +208,7 @@ const ContactView: React.FC = () => {
             <motion.button
               whileHover={{ 
                 scale: submitting ? 1 : 1.05,
-                boxShadow: "0 10px 30px rgba(255, 107, 53, 0.3)"
+                boxShadow: "0 10px 30px rgba(255, 255, 255, 0.1)"
               }}
               whileTap={{ scale: submitting ? 1 : 0.95 }}
               disabled={submitting}
@@ -228,7 +230,8 @@ const ContactView: React.FC = () => {
             </motion.button>
           </form>
         </motion.div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 };

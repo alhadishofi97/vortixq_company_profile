@@ -4,9 +4,7 @@ import { getHome } from "../controllers/HomeController";
 import { Container, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
-import FloatingElements from "../../../components/animations/FloatingElements";
-import ParticleField from "../../../components/animations/ParticleField";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 const EnhancedHome = () => {
   const [judul,setJudul] = useState<ReactNode>(null);
@@ -15,8 +13,7 @@ const EnhancedHome = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   
-  const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  
 
   const getData = useCallback(async () => {
     const data = await getHome();
@@ -194,9 +191,6 @@ const EnhancedHome = () => {
     <div className="relative min-h-screen overflow-hidden pt-20">
       {/* Video Background */}
       <div className="absolute inset-0 w-full h-full video-container" style={{ zIndex: 0 }}>
-        {/* Fallback Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800" style={{ zIndex: -700 }} />
-        
         <video
           ref={videoRef}
           autoPlay
@@ -205,7 +199,7 @@ const EnhancedHome = () => {
           playsInline
           className="absolute inset-0 w-full h-full object-cover video-fade-in"
           preload="metadata"
-          poster="/videos/bg-poster.jpg"
+          poster="/videos/bg.mp4"
           style={{ 
             zIndex: 0,
             position: 'absolute',
@@ -216,7 +210,6 @@ const EnhancedHome = () => {
             objectFit: 'cover',
             opacity: videoLoaded ? 1 : 0,
             transition: 'opacity 0.8s ease-in-out',
-            backgroundColor: 'transparent',
             display: 'block',
             visibility: 'visible',
             pointerEvents: 'none',
@@ -228,7 +221,8 @@ const EnhancedHome = () => {
             WebkitPerspective: '1000px',
             perspective: '1000px',
             WebkitFontSmoothing: 'antialiased',
-            imageRendering: 'crisp-edges'
+            imageRendering: 'crisp-edges',
+            mixBlendMode: 'screen'
           }}
           onLoadStart={() => {
             setVideoLoaded(false);
@@ -252,26 +246,12 @@ const EnhancedHome = () => {
             setVideoLoaded(false);
           }}
         >
-          <source src="/videos/bg1.mp4" type="video/mp4" />
+          <source src="/videos/bg.mp4" type="video/mp4" />
           {/* <source src="/videos/bg.webm" type="video/webm" /> */}
           Your browser does not support the video tag.
         </video>
-        
-        {/* Video Overlay */}
-        <div className="absolute inset-0 bg-black/40" style={{ zIndex: 1 }} />
-        
-        {/* Debug Info (removed for production) */}
       </div>
 
-      {/* Animated Background Elements */}
-      <motion.div 
-        style={{ y: backgroundY, zIndex: 2 }}
-        className="absolute inset-0"
-      >
-        <ParticleField count={80} color="rgba(124, 58, 237, 0.3)" />
-        <FloatingElements count={12} />
-      </motion.div>
-      
       {/* Glowing Orbs */}
       {/* <GlowingOrb 
         size={400} 

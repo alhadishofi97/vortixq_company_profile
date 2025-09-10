@@ -10,7 +10,7 @@ import ProductsView from "./modules/products/views/ProductsView";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ContactView from "./modules/contact/views/ContactView";
-import GlassMorphismBackground from "../Components/GlassMorphismBackground/GlassMorphismBackground";
+// import GlassMorphismBackground from "../Components/GlassMorphismBackground/GlassMorphismBackground";
 
 
 interface Section {
@@ -108,7 +108,7 @@ export default function SmoothScrollNavbarDemo() {
   return (
     <div className="min-h-screen text-slate-100 font-sans relative">
       {/* Glass Morphism Background */}
-      <GlassMorphismBackground />
+      {/* <GlassMorphismBackground /> */}     
       <Navbar sections={SECTIONS} activeId={activeId} onNavClick={handleNavClick} />
 
       <section id="home" className="scroll-mt-30 min-h-[92vh] border-t border-white/5">

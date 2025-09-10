@@ -27,6 +27,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(400);
   const [visibleCards, setVisibleCards] = useState(1);
@@ -44,19 +45,19 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
         
         if (containerWidth < 640) { // Mobile
           newVisibleCards = 1;
-          newCardWidth = containerWidth - 16;
+          newCardWidth = Math.min(containerWidth - 16, 400);
         } else if (containerWidth < 768) { // Small tablet
           newVisibleCards = 1;
-          newCardWidth = containerWidth - 32;
+          newCardWidth = Math.min(containerWidth - 32, 450);
         } else if (containerWidth < 1024) { // Tablet
           newVisibleCards = 1;
-          newCardWidth = containerWidth - 48;
+          newCardWidth = Math.min(containerWidth - 48, 500);
         } else if (containerWidth < 1280) { // Small desktop
-          newVisibleCards = 2;
-          newCardWidth = (containerWidth - 48) / 2;
+          newVisibleCards = 1;
+          newCardWidth = Math.min(containerWidth - 48, 600);
         } else { // Large desktop
-          newVisibleCards = 3;
-          newCardWidth = (containerWidth - 64) / 3;
+          newVisibleCards = 2;
+          newCardWidth = Math.min((containerWidth - 64) / 2, 500);
         }
         
         setCardWidth(newCardWidth);
@@ -142,24 +143,26 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
     }
   }, [pauseOnHover]);
 
+  const handleServiceSelect = useCallback((serviceId: string) => {
+    setSelectedServiceId(selectedServiceId === serviceId ? null : serviceId);
+  }, [selectedServiceId]);
+
   // Memoize the dots to prevent unnecessary re-renders
   const dotsIndicator = useMemo(() => {
     const maxSlides = Math.max(1, services.length - visibleCards + 1);
     return (
-      <div className="flex justify-center mt-4">
-        <div className="flex items-center gap-2">
-          {Array.from({ length: maxSlides }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                index === currentIndex
-                  ? 'bg-orange-500 scale-125 shadow-lg shadow-orange-500/50'
-                  : 'bg-white/40 hover:bg-orange-500/60'
-              }`}
-            />
-          ))}
-        </div>
+      <div className="flex justify-center mt-4 space-x-2">
+        {Array.from({ length: maxSlides }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-200 ${
+              index === currentIndex
+                ? 'bg-orange-500 scale-125 shadow-lg shadow-orange-500/50'
+                : 'bg-orange-500/40 hover:bg-orange-500/60'
+            }`}
+          />
+        ))}
       </div>
     );
   }, [services.length, currentIndex, goToSlide, visibleCards]);
@@ -203,7 +206,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
       {/* Carousel Container */}
       <div 
         ref={carouselRef}
-        className="relative overflow-hidden rounded-2xl mx-auto"
+        className="relative rounded-2xl mx-auto"
         style={{ 
           width: '100%'
         }}
@@ -252,6 +255,8 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
                 shortDescription={service.shortDescription}
                 fullDescription={service.fullDescription}
                 className={service.className}
+                isSelected={selectedServiceId === service.id}
+                onSelect={() => handleServiceSelect(service.id)}
               />
             </div>
           ))}
@@ -265,7 +270,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
       <div className="flex justify-center mt-2">
         <div className="flex items-center space-x-2 text-white/60 text-sm">
           <motion.div
-            className="w-2 h-2 bg-orange-500 rounded-full"
+            className="w-2 h-2 bg-white rounded-full"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.5, 1, 0.5]

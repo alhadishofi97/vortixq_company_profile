@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <motion.div
-      className={`relative w-full h-[28rem] bg-black/80 p-6 shadow-2xl rounded-xl border-2 border-white/20 overflow-hidden group flex flex-col ${className}`}
+      className={`relative w-full min-h-[28rem] bg-black/80 p-6 shadow-2xl rounded-xl border-2 border-white/20 overflow-hidden group flex flex-col ${className}`}
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
