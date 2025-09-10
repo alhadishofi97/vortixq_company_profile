@@ -366,7 +366,7 @@ const EnhancedHome = () => {
                         borderColor: '#FF6B35', 
                         color: '#FF6B35',
                         backgroundColor: 'rgba(255, 107, 53, 0.05)',
-                        boxShadow: '0 4px 15px rgba(255, 107, 53, 0.2)',
+                        boxShadow: '0 10px 30px rgba(255, 107, 53, 0.2)',
                         transform: 'translateY(-1px)'
                       },
                       '&::before': {

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Waves from '../../../components/animations/Waves';
 
 const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -50,7 +51,23 @@ const ContactView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto w-[90%] pt-32 pb-24 bg-transparent">
+    <div className="mx-auto w-[90%] pt-32 pb-24 bg-transparent relative overflow-hidden">
+      {/* Wave Lines Animation (Waves) */}
+      <Waves
+        lineColor="#ffffff22"
+        backgroundColor="transparent"
+        waveSpeedX={0.02}
+        waveSpeedY={0.01}
+        waveAmpX={40}
+        waveAmpY={20}
+        friction={0.9}
+        tension={0.01}
+        maxCursorMove={120}
+        xGap={12}
+        yGap={36}
+        className="-z-5"
+      />
+      
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -187,18 +204,27 @@ const ContactView: React.FC = () => {
 
             {/* Submit Button */}
             <motion.button
-              whileHover={{ scale: submitting ? 1 : 1.02 }}
-              whileTap={{ scale: submitting ? 1 : 0.98 }}
+              whileHover={{ 
+                scale: submitting ? 1 : 1.05,
+                boxShadow: "0 10px 30px rgba(255, 107, 53, 0.3)"
+              }}
+              whileTap={{ scale: submitting ? 1 : 0.95 }}
               disabled={submitting}
               type="submit"
-              className="w-full bg-gradient-to-r from-brand-highlight1 to-brand-secondary text-white font-semibold py-3 px-6 rounded-xl hover:opacity-95 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl disabled:opacity-50"
+              className="w-full px-6 py-3 border border-orange-500 text-orange-500 font-semibold rounded-xl transition-all duration-200 shadow-lg cursor-pointer relative overflow-hidden group flex items-center justify-center gap-2 disabled:opacity-50 hover:bg-orange-500 hover:text-white"
             >
-              <span>{submitting ? 'Sending...' : 'Send Message'}</span>
+              <span className="relative z-10">{submitting ? 'Sending...' : 'Send Message'}</span>
               {!submitting && (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               )}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-orange-400/20"
+                initial={{ x: "100%" }}
+                whileHover={{ x: "0%" }}
+                transition={{ duration: 0.3 }}
+              />
             </motion.button>
           </form>
         </motion.div>

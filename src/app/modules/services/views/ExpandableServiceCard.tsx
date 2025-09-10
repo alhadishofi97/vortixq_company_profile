@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ExpandableServiceCardProps {
@@ -18,47 +18,14 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
   className = "",
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [cardHeight, setCardHeight] = useState('auto');
   const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const updateCardHeight = () => {
-      if (cardRef.current) {
-        const allCards = document.querySelectorAll('[data-service-card]');
-        let maxHeight = 0;
-        
-        allCards.forEach(card => {
-          const cardElement = card as HTMLElement;
-          // Temporarily expand all cards to measure their full height
-          const originalHeight = cardElement.style.height;
-          cardElement.style.height = 'auto';
-          const height = cardElement.offsetHeight;
-          cardElement.style.height = originalHeight;
-          
-          if (height > maxHeight) {
-            maxHeight = height;
-          }
-        });
-        
-        if (maxHeight > 0) {
-          setCardHeight(`${maxHeight}px`);
-        }
-      }
-    };
-
-    // Update height after component mounts and when expanded state changes
-    const timeoutId = setTimeout(updateCardHeight, 100);
-    
-    return () => clearTimeout(timeoutId);
-  }, [isExpanded]);
 
   return (
     <motion.div
       ref={cardRef}
-      data-service-card
-      className={`relative w-full bg-gradient-to-br from-slate-800/80 to-gray-900/90 p-4 sm:p-5 md:p-6 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col ${className}`}
-      style={{ height: cardHeight }}
+      className={`relative w-full bg-gradient-to-br from-slate-800/80 to-gray-900/90 p-4 sm:p-5 md:p-6 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col min-h-fit ${className}`}
       layout
+      transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className="flex items-start justify-between gap-3 flex-shrink-0">
         <div className="flex items-start gap-3 flex-1 min-w-0">
@@ -96,44 +63,50 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
         {isExpanded ? (
           <motion.div
             key="full-content"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, height: 0, y: -10 }}
+            animate={{ 
+              opacity: 1, 
+              height: "auto", 
+              y: 0 
+            }}
+            exit={{ 
+              opacity: 0, 
+              height: 0, 
+              y: -10 
+            }}
+            transition={{ 
+              duration: 0.4, 
+              ease: [0.25, 0.46, 0.45, 0.94] 
+            }}
             className="mt-3 space-y-3 overflow-hidden flex-1 flex flex-col"
           >
-            <p className="text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed break-normal hyphens-auto overflow-hidden">
+            <motion.p 
+              className="text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed break-normal hyphens-auto overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+            >
               {fullDescription}
-            </p>
-            
-            {/* Additional detailed content */}
-            {/* <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="text-sm font-semibold text-white mb-2">Key Benefits:</h4>
-              <ul className="text-xs text-slate-300 space-y-1">
-                <li>• Enhanced security posture</li>
-                <li>• Risk mitigation strategies</li>
-                <li>• Compliance adherence</li>
-                <li>• Business continuity</li>
-              </ul>
-            </div> */}
-            
-            {/* <div className="bg-white/5 rounded-lg p-4">
-              <h4 className="text-sm font-semibold text-white mb-2">Deliverables:</h4>
-              <ul className="text-xs text-slate-300 space-y-1">
-                <li>• Comprehensive assessment report</li>
-                <li>• Action plan with timelines</li>
-                <li>• Implementation roadmap</li>
-                <li>• Ongoing support framework</li>
-              </ul>
-            </div> */}
+            </motion.p>
           </motion.div>
         ) : (
           <motion.p
             key="short-desc"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, height: 0, y: 10 }}
+            animate={{ 
+              opacity: 1, 
+              height: "auto", 
+              y: 0 
+            }}
+            exit={{ 
+              opacity: 0, 
+              height: 0, 
+              y: 10 
+            }}
+            transition={{ 
+              duration: 0.4, 
+              ease: [0.25, 0.46, 0.45, 0.94] 
+            }}
             className="mt-3 text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed overflow-hidden break-normal hyphens-auto flex-1 flex flex-col justify-center"
           >
             {shortDescription}

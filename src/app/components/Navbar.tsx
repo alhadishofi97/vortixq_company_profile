@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -14,17 +14,72 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show navbar when scrolling up or at the top
+      if (currentScrollY < lastScrollY || currentScrollY < 100) {
+        setIsVisible(true);
+      } 
+      // Hide navbar when scrolling down (but not at the very top)
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    // Throttle scroll events for better performance
+    let timeoutId: NodeJS.Timeout;
+    const throttledHandleScroll = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleScroll, 10);
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('scroll', throttledHandleScroll);
+    };
+  }, [lastScrollY]);
 
   return (
     <motion.header 
       className="navbar-fixed border-b border-white/5 backdrop-blur-md bg-black/20"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ 
+        y: isVisible ? 0 : -100,
+        opacity: isVisible ? 1 : 0,
+        boxShadow: isVisible 
+          ? "0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)" 
+          : "0 0 0 rgba(0, 0, 0, 0)"
+      }}
+      transition={{ 
+        duration: 0.4, 
+        ease: [0.25, 0.46, 0.45, 0.94], // Custom cubic-bezier for smooth animation
+        type: "tween"
+      }}
     >
       <nav className="mx-auto flex w-[90%] items-center justify-between gap-3 py-4" aria-label="Primary">
         {/* Logo */}
-        <div className="flex items-center gap-3">
+        <motion.div 
+          className="flex items-center gap-3"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ 
+            opacity: isVisible ? 1 : 0,
+            x: isVisible ? 0 : -20
+          }}
+          transition={{ 
+            duration: 0.5, 
+            delay: isVisible ? 0.1 : 0,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+        >
           <Image
             src="/Black_Full_Name-removebg-preview-cropped.svg"
             width={160}
@@ -32,10 +87,23 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
             alt="logo"
             className="w-28 sm:w-36 md:w-44 h-auto"
           />
-        </div>
+        </motion.div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-2 rounded-2xl bg-white/5 backdrop-blur-md p-1 border border-white/10">
+        <motion.div 
+          className="hidden md:flex items-center gap-2 rounded-2xl bg-white/5 backdrop-blur-md p-1 border border-white/10"
+          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          animate={{ 
+            opacity: isVisible ? 1 : 0,
+            y: isVisible ? 0 : -10,
+            scale: isVisible ? 1 : 0.95
+          }}
+          transition={{ 
+            duration: 0.5, 
+            delay: isVisible ? 0.2 : 0,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+        >
           {sections.map((s) => {
             const isActive = activeId === s.id;
             return (
@@ -65,7 +133,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
               </motion.button>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Mobile Hamburger */}
         <motion.button
@@ -74,9 +142,18 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           aria-label="Open menu"
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((v) => !v)}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ 
+            opacity: isVisible ? 1 : 0,
+            x: isVisible ? 0 : 20
+          }}
+          transition={{ 
+            duration: 0.5, 
+            delay: isVisible ? 0.3 : 0,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -89,9 +166,17 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
         <motion.div 
           className="md:hidden mx-auto w-[90%] mt-2 rounded-2xl bg-black/40 backdrop-blur-lg border border-white/20 p-2"
           initial={{ opacity: 0, y: -20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          animate={{ 
+            opacity: 1, 
+            y: 0, 
+            scale: 1,
+            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)"
+          }}
           exit={{ opacity: 0, y: -20, scale: 0.95 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
+          transition={{ 
+            duration: 0.3, 
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
         >
           {sections.map((s) => {
             const isActive = activeId === s.id;

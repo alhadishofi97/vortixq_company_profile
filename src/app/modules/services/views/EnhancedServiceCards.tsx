@@ -6,6 +6,7 @@ import FloatingElements from "../../../components/animations/FloatingElements";
 import GlowingOrb from "../../../components/animations/GlowingOrb";
 import ServiceTab from "../../../components/animations/ServiceTab";
 import SwipeServiceCarousel from "../../../components/animations/SwipeServiceCarousel";
+import Waves from "../../../components/animations/Waves";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const EnhancedServiceCards: React.FC = () => {
@@ -189,7 +190,23 @@ const EnhancedServiceCards: React.FC = () => {
   }, [activeTab]);
 
   return (
-    <div className="relative mx-auto w-[90%] pt-32 pb-16 overflow-hidden">
+    <div className="relative mx-auto w-[90%] pt-32 pb-16 bg-transparent overflow-visible">
+      {/* Wave Lines Animation (Waves) */}
+      <Waves
+        lineColor="#ffffff22"
+        backgroundColor="transparent"
+        waveSpeedX={0.02}
+        waveSpeedY={0.01}
+        waveAmpX={40}
+        waveAmpY={20}
+        friction={0.9}
+        tension={0.01}
+        maxCursorMove={120}
+        xGap={12}
+        yGap={36}
+        className="-z-5"
+      />
+      
       {/* Enhanced Animated Background */}
       <motion.div 
         style={{ y: backgroundY }}
@@ -336,36 +353,25 @@ const EnhancedServiceCards: React.FC = () => {
       {/* CTA Section with Animated Button */}
       <AnimatedSection animation="fadeInUp" delay={0.8} className="relative z-10 mt-8">
         <div className="text-center">
-          {/* <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
+          <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Transform Your Business?
           </h3>
           <p className="text-sm xs:text-base sm:text-lg text-white/80 mb-8 max-w-2xl mx-auto">
             Let's discuss how our AI integration and cybersecurity services can help your organization achieve its goals.
-          </p> */}
-          {/* <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <AnimatedButton
-              variant="primary"
-              size="lg"
+          </p>
+          <div className="flex justify-center items-center">
+            <motion.button
               onClick={() => {
                 const section = document.getElementById("contact");
                 section?.scrollIntoView({ behavior: "smooth" });
               }}
-              showIndicator={true}
+              className="px-8 py-3 border border-orange-500 text-orange-500 font-semibold rounded-xl hover:bg-orange-500 hover:text-white transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Get Started Today
-            </AnimatedButton>
-            <AnimatedButton
-              variant="outline"
-              size="lg"
-              onClick={() => {
-                const section = document.getElementById("about");
-                section?.scrollIntoView({ behavior: "smooth" });
-              }}
-              showIndicator={true}
-            >
-              Learn More
-            </AnimatedButton>
-          </div> */}
+              <span>Get Started Today</span>
+            </motion.button>
+          </div>
         </div>
       </AnimatedSection>
     </div>

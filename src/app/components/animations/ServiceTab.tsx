@@ -27,14 +27,14 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       style={{
-        boxShadow: isActive ? "0 0 20px rgba(59, 130, 246, 0.3)" : "none"
+        boxShadow: isActive ? "0 0 20px rgba(255, 107, 53, 0.3)" : "none"
       }}
     >
       {/* Background */}
       <motion.div
         className={`absolute inset-0 rounded-2xl ${
           isActive 
-            ? "bg-gradient-to-r from-brand-highlight1/40 to-brand-secondary/40 border-2 border-brand-highlight1/60 shadow-lg shadow-brand-highlight1/30" 
+            ? "bg-gradient-to-r from-orange-500/40 to-orange-400/40 border-2 border-orange-500/60 shadow-lg shadow-orange-500/30" 
             : "bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20"
         }`}
         layoutId="serviceTab"
@@ -44,7 +44,7 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
       {/* Glow Effect */}
       {isActive && (
         <motion.div
-          className="absolute inset-0 rounded-2xl bg-gradient-to-r from-brand-highlight1/20 to-brand-secondary/20"
+          className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/20 to-orange-400/20"
           animate={{
             opacity: [0.6, 1, 0.6],
             scale: [1, 1.02, 1]
@@ -60,7 +60,7 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
       {/* Ripple Effect */}
       {isActive && (
         <motion.div
-          className="absolute inset-0 rounded-2xl border-2 border-brand-highlight1/40"
+          className="absolute inset-0 rounded-2xl border-2 border-orange-500/40"
           animate={{
             scale: [1, 1.05, 1],
             opacity: [0.5, 0.8, 0.5]
@@ -93,14 +93,14 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
         {/* Active Indicator */}
         {isActive && (
           <motion.div
-            className="w-2 h-2 sm:w-3 sm:h-3 bg-brand-highlight1 rounded-full shadow-lg shadow-brand-highlight1/50 flex-shrink-0"
+            className="w-2 h-2 sm:w-3 sm:h-3 bg-orange-500 rounded-full shadow-lg shadow-orange-500/50 flex-shrink-0"
             animate={{
               scale: [1, 1.4, 1],
               opacity: [0.8, 1, 0.8],
               boxShadow: [
-                "0 0 0 0 rgba(59, 130, 246, 0.5)",
-                "0 0 0 6px rgba(59, 130, 246, 0)",
-                "0 0 0 0 rgba(59, 130, 246, 0.5)"
+                "0 0 0 0 rgba(255, 107, 53, 0.5)",
+                "0 0 0 6px rgba(255, 107, 53, 0)",
+                "0 0 0 0 rgba(255, 107, 53, 0.5)"
               ]
             }}
             transition={{

@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
 import FloatingElements from "../../../components/animations/FloatingElements";
 import GlowingOrb from "../../../components/animations/GlowingOrb";
+import Waves from "../../../components/animations/Waves";
 
 const About = () => {
   const { scrollYProgress } = useScroll();
@@ -19,6 +20,22 @@ const About = () => {
 
   return (
     <div className="relative mx-auto w-[90%] pt-32 pb-24 bg-transparent overflow-hidden">
+      {/* Wave Lines Animation (Waves) */}
+      <Waves
+        lineColor="#ffffff22"
+        backgroundColor="transparent"
+        waveSpeedX={0.02}
+        waveSpeedY={0.01}
+        waveAmpX={40}
+        waveAmpY={20}
+        friction={0.9}
+        tension={0.01}
+        maxCursorMove={120}
+        xGap={12}
+        yGap={36}
+        className="-z-5"
+      />
+      
       {/* Enhanced Animated Background */}
       <motion.div 
         style={{ y: backgroundY }}

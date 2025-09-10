@@ -161,7 +161,41 @@ const Home = () => {
               const section = document.getElementById("about");
               section?.scrollIntoView({ behavior: "smooth" });
             }}
-            sx={{ borderRadius: 12, px: 4, borderColor: 'rgba(193,107,50,0.5)', color: '#C16B32', '&:hover': { borderColor: 'rgba(165,148,137,0.6)', color: '#A59489' } }}
+            sx={{ 
+              borderRadius: 12, 
+              px: 4, 
+              py: 1.5,
+              borderColor: '#FF6B35', 
+              color: '#FF6B35',
+              backgroundColor: 'transparent',
+              position: "relative",
+              overflow: "hidden",
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              fontSize: '0.875rem',
+              letterSpacing: '0.5px',
+              '&:hover': { 
+                borderColor: '#FF6B35', 
+                color: '#FF6B35',
+                backgroundColor: 'rgba(255, 107, 53, 0.05)',
+                boxShadow: '0 10px 30px rgba(255, 107, 53, 0.2)',
+                transform: 'translateY(-1px)'
+              },
+              '&::before': {
+                content: '""',
+                position: "absolute",
+                top: 0,
+                left: "-100%",
+                width: "100%",
+                height: "100%",
+                background: "linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent)",
+                transition: "left 0.5s",
+              },
+              '&:hover::before': {
+                left: "100%",
+              },
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}
           >
             <BlurText
               text="Learn More"

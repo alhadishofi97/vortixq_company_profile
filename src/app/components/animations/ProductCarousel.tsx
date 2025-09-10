@@ -1,26 +1,31 @@
 "use client";
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, PanInfo } from "framer-motion";
-import ExpandableServiceCard from "../../modules/services/views/ExpandableServiceCard";
+import ProductCard from "./ProductCard";
 
-interface ServiceItem {
+interface ProductItem {
   id: string;
-  icon: React.ReactNode;
   title: string;
-  shortDescription: string;
-  fullDescription: string;
-  className: string;
+  description: string;
+  dashboardImage: string;
+  icon: React.ReactNode;
+  details: {
+    features: string[];
+    capabilities: string[];
+  };
 }
 
-interface SwipeServiceCarouselProps {
-  services: ServiceItem[];
+interface ProductCarouselProps {
+  products: ProductItem[];
+  onProductClick: (product: ProductItem) => void;
   className?: string;
   autoSlideInterval?: number;
   pauseOnHover?: boolean;
 }
 
-const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({ 
-  services, 
+const ProductCarousel: React.FC<ProductCarouselProps> = ({ 
+  products, 
+  onProductClick,
   className = "",
   autoSlideInterval = 5000,
   pauseOnHover = true
@@ -44,19 +49,19 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
         
         if (containerWidth < 640) { // Mobile
           newVisibleCards = 1;
-          newCardWidth = containerWidth - 16;
+          newCardWidth = Math.min(containerWidth - 16, 320);
         } else if (containerWidth < 768) { // Small tablet
           newVisibleCards = 1;
-          newCardWidth = containerWidth - 32;
+          newCardWidth = Math.min(containerWidth - 32, 400);
         } else if (containerWidth < 1024) { // Tablet
           newVisibleCards = 1;
-          newCardWidth = containerWidth - 48;
+          newCardWidth = Math.min(containerWidth - 48, 500);
         } else if (containerWidth < 1280) { // Small desktop
           newVisibleCards = 2;
-          newCardWidth = (containerWidth - 48) / 2;
+          newCardWidth = Math.min((containerWidth - 48) / 2, 350);
         } else { // Large desktop
           newVisibleCards = 3;
-          newCardWidth = (containerWidth - 64) / 3;
+          newCardWidth = Math.min((containerWidth - 64) / 3, 320);
         }
         
         setCardWidth(newCardWidth);
@@ -71,10 +76,10 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
 
   // Auto slide functionality
   useEffect(() => {
-    if (!isPaused && !isDragging && services.length > visibleCards) {
+    if (!isPaused && !isDragging && products.length > visibleCards) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => {
-          const maxIndex = Math.max(0, services.length - visibleCards);
+          const maxIndex = Math.max(0, products.length - visibleCards);
           return prev >= maxIndex ? 0 : prev + 1;
         });
       }, autoSlideInterval);
@@ -85,50 +90,42 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPaused, services.length, autoSlideInterval, isDragging, visibleCards]);
+  }, [isPaused, products.length, autoSlideInterval, isDragging, visibleCards]);
 
   const resetAutoSlide = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    if (!isPaused && !isDragging && services.length > visibleCards) {
+    if (!isPaused && !isDragging && products.length > visibleCards) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => {
-          const maxIndex = Math.max(0, services.length - visibleCards);
+          const maxIndex = Math.max(0, products.length - visibleCards);
           return prev >= maxIndex ? 0 : prev + 1;
         });
       }, autoSlideInterval);
     }
-  }, [isPaused, isDragging, services.length, autoSlideInterval, visibleCards]);
+  }, [isPaused, isDragging, products.length, autoSlideInterval, visibleCards]);
 
   const goToSlide = useCallback((index: number) => {
     setCurrentIndex(index);
-    // Reset auto slide timer when manually navigating
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-    if (!isPaused && !isDragging && services.length > 1) {
-      intervalRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % services.length);
-      }, autoSlideInterval);
-    }
-  }, [isPaused, isDragging, services.length, autoSlideInterval]);
+    resetAutoSlide();
+  }, [resetAutoSlide]);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => {
-      const maxIndex = Math.max(0, services.length - visibleCards);
+      const maxIndex = Math.max(0, products.length - visibleCards);
       return prev >= maxIndex ? 0 : prev + 1;
     });
     resetAutoSlide();
-  }, [services.length, visibleCards, resetAutoSlide]);
+  }, [products.length, visibleCards, resetAutoSlide]);
 
   const prevSlide = useCallback(() => {
     setCurrentIndex((prev) => {
-      const maxIndex = Math.max(0, services.length - visibleCards);
+      const maxIndex = Math.max(0, products.length - visibleCards);
       return prev <= 0 ? maxIndex : prev - 1;
     });
     resetAutoSlide();
-  }, [services.length, visibleCards, resetAutoSlide]);
+  }, [products.length, visibleCards, resetAutoSlide]);
 
   const handleMouseEnter = useCallback(() => {
     if (pauseOnHover) {
@@ -144,9 +141,9 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
 
   // Memoize the dots to prevent unnecessary re-renders
   const dotsIndicator = useMemo(() => {
-    const maxSlides = Math.max(1, services.length - visibleCards + 1);
+    const maxSlides = Math.max(1, products.length - visibleCards + 1);
     return (
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-6">
         <div className="flex items-center gap-2">
           {Array.from({ length: maxSlides }, (_, index) => (
             <button
@@ -162,7 +159,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
         </div>
       </div>
     );
-  }, [services.length, currentIndex, goToSlide, visibleCards]);
+  }, [products.length, currentIndex, goToSlide, visibleCards]);
 
   // Handle drag events
   const handleDragStart = useCallback((event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -177,14 +174,12 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
 
   const handleDragEnd = useCallback((event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const dragDistance = info.point.x - dragStart;
-    const threshold = 50; // Minimum drag distance to trigger slide change
+    const threshold = 50;
     
     if (Math.abs(dragDistance) > threshold) {
       if (dragDistance > 0) {
-        // Swiped right - go to previous slide
         prevSlide();
       } else {
-        // Swiped left - go to next slide
         nextSlide();
       }
     }
@@ -200,13 +195,12 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+
       {/* Carousel Container */}
       <div 
         ref={carouselRef}
-        className="relative overflow-hidden rounded-2xl mx-auto"
-        style={{ 
-          width: '100%'
-        }}
+        className="relative overflow-visible rounded-2xl mx-auto"
+        style={{ width: '100%' }}
       >
         <motion.div
           className="flex cursor-grab active:cursor-grabbing"
@@ -219,12 +213,12 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
             ease: "easeOut"
           }}
           style={{ 
-            width: `${services.length * cardWidth}px`,
+            width: `${products.length * cardWidth}px`,
             willChange: isDragging ? 'transform' : 'auto'
           }}
           drag="x"
           dragConstraints={{ 
-            left: -Math.max(0, services.length - visibleCards) * cardWidth, 
+            left: -Math.max(0, products.length - visibleCards) * cardWidth, 
             right: 0 
           }}
           onDragStart={handleDragStart}
@@ -234,24 +228,24 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
           dragMomentum={false}
           dragPropagation={false}
         >
-          {services.map((service, index) => (
+          {products.map((product, index) => (
             <div
-              key={service.id}
+              key={product.id}
               className="flex-shrink-0"
               style={{ 
                 width: cardWidth,
-                transform: 'translateZ(0)', // Hardware acceleration
+                transform: 'translateZ(0)',
                 backfaceVisibility: 'hidden',
-                paddingLeft: index === 0 ? '0px' : '2px',
-                paddingRight: index === services.length - 1 ? '0px' : '2px'
+                paddingLeft: index === 0 ? '0px' : '8px',
+                paddingRight: index === products.length - 1 ? '0px' : '8px'
               }}
             >
-              <ExpandableServiceCard
-                icon={service.icon}
-                title={service.title}
-                shortDescription={service.shortDescription}
-                fullDescription={service.fullDescription}
-                className={service.className}
+              <ProductCard
+                title={product.title}
+                description={product.description}
+                dashboardImage={product.dashboardImage}
+                icon={product.icon}
+                onLearnMore={() => onProductClick(product)}
               />
             </div>
           ))}
@@ -262,7 +256,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
       {dotsIndicator}
 
       {/* Swipe Indicator */}
-      <div className="flex justify-center mt-2">
+      <div className="flex justify-center mt-4">
         <div className="flex items-center space-x-2 text-white/60 text-sm">
           <motion.div
             className="w-2 h-2 bg-orange-500 rounded-full"
@@ -283,4 +277,4 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
   );
 };
 
-export default SwipeServiceCarousel;
+export default ProductCarousel;
