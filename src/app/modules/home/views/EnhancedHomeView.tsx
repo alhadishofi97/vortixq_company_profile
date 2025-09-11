@@ -47,7 +47,8 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-4xl mx-auto flex flex-wrap justify-center"
+            fontFamily="sans"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-7xl mx-auto"
           />
         </div>
       );
@@ -99,7 +100,7 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-4xl mx-auto flex flex-wrap justify-center"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-7xl mx-auto"
           />
         </div>
       );
