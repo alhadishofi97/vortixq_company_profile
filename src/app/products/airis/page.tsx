@@ -236,7 +236,7 @@ const AirisProductPage: React.FC = () => {
                     alt={product.title}
                     className="w-full h-full object-cover"
                   />
-                </div>
+            </div>
 
                 {/* Product Icon */}
                 <div className="flex items-center justify-center w-12 h-12 bg-orange-500/20 rounded-lg mb-4">
@@ -267,8 +267,6 @@ const AirisProductPage: React.FC = () => {
                 </motion.div>
               ))}
           </div>
-
-
 
           {/* Product Modal */}
           <ProductModal
