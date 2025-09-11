@@ -28,7 +28,7 @@ const ProductsView: React.FC = () => {
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Product data based on demo-airis.vortiqx.com
+  // Product data for carousel - includes AIRIS and dummy products
   const products = [
     {
       id: "airis",
@@ -54,6 +54,168 @@ const ProductsView: React.FC = () => {
           "Real-time monitoring",
           "Advanced defense systems",
           "Unified security platform"
+        ]
+      }
+    },
+    {
+      id: "cyber-shield",
+      title: "CyberShield Pro",
+      description: "Advanced endpoint protection with AI-powered threat detection and automated incident response capabilities.",
+      dashboardImage: "/airis_dsb.png",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      ),
+      details: {
+        features: [
+          "AI-powered endpoint protection",
+          "Automated incident response",
+          "Real-time threat detection",
+          "Behavioral analysis and monitoring"
+        ],
+        capabilities: [
+          "Endpoint protection",
+          "AI threat detection",
+          "Automated response",
+          "Behavioral analysis",
+          "Real-time monitoring",
+          "Incident management"
+        ]
+      }
+    },
+    {
+      id: "secure-cloud",
+      title: "SecureCloud",
+      description: "Cloud security platform providing comprehensive protection for multi-cloud environments with automated compliance.",
+      dashboardImage: "/airis_dsb.png",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+        </svg>
+      ),
+      details: {
+        features: [
+          "Multi-cloud security management",
+          "Automated compliance monitoring",
+          "Cloud workload protection",
+          "Data loss prevention"
+        ],
+        capabilities: [
+          "Multi-cloud support",
+          "Compliance automation",
+          "Workload protection",
+          "Data protection",
+          "Cloud monitoring",
+          "Security orchestration"
+        ]
+      }
+    },
+    {
+      id: "threat-hunter",
+      title: "ThreatHunter AI",
+      description: "Advanced threat hunting platform using machine learning to detect and neutralize sophisticated cyber threats.",
+      dashboardImage: "/airis_dsb.png",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+      details: {
+        features: [
+          "AI-powered threat hunting",
+          "Machine learning detection",
+          "Advanced threat analysis",
+          "Automated threat response"
+        ],
+        capabilities: [
+          "Threat hunting",
+          "ML detection",
+          "Threat analysis",
+          "Automated response",
+          "Behavioral analysis",
+          "Threat intelligence"
+        ]
+      }
+    },
+    {
+      id: "data-guard",
+      title: "DataGuard",
+      description: "Comprehensive data protection solution with encryption, access control, and data loss prevention capabilities.",
+      dashboardImage: "/airis_dsb.png",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      ),
+      details: {
+        features: [
+          "Advanced data encryption",
+          "Access control management",
+          "Data loss prevention",
+          "Compliance monitoring"
+        ],
+        capabilities: [
+          "Data encryption",
+          "Access control",
+          "DLP capabilities",
+          "Compliance monitoring",
+          "Data classification",
+          "Audit trails"
+        ]
+      }
+    },
+    {
+      id: "network-sentinel",
+      title: "NetworkSentinel",
+      description: "Network security monitoring and protection platform with real-time threat detection and automated response.",
+      dashboardImage: "/airis_dsb.png",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      ),
+      details: {
+        features: [
+          "Real-time network monitoring",
+          "Automated threat response",
+          "Network segmentation",
+          "Traffic analysis"
+        ],
+        capabilities: [
+          "Network monitoring",
+          "Threat detection",
+          "Automated response",
+          "Traffic analysis",
+          "Segmentation",
+          "Incident response"
+        ]
+      }
+    },
+    {
+      id: "identity-protect",
+      title: "IdentityProtect",
+      description: "Identity and access management solution with multi-factor authentication and privileged access management.",
+      dashboardImage: "/airis_dsb.png",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      ),
+      details: {
+        features: [
+          "Multi-factor authentication",
+          "Privileged access management",
+          "Identity governance",
+          "Single sign-on"
+        ],
+        capabilities: [
+          "MFA capabilities",
+          "PAM management",
+          "Identity governance",
+          "SSO integration",
+          "Access reviews",
+          "Compliance reporting"
         ]
       }
     },
