@@ -346,7 +346,7 @@ section {
 
 @layer base {
   * {
-    @apply border-gray-200 outline-gray-300/50;
+    
  }
   body {
     @apply bg-slate-900 text-white;
