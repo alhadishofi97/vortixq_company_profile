@@ -31,6 +31,33 @@ const ProductsView: React.FC = () => {
   // Product data based on demo-airis.vortiqx.com
   const products = [
     {
+      id: "airis",
+      title: "AIRIS",
+      description: "AI-driven, GPU-powered cybersecurity platform that unifies GRC automation with advanced threat detection and defense.",
+      dashboardImage: "/airis_dsb.png",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      ),
+      details: {
+        features: [
+          "AI-driven cybersecurity platform with GPU acceleration",
+          "Unified GRC automation and threat detection",
+          "Advanced threat defense capabilities",
+          "Real-time security monitoring and response"
+        ],
+        capabilities: [
+          "AI-powered threat detection",
+          "GRC automation",
+          "GPU-accelerated processing",
+          "Real-time monitoring",
+          "Advanced defense systems",
+          "Unified security platform"
+        ]
+      }
+    },
+    {
       id: "ai-grc",
       title: "AI GRC",
       description: "Automate governance, risk, and compliance processes with AI-powered controls and real-time policy enforcement.",
@@ -250,50 +277,23 @@ const ProductsView: React.FC = () => {
           <div className="w-full h-px bg-gradient-to-r from-brand-highlight1 to-brand-secondary animate-gradient-x text-left"></div>
         </div>
 
-        {/* AIRIS Product Section */}
-        <div className="mb-16">
-          <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 text-center">
-            AIRIS
-          </h3>
-          <p className="text-sm xs:text-base sm:text-lg text-slate-300 mb-12 text-center max-w-3xl mx-auto">
-            Discover our comprehensive suite of AI-native cybersecurity and compliance solutions designed to protect and empower your organization.
-          </p>
+        {/* Our Products Carousel Section */}
+          <div className="mb-16">
+            <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+            Our Products
+            </h3>
+            <p className="text-sm xs:text-base sm:text-lg text-slate-300 mb-12 text-center max-w-3xl mx-auto">
+              Discover our comprehensive suite of AI-native cybersecurity and compliance solutions designed to protect and empower your organization.
+            </p>
         </div>
             
         <AnimatedSection animation="fadeInUp" delay={0.2}>
           <div className="relative rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              {/* Left Column - Content */}
-              <div className="space-y-6">
-                <h4 className="font-display text-2xl xs:text-3xl sm:text-4xl font-bold text-white leading-tight">
-                  AIRIS
-                </h4>
-                <p className="text-sm xs:text-base sm:text-lg text-slate-300 leading-relaxed">
-                  AIRIS is an AI-driven, GPU-powered cybersecurity platform that unifies GRC automation with advanced threat detection and defense.
-                </p>
-                <motion.button
-                  onClick={() => {
-                    window.location.href = '/products/airis';
-                  }}
-                  className="px-8 py-4 border border-orange-500 text-orange-500 font-semibold rounded-xl hover:bg-orange-500 hover:text-white transition-all duration-200 shadow-lg hover:shadow-xl"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Learn More
-                </motion.button>
-              </div>
-              
-              {/* Right Column - Image */}
-              <div className="flex justify-center">
-                <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-                  <img
-                    src="/airis_dsb.png"
-                    alt="AIRIS Platform"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              </div>
-            </div>
+            <ProductCarousel
+              products={products}
+              onProductClick={handleProductClick}
+              className="w-full"
+            />
           </div>
         </AnimatedSection>
 
