@@ -34,7 +34,7 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="top"
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight justify-center"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-cyan-300 tracking-tight leading-tight justify-center"
           />
         </div>
       );
@@ -47,7 +47,7 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-4xl mx-auto flex flex-wrap justify-center"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-cyan-300 text-center max-w-4xl mx-auto flex flex-wrap justify-center"
           />
         </div>
       );
@@ -87,7 +87,7 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="top"
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight justify-center"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-cyan-300 tracking-tight leading-tight justify-center"
           />
         </div>
       );
@@ -99,7 +99,7 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-4xl mx-auto flex flex-wrap justify-center"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-cyan-300 text-center max-w-4xl mx-auto flex flex-wrap justify-center"
           />
         </div>
       );
@@ -189,8 +189,34 @@ const EnhancedHome = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden pt-20">
+      {/* Dark Background with Digital Effect */}
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900" style={{ zIndex: 0 }}>
+        {/* Digital Network Lines */}
+        <div className="absolute inset-0 opacity-40">
+          <div className="absolute top-20 left-10 w-32 h-px bg-cyan-400 animate-pulse"></div>
+          <div className="absolute top-32 right-20 w-24 h-px bg-blue-400 animate-pulse delay-1000"></div>
+          <div className="absolute bottom-40 left-1/4 w-40 h-px bg-cyan-300 animate-pulse delay-2000"></div>
+          <div className="absolute top-1/2 right-1/3 w-20 h-px bg-blue-300 animate-pulse delay-3000"></div>
+          <div className="absolute bottom-20 right-10 w-28 h-px bg-cyan-400 animate-pulse delay-4000"></div>
+          <div className="absolute top-60 left-1/2 w-16 h-px bg-red-400 animate-pulse delay-500"></div>
+          <div className="absolute top-80 right-1/4 w-36 h-px bg-orange-400 animate-pulse delay-1500"></div>
+          <div className="absolute bottom-60 left-1/3 w-24 h-px bg-yellow-400 animate-pulse delay-2500"></div>
+          <div className="absolute top-40 left-1/3 w-20 h-px bg-cyan-500 animate-pulse delay-3500"></div>
+          <div className="absolute bottom-80 right-1/2 w-32 h-px bg-blue-500 animate-pulse delay-4500"></div>
+        </div>
+        {/* Floating Data Points */}
+        <div className="absolute top-20 left-20 text-cyan-400 text-xs font-mono opacity-60 animate-pulse">654976</div>
+        <div className="absolute top-40 right-32 text-blue-400 text-xs font-mono opacity-60 animate-pulse delay-1000">AI_001</div>
+        <div className="absolute bottom-32 left-1/3 text-cyan-300 text-xs font-mono opacity-60 animate-pulse delay-2000">SEC_2024</div>
+        <div className="absolute top-60 left-1/4 text-red-400 text-xs font-mono opacity-50 animate-pulse delay-500">DATA_001</div>
+        <div className="absolute top-80 right-1/3 text-orange-400 text-xs font-mono opacity-50 animate-pulse delay-1500">NET_2024</div>
+        <div className="absolute bottom-60 right-1/4 text-yellow-400 text-xs font-mono opacity-50 animate-pulse delay-2500">CYBER_AI</div>
+        <div className="absolute top-100 left-1/2 text-cyan-500 text-xs font-mono opacity-50 animate-pulse delay-3500">PROTECT</div>
+        <div className="absolute bottom-80 left-1/5 text-blue-500 text-xs font-mono opacity-50 animate-pulse delay-4500">SECURE</div>
+      </div>
+      
       {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full video-container" style={{ zIndex: 0 }}>
+      <div className="absolute inset-0 w-full h-full video-container" style={{ zIndex: 1 }}>
         <video
           ref={videoRef}
           autoPlay
@@ -329,8 +355,8 @@ const EnhancedHome = () => {
                       borderRadius: 10, 
                       px: 4, 
                       py: 1.5,
-                      borderColor: '#FF6B35', 
-                      color: '#FF6B35',
+                      borderColor: '#60A5FA', 
+                      color: '#60A5FA',
                       backgroundColor: 'transparent',
                       position: "relative",
                       overflow: "hidden",
@@ -339,10 +365,10 @@ const EnhancedHome = () => {
                       fontSize: '0.875rem',
                       letterSpacing: '0.5px',
                       '&:hover': { 
-                        borderColor: '#FF6B35', 
-                        color: '#FF6B35',
-                        backgroundColor: 'rgba(255, 107, 53, 0.05)',
-                        boxShadow: '0 10px 30px rgba(255, 107, 53, 0.2)',
+                        borderColor: '#60A5FA', 
+                        color: '#60A5FA',
+                        backgroundColor: 'rgba(96, 165, 250, 0.05)',
+                        boxShadow: '0 10px 30px rgba(96, 165, 250, 0.2)',
                         transform: 'translateY(-1px)'
                       },
                       '&::before': {
