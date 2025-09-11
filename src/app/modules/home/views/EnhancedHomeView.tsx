@@ -41,13 +41,13 @@ const EnhancedHome = () => {
 
       const subjudulText = (data as HomeResponse).data?.[0]?.subjudul || "Transforming businesses through cutting-edge AI integration and robust security solutions";
       const elmSub = (
-        <div className="mt-6 font-display text-center">
+        <div className="mt-6 font-display text-center flex justify-center items-center">
           <BlurText
             text={subjudulText}
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-4xl mx-auto"
           />
         </div>
       );
@@ -93,13 +93,13 @@ const EnhancedHome = () => {
       );
       
       setSubJudul(
-        <div className="mt-6 font-display text-center">
+        <div className="mt-6 font-display text-center flex justify-center items-center">
           <BlurText
             text="Transforming businesses through cutting-edge AI integration and robust security solutions"
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-4xl mx-auto"
           />
         </div>
       );
