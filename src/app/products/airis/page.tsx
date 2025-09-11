@@ -217,55 +217,53 @@ const AirisProductPage: React.FC = () => {
             <div className="w-full h-px bg-gradient-to-r from-brand-highlight1 to-brand-secondary animate-gradient-x"></div>
           </div>
 
-          {/* Single Product Display */}
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all duration-300"
-            >
-              {/* Product Image - Full Width */}
-              <div className="relative w-full h-96 mb-8 rounded-xl overflow-hidden">
-                <img
-                  src="/red-team-module.jpg"
-                  alt="AI Red Team Simulation"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Product Content */}
-              <div className="text-center">
+          {/* Products Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {products.map((product, index) => (
+                <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
+              >
+                {/* Product Image */}
+                <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden">
+                  <img
+                    src={product.dashboardImage}
+                    alt={product.title}
+                    className="w-full h-full object-cover"
+                  />
+            </div>
+
                 {/* Product Icon */}
-                <div className="flex items-center justify-center w-16 h-16 bg-orange-500/20 rounded-xl mb-6 mx-auto">
+                <div className="flex items-center justify-center w-12 h-12 bg-orange-500/20 rounded-lg mb-4">
                   <div className="text-orange-500">
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
+                    {product.icon}
                   </div>
-                </div>
+              </div>
                 
                 {/* Product Title */}
-                <h3 className="font-display text-3xl font-bold text-white mb-4">
-                  AI Red Team Simulation
+                <h3 className="font-display text-lg font-bold text-white mb-3">
+                  {product.title}
                 </h3>
                 
                 {/* Product Description */}
-                <p className="text-lg text-slate-300 mb-8 leading-relaxed max-w-3xl mx-auto">
-                  Simulate sophisticated AI-driven attack scenarios to test and strengthen your defenses.
+                <p className="text-sm text-slate-300 mb-6 leading-relaxed">
+                  {product.description}
                 </p>
                 
                 {/* Learn More Button */}
                 <motion.button
-                  onClick={() => handleProductClick(products[1])} // AI Red Team Simulation
-                  className="px-8 py-4 border border-orange-500 text-orange-500 font-semibold rounded-xl hover:bg-orange-500 hover:text-white transition-all duration-200 text-lg"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleProductClick(product)}
+                  className="w-full px-4 py-2 border border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-200 text-sm"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   Learn more →
                 </motion.button>
-              </div>
-            </motion.div>
+                </motion.div>
+              ))}
           </div>
 
           {/* Product Modal */}

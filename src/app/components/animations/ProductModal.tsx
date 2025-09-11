@@ -77,10 +77,10 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
 
             {/* Content */}
             <div className="flex flex-col lg:flex-row max-h-[calc(90vh-120px)] overflow-hidden">
-              {/* Left Side - Dashboard Preview */}
+              {/* Left Side - Single Dashboard Image */}
               <div className="lg:w-2/3 p-6">
                 <motion.div
-                  className="relative rounded-lg overflow-hidden bg-black/50 border border-white/10 mb-6"
+                  className="relative rounded-lg overflow-hidden bg-black/50 border border-white/10"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.4 }}
@@ -88,33 +88,10 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                   <img
                     src={product.dashboardImage}
                     alt={`${product.title} Dashboard`}
-                    className="w-full h-64 lg:h-80 object-cover"
+                    className="w-full h-96 lg:h-[500px] object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 </motion.div>
-
-                {/* Additional Dashboard Cards */}
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <motion.div
-                      key={i}
-                      className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10"
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.4 + i * 0.1, duration: 0.3 }}
-                    >
-                      <div className="h-20 bg-gradient-to-br from-orange-500/20 to-yellow-500/20 rounded-lg flex items-center justify-center">
-                        <div className="w-8 h-8 bg-orange-500/30 rounded-full flex items-center justify-center">
-                          <div className="w-3 h-3 bg-orange-400 rounded-full" />
-                        </div>
-                      </div>
-                      <div className="mt-2">
-                        <div className="h-2 bg-white/20 rounded mb-1" />
-                        <div className="h-2 bg-white/10 rounded w-3/4" />
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
               </div>
 
               {/* Right Side - Features & Capabilities */}
