@@ -382,6 +382,13 @@ const ProductsView: React.FC = () => {
       capabilities: string[];
     };
   }) => {
+    // Jika produk adalah AIRIS, redirect ke halaman /products/airis
+    if (product.id === "airis") {
+      window.location.href = '/products/airis';
+      return;
+    }
+    
+    // Untuk produk lain, buka modal
     setSelectedProduct(product);
     setIsModalOpen(true);
   };
