@@ -21,6 +21,119 @@ const EnhancedServiceCards: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
+  // Animation handlers
+  const handleAnimationComplete = () => {
+    // Animation completed
+  };
+
+  // Get current services based on active tab
+  const getCurrentServices = () => {
+    switch (activeTab) {
+      case "csa":
+        return csaServices;
+      case "cdo":
+        return cdoServices;
+      case "aisa":
+        return aisaServices;
+      default:
+        return csaServices;
+    }
+  };
+
+  // Get current title based on active tab
+  const getCurrentTitle = () => {
+    switch (activeTab) {
+      case "csa":
+        return "Cyber Security Advisory (CSA)";
+      case "cdo":
+        return "Cyber Defense and Operation (CDO)";
+      case "aisa":
+        return "AI Security Advisory (AISA)";
+      default:
+        return "Cyber Security Advisory (CSA)";
+    }
+  };
+
+  // Get current description based on active tab
+  const getCurrentDescription = () => {
+    switch (activeTab) {
+      case "csa":
+        return "Comprehensive cybersecurity advisory services to help organizations build robust security frameworks and maintain compliance with industry standards.";
+      case "cdo":
+        return "Advanced cyber defense and operational services designed to protect your organization from evolving threats and ensure continuous security monitoring.";
+      case "aisa":
+        return "AI-powered security advisory services leveraging cutting-edge artificial intelligence to enhance your organization&apos;s security posture and threat detection capabilities.";
+      default:
+        return "Comprehensive cybersecurity advisory services to help organizations build robust security frameworks and maintain compliance with industry standards.";
+    }
+  };
+
+  // Get current animation key based on active tab
+  const getCurrentAnimationKey = () => {
+    switch (activeTab) {
+      case "csa":
+        return csaAnimationKey;
+      case "cdo":
+        return cdoAnimationKey;
+      case "aisa":
+        return aisaAnimationKey;
+      default:
+        return csaAnimationKey;
+    }
+  };
+
+  // Get current visible state based on active tab
+  const getCurrentVisible = () => {
+    switch (activeTab) {
+      case "csa":
+        return csaVisible;
+      case "cdo":
+        return cdoVisible;
+      case "aisa":
+        return aisaVisible;
+      default:
+        return csaVisible;
+    }
+  };
+
+  // Get current trigger function based on active tab
+  const getCurrentTriggerFunction = () => {
+    switch (activeTab) {
+      case "csa":
+        return () => {
+          setCsaVisible(false);
+          setTimeout(() => {
+            setCsaAnimationKey(prev => prev + 1);
+            setCsaVisible(true);
+          }, 100);
+        };
+      case "cdo":
+        return () => {
+          setCdoVisible(false);
+          setTimeout(() => {
+            setCdoAnimationKey(prev => prev + 1);
+            setCdoVisible(true);
+          }, 100);
+        };
+      case "aisa":
+        return () => {
+          setAisaVisible(false);
+          setTimeout(() => {
+            setAisaAnimationKey(prev => prev + 1);
+            setAisaVisible(true);
+          }, 100);
+        };
+      default:
+        return () => {
+          setCsaVisible(false);
+          setTimeout(() => {
+            setCsaAnimationKey(prev => prev + 1);
+            setCsaVisible(true);
+          }, 100);
+        };
+    }
+  };
+
   // CSA Services Data (8 cards)
   const csaServices = [
     {
@@ -31,8 +144,8 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "01 - Compliance Assessment",
-      shortDescription: "An advisory service to ensure the organization's adherence to industry standards and regulatory compliance.",
-      fullDescription: "An advisory service to ensure the organization's adherence to industry standards and regulatory compliance. Provide gap report and recommendation for improvement.",
+      shortDescription: "An advisory service to ensure the organization&apos;s adherence to industry standards and regulatory compliance.",
+      fullDescription: "An advisory service to ensure the organization&apos;s adherence to industry standards and regulatory compliance. Provide gap report and recommendation for improvement.",
       className: "bg-gradient-to-br from-blue-900/80 to-cyan-900/80 border-blue-500/60"
     },
     {
@@ -43,8 +156,8 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "02 - Cyber Maturity Assessment (CMA)",
-      shortDescription: "A cybersecurity maturity assessment is a systematic evaluation of an organization's cybersecurity posture.",
-      fullDescription: "A cybersecurity maturity assessment is a systematic evaluation of an organization's cybersecurity posture, capabilities, and processes. It aims to determine the organization's current level of maturity in managing and mitigating cybersecurity risks.",
+      shortDescription: "A cybersecurity maturity assessment is a systematic evaluation of an organization&apos;s cybersecurity posture.",
+      fullDescription: "A cybersecurity maturity assessment is a systematic evaluation of an organization&apos;s cybersecurity posture, capabilities, and processes. It aims to determine the organization&apos;s current level of maturity in managing and mitigating cybersecurity risks.",
       className: "bg-gradient-to-br from-green-900/80 to-emerald-900/80 border-green-500/60"
     },
     {
@@ -68,7 +181,7 @@ const EnhancedServiceCards: React.FC = () => {
       ),
       title: "04 - Enterprise Security Architecture",
       shortDescription: "Enterprise security architecture provides the blueprint for a comprehensive defense.",
-      fullDescription: "Enterprise security architecture provides the blueprint for a comprehensive defense, encompassing all layers of protection to safeguard an organization's assets and data.",
+      fullDescription: "Enterprise security architecture provides the blueprint for a comprehensive defense, encompassing all layers of protection to safeguard an organization&apos;s assets and data.",
       className: "bg-gradient-to-br from-amber-900/80 to-orange-900/80 border-amber-500/60"
     },
     {
@@ -91,8 +204,8 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "06 - Cyber Risk Management",
-      shortDescription: "Cyber risk management focuses on proactively managing and reducing an organization's exposure to cyber threats.",
-      fullDescription: "Cyber risk management focuses on proactively managing and reducing an organization's exposure to cyber threats. Activity includes identifies, assesses, and mitigates potential cyber threats to protect an organization's assets.",
+      shortDescription: "Cyber risk management focuses on proactively managing and reducing an organization&apos;s exposure to cyber threats.",
+      fullDescription: "Cyber risk management focuses on proactively managing and reducing an organization&apos;s exposure to cyber threats. Activity includes identifies, assesses, and mitigates potential cyber threats to protect an organization&apos;s assets.",
       className: "bg-gradient-to-br from-yellow-900/80 to-amber-900/80 border-yellow-500/60"
     },
     {
@@ -191,8 +304,8 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "06 - Red Teaming Exercise",
-      shortDescription: "Red teaming exercises simulate real-world, targeted attacks to evaluate an organization's security posture.",
-      fullDescription: "Red teaming exercises simulate real-world, targeted attacks to evaluate an organization's security posture and response capabilities, providing insights into potential weaknesses from an attacker's perspective.",
+      shortDescription: "Red teaming exercises simulate real-world, targeted attacks to evaluate an organization&apos;s security posture.",
+      fullDescription: "Red teaming exercises simulate real-world, targeted attacks to evaluate an organization&apos;s security posture and response capabilities, providing insights into potential weaknesses from an attacker&apos;s perspective.",
       className: "bg-gradient-to-br from-yellow-900/80 to-amber-900/80 border-yellow-500/60"
     },
     {
@@ -279,8 +392,8 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "04 - AI Integration Readiness Assessment",
-      shortDescription: "The AI Integration Readiness Assessment is a comprehensive evaluation of an organization's preparedness.",
-      fullDescription: "The AI Integration Readiness Assessment is a comprehensive evaluation of an organization's preparedness to effectively adopt and integrate Artificial Intelligence technologies into its operations, products, and services.",
+      shortDescription: "The AI Integration Readiness Assessment is a comprehensive evaluation of an organization&apos;s preparedness.",
+      fullDescription: "The AI Integration Readiness Assessment is a comprehensive evaluation of an organization&apos;s preparedness to effectively adopt and integrate Artificial Intelligence technologies into its operations, products, and services.",
       className: "bg-gradient-to-br from-amber-900/80 to-orange-900/80 border-amber-500/60"
     },
     {
@@ -321,35 +434,6 @@ const EnhancedServiceCards: React.FC = () => {
     }
   ];
 
-  const handleAnimationComplete = () => {
-    console.log('Animation completed!');
-  };
-
-  const triggerCsaAnimation = () => {
-    console.log('Triggering CSA animation...');
-    setCsaVisible(false);
-    setTimeout(() => {
-      setCsaAnimationKey(prev => prev + 1);
-      setCsaVisible(true);
-    }, 100);
-  };
-
-  const triggerCdoAnimation = () => {
-    setCdoVisible(false);
-    setTimeout(() => {
-      setCdoAnimationKey(prev => prev + 1);
-      setCdoVisible(true);
-    }, 100);
-  };
-
-  const triggerAisaAnimation = () => {
-    setAisaVisible(false);
-    setTimeout(() => {
-      setAisaAnimationKey(prev => prev + 1);
-      setAisaVisible(true);
-    }, 100);
-  };
-
   // Reset animation when tab changes
   useEffect(() => {
     if (activeTab === "csa") {
@@ -360,84 +444,6 @@ const EnhancedServiceCards: React.FC = () => {
       setAisaAnimationKey(prev => prev + 1);
     }
   }, [activeTab]);
-
-  const getCurrentServices = () => {
-    switch (activeTab) {
-      case "csa":
-        return csaServices;
-      case "cdo":
-        return cdoServices;
-      case "aisa":
-        return aisaServices;
-      default:
-        return csaServices;
-    }
-  };
-
-  const getCurrentTitle = () => {
-    switch (activeTab) {
-      case "csa":
-        return "Cyber Security Advisory (CSA)";
-      case "cdo":
-        return "Cyber Defense and Operation (CDO)";
-      case "aisa":
-        return "AI Security Advisory (AISA)";
-      default:
-        return "Cyber Security Advisory (CSA)";
-    }
-  };
-
-  const getCurrentDescription = () => {
-    switch (activeTab) {
-      case "csa":
-        return "Comprehensive cybersecurity advisory services to help organizations strengthen their security posture and achieve compliance with industry standards.";
-      case "cdo":
-        return "Advanced cyber defense and operational services to protect your organization from evolving threats and ensure robust security operations.";
-      case "aisa":
-        return "Expert AI security advisory services to help organizations safely integrate and manage artificial intelligence technologies.";
-      default:
-        return "Comprehensive cybersecurity advisory services to help organizations strengthen their security posture and achieve compliance with industry standards.";
-    }
-  };
-
-  const getCurrentAnimationKey = () => {
-    switch (activeTab) {
-      case "csa":
-        return csaAnimationKey;
-      case "cdo":
-        return cdoAnimationKey;
-      case "aisa":
-        return aisaAnimationKey;
-      default:
-        return csaAnimationKey;
-    }
-  };
-
-  const getCurrentVisible = () => {
-    switch (activeTab) {
-      case "csa":
-        return csaVisible;
-      case "cdo":
-        return cdoVisible;
-      case "aisa":
-        return aisaVisible;
-      default:
-        return csaVisible;
-    }
-  };
-
-  const getCurrentTriggerFunction = () => {
-    switch (activeTab) {
-      case "csa":
-        return triggerCsaAnimation;
-      case "cdo":
-        return triggerCdoAnimation;
-      case "aisa":
-        return triggerAisaAnimation;
-      default:
-        return triggerCsaAnimation;
-    }
-  };
 
   return (
     <div className="relative w-full pt-32 pb-16 overflow-hidden">
@@ -523,55 +529,70 @@ const EnhancedServiceCards: React.FC = () => {
           </div>
         </AnimatedSection>
 
-        <AnimatedSection animation="fadeInUp" delay={0.4} className="relative z-10">
-        <div className="relative mt-6 rounded-3xl border border-white/10 p-4 sm:p-6">
-          <div className="space-y-6">
-            <AnimatedSection animation="fadeInUp" delay={0.6}>
-              <div className="text-center">
-                <div
-                  onClick={getCurrentTriggerFunction()}
-                  className="cursor-pointer hover:scale-105 transition-transform duration-200 active:scale-95 inline-block"
-                >
+        {/* Service Carousel Container - With Background like Contact Form */}
+        <AnimatedSection animation="fadeInUp" delay={0.4} className="relative z-10 mt-12">
+          <div className="relative rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl bg-black/60 backdrop-blur-md">
+            <div className="space-y-8">
+              <AnimatedSection animation="fadeInUp" delay={0.6}>
+                <div className="text-center">
+                  <div
+                    onClick={getCurrentTriggerFunction()}
+                    className="cursor-pointer hover:scale-105 transition-transform duration-200 active:scale-95 inline-block"
+                  >
+                    {getCurrentVisible() && (
+                      <BlurText
+                        key={`${activeTab}-${getCurrentAnimationKey()}`}
+                        text={getCurrentTitle()}
+                        delay={20}
+                        animateBy="words"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight"
+                      />
+                    )}
+                  </div>
                   {getCurrentVisible() && (
                     <BlurText
                       key={`${activeTab}-${getCurrentAnimationKey()}`}
-                      text={getCurrentTitle()}
+                      text={getCurrentDescription()}
                       delay={20}
                       animateBy="words"
                       direction="top"
                       onAnimationComplete={handleAnimationComplete}
-                      className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight"
+                      className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl mx-auto"
                     />
                   )}
                 </div>
-                {getCurrentVisible() && (
-                  <BlurText
-                    key={`${activeTab}-${getCurrentAnimationKey()}`}
-                    text={getCurrentDescription()}
-                    delay={20}
-                    animateBy="words"
-                    direction="top"
-                    onAnimationComplete={handleAnimationComplete}
-                    className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl mx-auto"
+              </AnimatedSection>
+              
+              <AnimatedSection animation="fadeInUp" delay={0.8}>
+                <div className="px-4 sm:px-6 lg:px-8">
+                  <SwipeServiceCarousel 
+                    services={getCurrentServices()} 
+                    autoSlideInterval={5000}
+                    pauseOnHover={true}
                   />
-                )}
-              </div>
-            </AnimatedSection>
-            
-            <AnimatedSection animation="fadeInUp" delay={0.8}>
-              <SwipeServiceCarousel 
-                services={getCurrentServices()} 
-                autoSlideInterval={5000}
-                pauseOnHover={true}
-              />
-            </AnimatedSection>
+                </div>
+              </AnimatedSection>
+            </div>
           </div>
-        </div>
-      </AnimatedSection>
+        </AnimatedSection>
+
       
       {/* CTA Section with Animated Button */}
-      <AnimatedSection animation="fadeInUp" delay={0.8} className="relative z-10 mt-8">
+      <AnimatedSection animation="fadeInUp" delay={0.6} className="relative z-10 mt-8">
         <div className="text-center">
+          <motion.button
+            onClick={() => {
+              const section = document.getElementById("contact");
+              section?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="px-8 py-4 border border-orange-500 text-orange-500 font-semibold rounded-xl hover:bg-orange-500 hover:text-white transition-all duration-200 shadow-lg hover:shadow-xl"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Get Started Today
+          </motion.button>
         </div>
       </AnimatedSection>
 
@@ -582,7 +603,7 @@ const EnhancedServiceCards: React.FC = () => {
             Ready to Transform Your Business?
           </h2>
           <p className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Let's discuss how our AI integration and cybersecurity services can help your organization achieve its goals.
+            Let&apos;s discuss how our AI integration and cybersecurity services can help your organization achieve its goals.
           </p>
           <motion.button
             onClick={() => {

@@ -43,11 +43,13 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
         const containerWidth = carouselRef.current.offsetWidth;
         const newVisibleCards = containerWidth >= 1280 ? 2 : 1;
         const totalGaps = (newVisibleCards - 1) * GAP;
-        const computedCardWidth = Math.floor((containerWidth - totalGaps));
-        const finalCardWidth = newVisibleCards === 1 ? computedCardWidth : Math.floor((containerWidth - totalGaps) / newVisibleCards);
+        const padding = 32; // Account for container padding (16px * 2)
+        const availableWidth = containerWidth - padding;
+        const computedCardWidth = Math.floor((availableWidth - totalGaps));
+        const finalCardWidth = newVisibleCards === 1 ? computedCardWidth : Math.floor((availableWidth - totalGaps) / newVisibleCards);
         
         // Ensure minimum card width for readability when zoomed
-        const minCardWidth = 280;
+        const minCardWidth = 320;
         const maxCardWidth = Math.min(finalCardWidth, 600);
         const responsiveCardWidth = Math.max(minCardWidth, maxCardWidth);
         
@@ -197,9 +199,10 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
       {/* Carousel Container */}
       <div 
         ref={carouselRef}
-        className="relative rounded-2xl mx-auto"
+        className="relative rounded-2xl mx-auto overflow-hidden"
         style={{ 
-          width: '100%'
+          width: '100%',
+          padding: '0 16px'
         }}
       >
         <motion.div
