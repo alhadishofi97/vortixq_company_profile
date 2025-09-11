@@ -26,7 +26,7 @@ const EnhancedHome = () => {
     };
     type HomeResponse = { data?: Array<HomeRecord> };
     try {
-      const judulText = (data as HomeResponse).data?.[0]?.Judul || "Welcome to Vortiqx";
+      const judulText = (data as HomeResponse).data?.[0]?.Judul || "AI-Powered Cybersecurity Platform for Modern Enterprises";
       setJudul(
         <div className="font-display text-center mb-10 mt-12">
           <BlurText
@@ -39,7 +39,7 @@ const EnhancedHome = () => {
         </div>
       );
 
-      const subjudulText = (data as HomeResponse).data?.[0]?.subjudul || "Innovative AI & Cybersecurity Solutions";
+      const subjudulText = (data as HomeResponse).data?.[0]?.subjudul || "Transforming businesses through cutting-edge AI integration and robust security solutions";
       const elmSub = (
         <div className="mt-6 font-display text-center">
           <BlurText
@@ -47,7 +47,7 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed bg-clip-text text-transparent bg-gradient-to-r from-brand-highlight1 to-brand-secondary"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white"
           />
         </div>
       );
@@ -83,7 +83,7 @@ const EnhancedHome = () => {
       setJudul(
         <div className="font-display text-center mb-10 mt-12">
           <BlurText
-            text="Welcome to Vortiqx"
+            text="AI-Powered Cybersecurity Platform for Modern Enterprises"
             delay={200}
             animateBy="words"
             direction="top"
@@ -95,11 +95,11 @@ const EnhancedHome = () => {
       setSubJudul(
         <div className="mt-6 font-display text-center">
           <BlurText
-            text="Innovative AI & Cybersecurity Solutions"
+            text="Transforming businesses through cutting-edge AI integration and robust security solutions"
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed bg-clip-text text-transparent bg-gradient-to-r from-brand-highlight1 to-brand-secondary"
+            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white"
           />
         </div>
       );
@@ -251,7 +251,7 @@ const EnhancedHome = () => {
           Your browser does not support the video tag.
         </video>
       </div>
-
+      
       {/* Glowing Orbs */}
       {/* <GlowingOrb 
         size={400} 
@@ -295,14 +295,10 @@ const EnhancedHome = () => {
               {subjudul}
             </AnimatedSection>
             
-            {/* Animated Description */}
-            <AnimatedSection animation="fadeInUp" delay={0.6}>
-              {narasi}
-            </AnimatedSection>
             
-            {/* Animated CTA Buttons */}
-            <AnimatedSection animation="stagger" delay={0.8} staggerChildren={0.2}>
-              <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
+            {/* Animated CTA Button */}
+            <AnimatedSection animation="fadeInUp" delay={0.6}>
+              <div className="mt-12 flex items-center justify-center">
                 <motion.div
                   variants={{
                     initial: { opacity: 0, y: 40 },
@@ -366,7 +362,7 @@ const EnhancedHome = () => {
                     }}
                   >
                     <BlurText
-                      text="Learn More"
+                      text="LEARN MORE"
                       delay={200}
                       animateBy="letters"
                       direction="top"
@@ -374,26 +370,6 @@ const EnhancedHome = () => {
                     />
                   </Button>
                 </motion.div>
-                
-                <motion.button
-                  variants={{
-                    initial: { opacity: 0, y: 40 },
-                    animate: { opacity: 1, y: 0 }
-                  }}
-                  onClick={() => {
-                    const section = document.getElementById("contact");
-                    section?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="rounded-2xl px-8 py-4 bg-gradient-to-r from-brand-highlight1 to-brand-secondary text-white font-semibold shadow-lg transition-all relative overflow-hidden group"
-                >
-                  {/* <span className="relative z-10">Hubungi kami hari ini</span> */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-brand-secondary to-brand-highlight1"
-                    initial={{ x: "100%" }}
-                    whileHover={{ x: "0%" }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.button>
               </div>
             </AnimatedSection>
           </Container>
