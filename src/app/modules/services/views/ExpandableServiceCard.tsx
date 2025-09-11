@@ -35,6 +35,11 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
       layout
       transition={{ duration: 0.25, ease: "easeInOut" }}
       onClick={onSelect}
+      style={{ 
+        minHeight: isExpanded ? '280px' : '200px',
+        minWidth: '280px',
+        maxWidth: '100%'
+      }}
     >
       {/* Orange indicator when selected */}
       {isSelected && (
@@ -126,7 +131,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
             initial={{ opacity: 0, height: 0, y: -10 }}
             animate={{ 
               opacity: 1, 
-              height: "auto", 
+              height: "140px", 
               y: 0 
             }}
             exit={{ 
@@ -141,7 +146,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
             className="mt-3 space-y-3 flex-1 flex flex-col"
           >
             <motion.p 
-              className="text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed break-normal hyphens-auto"
+              className="text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed break-normal hyphens-auto overflow-y-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1, duration: 0.3 }}
@@ -155,7 +160,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
             initial={{ opacity: 0, height: 0, y: 10 }}
             animate={{ 
               opacity: 1, 
-              height: "auto", 
+              height: "80px", 
               y: 0 
             }}
             exit={{ 

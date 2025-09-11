@@ -25,6 +25,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
   autoSlideInterval = 5000,
   pauseOnHover = true
 }) => {
+  const GAP = 12;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
@@ -40,27 +41,17 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
     const updateCardWidth = () => {
       if (carouselRef.current) {
         const containerWidth = carouselRef.current.offsetWidth;
-        let newCardWidth;
-        let newVisibleCards;
+        const newVisibleCards = containerWidth >= 1280 ? 2 : 1;
+        const totalGaps = (newVisibleCards - 1) * GAP;
+        const computedCardWidth = Math.floor((containerWidth - totalGaps));
+        const finalCardWidth = newVisibleCards === 1 ? computedCardWidth : Math.floor((containerWidth - totalGaps) / newVisibleCards);
         
-        if (containerWidth < 640) { // Mobile
-          newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 16, 400);
-        } else if (containerWidth < 768) { // Small tablet
-          newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 32, 450);
-        } else if (containerWidth < 1024) { // Tablet
-          newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 48, 500);
-        } else if (containerWidth < 1280) { // Small desktop
-          newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 48, 600);
-        } else { // Large desktop
-          newVisibleCards = 2;
-          newCardWidth = Math.min((containerWidth - 64) / 2, 500);
-        }
+        // Ensure minimum card width for readability when zoomed
+        const minCardWidth = 280;
+        const maxCardWidth = Math.min(finalCardWidth, 600);
+        const responsiveCardWidth = Math.max(minCardWidth, maxCardWidth);
         
-        setCardWidth(newCardWidth);
+        setCardWidth(responsiveCardWidth);
         setVisibleCards(newVisibleCards);
       }
     };
@@ -214,7 +205,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
         <motion.div
           className="flex cursor-grab active:cursor-grabbing"
           animate={{ 
-            x: isDragging ? -currentIndex * cardWidth + dragX : -currentIndex * cardWidth 
+            x: isDragging ? -currentIndex * (cardWidth + GAP) + dragX : -currentIndex * (cardWidth + GAP)
           }}
           transition={{ 
             type: "tween", 
@@ -222,12 +213,12 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
             ease: "easeOut"
           }}
           style={{ 
-            width: `${services.length * cardWidth}px`,
+            width: `${services.length * cardWidth + (services.length - 1) * GAP}px`,
             willChange: isDragging ? 'transform' : 'auto'
           }}
           drag="x"
           dragConstraints={{ 
-            left: -Math.max(0, services.length - visibleCards) * cardWidth, 
+            left: -Math.max(0, services.length - visibleCards) * (cardWidth + GAP), 
             right: 0 
           }}
           onDragStart={handleDragStart}
@@ -245,8 +236,8 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
                 width: cardWidth,
                 transform: 'translateZ(0)', // Hardware acceleration
                 backfaceVisibility: 'hidden',
-                paddingLeft: index === 0 ? '0px' : '2px',
-                paddingRight: index === services.length - 1 ? '0px' : '2px'
+                paddingLeft: index === 0 ? '0px' : `${GAP}px`,
+                paddingRight: index === services.length - 1 ? '0px' : `${GAP}px`
               }}
             >
               <ExpandableServiceCard

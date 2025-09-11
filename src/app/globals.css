@@ -20,6 +20,119 @@ body {
   overflow-y: auto;
 }
 
+/* Responsive zoom handling */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent horizontal scroll on zoom */
+* {
+  box-sizing: border-box;
+}
+
+/* Responsive container adjustments */
+@media screen and (max-width: 768px) {
+  .container-responsive {
+    min-width: 320px;
+    max-width: 100vw;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Ensure text remains readable when zoomed */
+  body {
+    font-size: clamp(14px, 4vw, 16px);
+  }
+  
+  /* Prevent elements from becoming too small */
+  h1, h2, h3, h4, h5, h6 {
+    font-size: clamp(1.2rem, 5vw, 2.5rem);
+  }
+  
+  /* Ensure buttons remain tappable */
+  button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Tablet responsive adjustments */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .container-responsive {
+    min-width: 768px;
+    max-width: 100vw;
+  }
+  
+  /* Adjust font sizes for tablet zoom */
+  body {
+    font-size: clamp(15px, 2.5vw, 18px);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+  }
+}
+
+/* Prevent layout breaking on extreme zoom levels */
+@media screen and (max-width: 480px) {
+  .container-responsive {
+    min-width: 280px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  /* Ensure critical elements remain visible */
+  .navbar-fixed {
+    min-height: 60px;
+  }
+}
+
+/* Handle extreme zoom out scenarios */
+@media screen and (max-width: 320px) {
+  .container-responsive {
+    min-width: 280px;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+  
+  /* Ensure text remains readable even when heavily zoomed out */
+  body {
+    font-size: 12px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-size: clamp(1rem, 6vw, 1.5rem);
+    line-height: 1.2;
+  }
+  
+  /* Ensure buttons remain accessible */
+  button, .btn {
+    min-height: 40px;
+    min-width: 40px;
+    font-size: 14px;
+  }
+}
+
+/* Zoom out handling for very small screens */
+@media screen and (max-width: 280px) {
+  .container-responsive {
+    min-width: 260px;
+    padding-left: 0.125rem;
+    padding-right: 0.125rem;
+  }
+  
+  /* Force minimum readable sizes */
+  body {
+    font-size: 11px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-size: clamp(0.9rem, 7vw, 1.2rem);
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root { /* Primary - Dark background */ /* Text 2 - Pure white */

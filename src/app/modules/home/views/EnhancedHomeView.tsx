@@ -28,13 +28,13 @@ const EnhancedHome = () => {
     try {
       const judulText = (data as HomeResponse).data?.[0]?.Judul || "AI-Powered Cybersecurity Platform for Modern Enterprises";
       setJudul(
-        <div className="font-display text-center mb-10 mt-12">
+        <div className="font-display text-center mb-5 mt-5">
           <BlurText
             text={judulText}
             delay={200}
             animateBy="words"
             direction="top"
-            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight justify-center"
+            className="text-1xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white tracking-tight leading-tight justify-center"
           />
         </div>
       );
@@ -47,8 +47,7 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="bottom"
-            fontFamily="sans"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-7xl mx-auto"
+            className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-semibold leading-relaxed text-white text-center max-w-7xl mx-auto"
           />
         </div>
       );
@@ -100,7 +99,7 @@ const EnhancedHome = () => {
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-7xl mx-auto"
+            className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-semibold leading-relaxed text-white text-center max-w-7xl mx-auto"
           />
         </div>
       );
