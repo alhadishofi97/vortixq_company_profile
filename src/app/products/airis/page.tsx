@@ -230,13 +230,13 @@ const AirisProductPage: React.FC = () => {
                 className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
               >
                 {/* Product Image */}
-                <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
+                <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden">
                   <img
                     src={product.dashboardImage}
                     alt={product.title}
                     className="w-full h-full object-cover"
                   />
-            </div>
+                </div>
 
                 {/* Product Icon */}
                 <div className="flex items-center justify-center w-12 h-12 bg-orange-500/20 rounded-lg mb-4">
@@ -269,31 +269,6 @@ const AirisProductPage: React.FC = () => {
           </div>
 
 
-          {/* CTA Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0 }}
-            className="mt-16"
-          >
-            <div className="bg-gradient-to-r from-brand-highlight1/10 to-brand-secondary/10 rounded-3xl p-8 border border-brand-highlight2/20 animate-float-slow">
-              <h3 className="font-display text-xl xs:text-2xl sm:text-3xl font-bold text-white mb-4 text-center">
-                Ready to Transform Your Security & Compliance?
-              </h3>
-              <p className="text-text-secondary mb-6 max-w-2xl mx-auto text-sm xs:text-base sm:text-lg leading-relaxed text-center">
-                Experience the power of AI-native cybersecurity and compliance management. 
-                Get started with a free consultation today.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="px-8 py-3 border border-brand-highlight2/20 text-white font-semibold rounded-xl hover:bg-brand-highlight2/10 transition-all duration-200">
-                  Request Demo
-                </button>
-                {/* <button className="px-8 py-3 border border-brand-highlight2/20 text-white font-semibold rounded-xl hover:bg-brand-highlight2/10 transition-all duration-200">
-                  Learn More
-                </button> */}
-              </div>
-            </div>
-          </motion.div>
 
           {/* Product Modal */}
           <ProductModal
