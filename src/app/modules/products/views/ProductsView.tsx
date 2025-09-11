@@ -250,50 +250,23 @@ const ProductsView: React.FC = () => {
           <div className="w-full h-px bg-gradient-to-r from-brand-highlight1 to-brand-secondary animate-gradient-x text-left"></div>
         </div>
 
-        {/* AIRIS Product Section */}
-        <div className="mb-16">
-          <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 text-center">
-            AIRIS
-          </h3>
-          <p className="text-sm xs:text-base sm:text-lg text-slate-300 mb-12 text-center max-w-3xl mx-auto">
-            Discover our comprehensive suite of AI-native cybersecurity and compliance solutions designed to protect and empower your organization.
-          </p>
+        {/* Our Products Carousel Section */}
+          <div className="mb-16">
+            <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+            Our Products
+            </h3>
+            <p className="text-sm xs:text-base sm:text-lg text-slate-300 mb-12 text-center max-w-3xl mx-auto">
+              Discover our comprehensive suite of AI-native cybersecurity and compliance solutions designed to protect and empower your organization.
+            </p>
         </div>
             
         <AnimatedSection animation="fadeInUp" delay={0.2}>
           <div className="relative rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              {/* Left Column - Content */}
-              <div className="space-y-6">
-                <h4 className="font-display text-2xl xs:text-3xl sm:text-4xl font-bold text-white leading-tight">
-                  AIRIS
-                </h4>
-                <p className="text-sm xs:text-base sm:text-lg text-slate-300 leading-relaxed">
-                  AIRIS is an AI-driven, GPU-powered cybersecurity platform that unifies GRC automation with advanced threat detection and defense.
-                </p>
-                <motion.button
-                  onClick={() => {
-                    window.location.href = '/products/airis';
-                  }}
-                  className="px-8 py-4 border border-orange-500 text-orange-500 font-semibold rounded-xl hover:bg-orange-500 hover:text-white transition-all duration-200 shadow-lg hover:shadow-xl"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Learn More
-                </motion.button>
-              </div>
-              
-              {/* Right Column - Image */}
-              <div className="flex justify-center">
-                <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-                  <img
-                    src="/airis_dsb.png"
-                    alt="AIRIS Platform"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-              </div>
-            </div>
+            <ProductCarousel
+              products={products}
+              onProductClick={handleProductClick}
+              className="w-full"
+            />
           </div>
         </AnimatedSection>
 
