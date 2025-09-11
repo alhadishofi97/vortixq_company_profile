@@ -1,5 +1,7 @@
 @import './fonts.css';
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Ensure navbar stays fixed */
 .navbar-fixed {
@@ -231,10 +233,10 @@ section {
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-gray-200 outline-gray-300/50;
  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-slate-900 text-white;
  }
 }
 
