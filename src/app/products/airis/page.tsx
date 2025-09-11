@@ -209,8 +209,8 @@ const AirisProductPage: React.FC = () => {
           className="relative z-10"
         >
           {/* Header Section */}
-          <div className="mb-16 text-center">
-            <h1 className="font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+          <div className="mb-12 sm:mb-16 text-center px-4 sm:px-0">
+            <h1 className="font-display text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 sm:mb-6">
               One Platform. One Brain.<br />
               <span className="text-white/80">End-to-End Cyber Resilience</span>
             </h1>
@@ -218,17 +218,17 @@ const AirisProductPage: React.FC = () => {
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-16">
             {products.map((product, index) => (
                 <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-300"
+                className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 hover:bg-white/10 transition-all duration-300"
               >
                 {/* Product Image */}
-                <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden">
+                <div className="relative w-full h-48 sm:h-56 md:h-64 mb-4 rounded-lg overflow-hidden">
                   <img
                     src={product.dashboardImage}
                     alt={product.title}
@@ -237,26 +237,26 @@ const AirisProductPage: React.FC = () => {
             </div>
 
                 {/* Product Icon */}
-                <div className="flex items-center justify-center w-12 h-12 bg-orange-500/20 rounded-lg mb-4">
-                  <div className="text-orange-500">
+                <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-orange-500/20 rounded-lg mb-3 sm:mb-4">
+                  <div className="text-orange-500 w-5 h-5 sm:w-6 sm:h-6">
                     {product.icon}
                   </div>
               </div>
                 
                 {/* Product Title */}
-                <h3 className="font-display text-lg font-bold text-white mb-3">
+                <h3 className="font-display text-base sm:text-lg font-bold text-white mb-2 sm:mb-3">
                   {product.title}
                 </h3>
                 
                 {/* Product Description */}
-                <p className="text-sm text-slate-300 mb-6 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-300 mb-4 sm:mb-6 leading-relaxed line-clamp-3">
                   {product.description}
                 </p>
                 
                 {/* Learn More Button */}
                 <motion.button
                   onClick={() => handleProductClick(product)}
-                  className="w-full px-4 py-2 border border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-200 text-sm"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-200 text-xs sm:text-sm"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
