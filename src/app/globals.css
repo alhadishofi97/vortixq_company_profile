@@ -385,6 +385,51 @@ video {
   opacity: 1;
 }
 
+/* Background Animations */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes patternMove {
+  0% {
+    background-position: 0% 0%, 100% 100%, 50% 50%;
+  }
+  25% {
+    background-position: 25% 25%, 75% 75%, 75% 25%;
+  }
+  50% {
+    background-position: 50% 0%, 50% 100%, 0% 50%;
+  }
+  75% {
+    background-position: 75% 75%, 25% 25%, 25% 75%;
+  }
+  100% {
+    background-position: 100% 50%, 0% 50%, 100% 0%;
+  }
+}
+
+/* Ensure background covers full viewport */
+html, body {
+  min-height: 100vh;
+  background: #0a0a0a;
+}
+
+/* Fallback background for Chrome compatibility */
+body {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+  background-attachment: fixed;
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
 /* Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
   video {
@@ -395,5 +440,14 @@ video {
   .video-fade-in {
     opacity: 1;
     transition: none;
+  }
+  
+  body {
+    animation: none;
+    background: #0a0a0a;
+  }
+  
+  * {
+    animation: none !important;
   }
 }

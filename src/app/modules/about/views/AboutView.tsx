@@ -19,6 +19,32 @@ const About = () => {
 
   return (
     <div className="relative mx-auto w-[90%] pt-32 pb-24 bg-transparent overflow-hidden">
+      {/* Fallback Background Gradient */}
+      <div 
+        className="absolute inset-0 w-full h-full"
+        style={{ 
+          zIndex: -30,
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)',
+          backgroundSize: '400% 400%',
+          animation: 'gradientShift 15s ease infinite'
+        }}
+      />
+      
+      {/* Animated Background Pattern */}
+      <div 
+        className="absolute inset-0 w-full h-full opacity-10"
+        style={{ 
+          zIndex: -25,
+          backgroundImage: `
+            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%)
+          `,
+          backgroundSize: '100% 100%',
+          animation: 'patternMove 20s ease-in-out infinite'
+        }}
+      />
+
       {/* Enhanced Animated Background */}
       <motion.div 
         style={{ y: backgroundY }}

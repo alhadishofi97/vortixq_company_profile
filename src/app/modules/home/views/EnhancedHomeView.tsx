@@ -4,6 +4,7 @@ import { getHome } from "../controllers/HomeController";
 import { Container, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
+import Waves from "../../../../Components/Waves";
 import { motion } from "framer-motion";
 
 const EnhancedHome = () => {
@@ -189,8 +190,53 @@ const EnhancedHome = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden pt-20">
+      {/* Fallback Background Gradient */}
+      <div 
+        className="absolute inset-0 w-full h-full"
+        style={{ 
+          zIndex: 0,
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)',
+          backgroundSize: '400% 400%',
+          animation: 'gradientShift 15s ease infinite'
+        }}
+      />
+      
+      {/* Animated Background Pattern */}
+      <div 
+        className="absolute inset-0 w-full h-full opacity-20"
+        style={{ 
+          zIndex: 1,
+          backgroundImage: `
+            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%)
+          `,
+          backgroundSize: '100% 100%',
+          animation: 'patternMove 20s ease-in-out infinite'
+        }}
+      />
+
+      {/* Waves Background */}
+      <Waves
+        lineColor="rgba(255,255,255,0.6)"
+        backgroundColor="transparent"
+        waveSpeedX={0.01}
+        waveSpeedY={0.005}
+        waveAmpX={28}
+        waveAmpY={12}
+        friction={0.93}
+        tension={0.006}
+        maxCursorMove={90}
+        xGap={12}
+        yGap={36}
+        lineWidth={1}
+        opacity={0.2}
+        className="absolute inset-0"
+        style={{ zIndex: 1 }}
+      />
+
       {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full video-container" style={{ zIndex: 0 }}>
+      <div className="absolute inset-0 w-full h-full video-container" style={{ zIndex: 2 }}>
         <video
           ref={videoRef}
           autoPlay
@@ -198,18 +244,18 @@ const EnhancedHome = () => {
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover video-fade-in"
-          preload="metadata"
+          preload="auto"
           poster="/videos/bg.mp4"
           style={{ 
-            zIndex: 0,
+            zIndex: 2,
             position: 'absolute',
             top: 0,
             left: 0,
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            opacity: videoLoaded ? 1 : 0,
-            transition: 'opacity 0.8s ease-in-out',
+            opacity: videoLoaded ? 0.7 : 0,
+            transition: 'opacity 1s ease-in-out',
             display: 'block',
             visibility: 'visible',
             pointerEvents: 'none',
@@ -235,6 +281,7 @@ const EnhancedHome = () => {
           }}
           onError={(e) => {
             console.error('🎬 Video error:', e);
+            setVideoLoaded(false);
           }}
           onPlay={() => {
             setVideoLoaded(true);
@@ -247,7 +294,7 @@ const EnhancedHome = () => {
           }}
         >
           <source src="/videos/bg.mp4" type="video/mp4" />
-          {/* <source src="/videos/bg.webm" type="video/webm" /> */}
+          <source src="/videos/bg.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
       </div>

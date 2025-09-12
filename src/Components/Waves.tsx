@@ -170,8 +170,12 @@ const Waves: React.FC<WavesProps> = ({
     console.log('Waves mounted');
     const canvas = canvasRef.current;
     const container = containerRef.current;
-    if (!canvas || !container) return;
+    if (!canvas || !container) {
+      console.error('Waves: Canvas or container not found', { canvas, container });
+      return;
+    }
     ctxRef.current = (canvas as HTMLCanvasElement).getContext('2d');
+    console.log('Waves: Canvas context initialized', ctxRef.current);
 
     function setSize() {
       boundingRef.current = container!.getBoundingClientRect();
@@ -343,10 +347,23 @@ const Waves: React.FC<WavesProps> = ({
         height: '100%',
         overflow: 'hidden',
         backgroundColor,
+        zIndex: -1,
         ...style
       }}
     >
-      <canvas ref={canvasRef} className="waves-canvas" />
+      <canvas 
+        ref={canvasRef} 
+        className="waves-canvas"
+        style={{
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          pointerEvents: 'none'
+        }}
+      />
     </div>
   );
 };

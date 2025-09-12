@@ -447,6 +447,32 @@ const EnhancedServiceCards: React.FC = () => {
 
   return (
     <div className="relative w-full pt-32 pb-16 overflow-hidden">
+      {/* Fallback Background Gradient */}
+      <div 
+        className="absolute inset-0 w-full h-full"
+        style={{ 
+          zIndex: -30,
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)',
+          backgroundSize: '400% 400%',
+          animation: 'gradientShift 15s ease infinite'
+        }}
+      />
+      
+      {/* Animated Background Pattern */}
+      <div 
+        className="absolute inset-0 w-full h-full opacity-10"
+        style={{ 
+          zIndex: -25,
+          backgroundImage: `
+            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%)
+          `,
+          backgroundSize: '100% 100%',
+          animation: 'patternMove 20s ease-in-out infinite'
+        }}
+      />
+
       {/* Enhanced Animated Background */}
       <motion.div 
         style={{ y: backgroundY }}
@@ -457,7 +483,7 @@ const EnhancedServiceCards: React.FC = () => {
       
       {/* Waves Background */}
       <Waves
-        lineColor="rgba(255,255,255,0.6)"
+        lineColor="rgba(255,255,255,0.8)"
         backgroundColor="transparent"
         waveSpeedX={0.01}
         waveSpeedY={0.005}
@@ -468,9 +494,10 @@ const EnhancedServiceCards: React.FC = () => {
         maxCursorMove={90}
         xGap={12}
         yGap={36}
-        lineWidth={0.5}
-        opacity={0.12}
-        className="absolute inset-0 -z-10"
+        lineWidth={1}
+        opacity={0.3}
+        className="absolute inset-0"
+        style={{ zIndex: -5 }}
       />
       
       {/* Glowing Orbs */}
