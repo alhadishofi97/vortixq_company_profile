@@ -79,6 +79,9 @@ export default function LiquidEther({
   autoResumeDelay = 1000,
   autoRampDuration = 0.6
 }: LiquidEtherProps): React.ReactElement {
+  // Device detection and performance optimization
+  const [deviceType, setDeviceType] = React.useState<'mobile' | 'tablet' | 'desktop'>('desktop');
+  const [isLowPerformance, setIsLowPerformance] = React.useState(false);
   const mountRef = useRef<HTMLDivElement | null>(null);
   const webglRef = useRef<LiquidEtherWebGL | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
@@ -86,6 +89,63 @@ export default function LiquidEther({
   const intersectionObserverRef = useRef<IntersectionObserver | null>(null);
   const isVisibleRef = useRef<boolean>(true);
   const resizeRafRef = useRef<number | null>(null);
+  const performanceRef = useRef<{ frameCount: number; lastTime: number; fps: number }>({
+    frameCount: 0,
+    lastTime: performance.now(),
+    fps: 60
+  });
+
+  // Device detection and performance optimization
+  useEffect(() => {
+    const detectDevice = () => {
+      const width = window.innerWidth;
+      const userAgent = navigator.userAgent;
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      const isTablet = /iPad|Android/i.test(userAgent) && width >= 768 && width <= 1024;
+      
+      if (isMobile || width < 768) {
+        setDeviceType('mobile');
+        setIsLowPerformance(true);
+      } else if (isTablet || (width >= 768 && width <= 1024)) {
+        setDeviceType('tablet');
+        setIsLowPerformance(false);
+      } else {
+        setDeviceType('desktop');
+        setIsLowPerformance(false);
+      }
+    };
+
+    detectDevice();
+    window.addEventListener('resize', detectDevice);
+    return () => window.removeEventListener('resize', detectDevice);
+  }, []);
+
+  // Performance monitoring
+  useEffect(() => {
+    if (!isVisibleRef.current) return;
+
+    const monitorPerformance = () => {
+      const now = performance.now();
+      const perf = performanceRef.current;
+      perf.frameCount++;
+      
+      if (now - perf.lastTime >= 1000) {
+        perf.fps = Math.round((perf.frameCount * 1000) / (now - perf.lastTime));
+        perf.frameCount = 0;
+        perf.lastTime = now;
+        
+        // Adjust performance based on FPS
+        if (perf.fps < 30 && !isLowPerformance) {
+          setIsLowPerformance(true);
+        } else if (perf.fps > 45 && isLowPerformance) {
+          setIsLowPerformance(false);
+        }
+      }
+    };
+
+    const interval = setInterval(monitorPerformance, 1000);
+    return () => clearInterval(interval);
+  }, [isLowPerformance]);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -136,13 +196,30 @@ export default function LiquidEther({
       clock: THREE.Clock | null = null;
       init(container: HTMLElement) {
         this.container = container;
-        this.pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        // Optimize pixel ratio for performance
+        this.pixelRatio = isLowPerformance ? 1 : Math.min(window.devicePixelRatio || 1, deviceType === 'mobile' ? 1.5 : 2);
         this.resize();
-        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        // Optimize WebGL renderer settings
+        const rendererOptions: THREE.WebGLRendererParameters = {
+          antialias: !isLowPerformance && deviceType !== 'mobile',
+          alpha: true,
+          powerPreference: isLowPerformance ? 'low-power' : 'high-performance',
+          failIfMajorPerformanceCaveat: false
+        };
+        
+        this.renderer = new THREE.WebGLRenderer(rendererOptions);
         this.renderer.autoClear = false;
         this.renderer.setClearColor(new THREE.Color(0x000000), 0);
         this.renderer.setPixelRatio(this.pixelRatio);
         this.renderer.setSize(this.width, this.height);
+        
+        // Optimize renderer settings
+        if (isLowPerformance) {
+          this.renderer.shadowMap.enabled = false;
+          this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+        }
+        
         const el = this.renderer.domElement;
         el.style.width = '100%';
         el.style.height = '100%';
@@ -1035,6 +1112,17 @@ export default function LiquidEther({
       }
       loop() {
         if (!this.running) return;
+        
+        // Frame rate limiting for low performance devices
+        const perf = performanceRef.current;
+        perf.frameCount++;
+        
+        if (isLowPerformance && perf.frameCount % 2 === 0) {
+          // Skip every other frame on low performance devices
+          rafRef.current = requestAnimationFrame(this._loop);
+          return;
+        }
+        
         this.render();
         rafRef.current = requestAnimationFrame(this._loop);
       }
@@ -1070,9 +1158,21 @@ export default function LiquidEther({
     container.style.position = container.style.position || 'relative';
     container.style.overflow = container.style.overflow || 'hidden';
 
+    // Adaptive settings based on device type and performance
+    const adaptiveSettings = {
+      resolution: isLowPerformance ? 0.25 : (deviceType === 'mobile' ? 0.3 : deviceType === 'tablet' ? 0.4 : resolution),
+      iterationsViscous: isLowPerformance ? 8 : (deviceType === 'mobile' ? 16 : deviceType === 'tablet' ? 24 : iterationsViscous),
+      iterationsPoisson: isLowPerformance ? 8 : (deviceType === 'mobile' ? 16 : deviceType === 'tablet' ? 24 : iterationsPoisson),
+      mouseForce: isLowPerformance ? 10 : (deviceType === 'mobile' ? 15 : mouseForce),
+      cursorSize: isLowPerformance ? 50 : (deviceType === 'mobile' ? 75 : cursorSize),
+      autoDemo: isLowPerformance ? false : autoDemo,
+      isViscous: isLowPerformance ? false : isViscous,
+      BFECC: isLowPerformance ? false : BFECC
+    };
+
     const webgl = new WebGLManager({
       $wrapper: container,
-      autoDemo,
+      autoDemo: adaptiveSettings.autoDemo,
       autoSpeed,
       autoIntensity,
       takeoverDuration,
@@ -1087,18 +1187,18 @@ export default function LiquidEther({
       if (!sim) return;
       const prevRes = sim.options.resolution;
       Object.assign(sim.options, {
-        mouse_force: mouseForce,
-        cursor_size: cursorSize,
-        isViscous,
+        mouse_force: adaptiveSettings.mouseForce,
+        cursor_size: adaptiveSettings.cursorSize,
+        isViscous: adaptiveSettings.isViscous,
         viscous,
-        iterations_viscous: iterationsViscous,
-        iterations_poisson: iterationsPoisson,
+        iterations_viscous: adaptiveSettings.iterationsViscous,
+        iterations_poisson: adaptiveSettings.iterationsPoisson,
         dt,
-        BFECC,
-        resolution,
+        BFECC: adaptiveSettings.BFECC,
+        resolution: adaptiveSettings.resolution,
         isBounce
       });
-      if (resolution !== prevRes) sim.resize();
+      if (adaptiveSettings.resolution !== prevRes) sim.resize();
     };
     applyOptionsFromProps();
     webgl.start();
