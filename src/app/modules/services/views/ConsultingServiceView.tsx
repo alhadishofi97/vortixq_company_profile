@@ -60,22 +60,30 @@ const ConsultingServiceView = () => {
       {/* LiquidEther Background */}
       <div className="absolute inset-0 w-full h-full z-0">
         <LiquidEther
-          colors={['#2B0B00', '#6B1D00', '#B23A00', '#FF6B00', '#FFD36E']}
-          mouseForce={33}
+          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+          mouseForce={20}
           cursorSize={100}
-          isViscous={true}
+          isViscous={false}
           viscous={30}
           iterationsViscous={32}
           iterationsPoisson={32}
           resolution={0.5}
           isBounce={false}
-          autoDemo={false}
+          autoDemo={true}
           autoSpeed={0.5}
           autoIntensity={2.2}
           takeoverDuration={0.25}
           autoResumeDelay={1000}
           autoRampDuration={0.6}
-          style={{ opacity: 1, zIndex: 0 }}
+          style={{ 
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            opacity: 1,
+            zIndex: 0
+          }}
         />
       </div>
 
