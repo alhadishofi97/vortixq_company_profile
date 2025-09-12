@@ -21,6 +21,75 @@ export default function ThreadsBackground({
 }: ThreadsBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef({ x: 0, y: 0 })
+  
+  // Device detection and performance optimization
+  const [deviceType, setDeviceType] = React.useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+  const [isLowPerformance, setIsLowPerformance] = React.useState(false)
+  const animationRef = useRef<number | null>(null)
+  const lastFrameTime = useRef<number>(0)
+  const frameCount = useRef<number>(0)
+  
+  // Adaptive settings based on device
+  const adaptiveAmplitude = React.useMemo(() => {
+    if (isLowPerformance) return amplitude * 0.5
+    if (deviceType === 'mobile') return amplitude * 0.7
+    if (deviceType === 'tablet') return amplitude * 0.8
+    return amplitude
+  }, [amplitude, deviceType, isLowPerformance])
+  
+  const adaptiveIntensity = React.useMemo(() => {
+    if (isLowPerformance) return intensity * 0.6
+    if (deviceType === 'mobile') return intensity * 0.8
+    return intensity
+  }, [intensity, deviceType, isLowPerformance])
+
+  // Device detection
+  useEffect(() => {
+    const detectDevice = () => {
+      const width = window.innerWidth
+      const userAgent = navigator.userAgent
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+      const isTablet = /iPad|Android/i.test(userAgent) && width >= 768 && width <= 1024
+      
+      if (isMobile || width < 768) {
+        setDeviceType('mobile')
+        setIsLowPerformance(true)
+      } else if (isTablet || (width >= 768 && width <= 1024)) {
+        setDeviceType('tablet')
+        setIsLowPerformance(false)
+      } else {
+        setDeviceType('desktop')
+        setIsLowPerformance(false)
+      }
+    }
+
+    detectDevice()
+    window.addEventListener('resize', detectDevice)
+    return () => window.removeEventListener('resize', detectDevice)
+  }, [])
+
+  // Performance monitoring
+  useEffect(() => {
+    const monitorPerformance = () => {
+      const now = performance.now()
+      frameCount.current++
+      
+      if (now - lastFrameTime.current >= 1000) {
+        const fps = Math.round((frameCount.current * 1000) / (now - lastFrameTime.current))
+        frameCount.current = 0
+        lastFrameTime.current = now
+        
+        if (fps < 30 && !isLowPerformance) {
+          setIsLowPerformance(true)
+        } else if (fps > 45 && isLowPerformance) {
+          setIsLowPerformance(false)
+        }
+      }
+    }
+
+    const interval = setInterval(monitorPerformance, 1000)
+    return () => clearInterval(interval)
+  }, [isLowPerformance])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -29,14 +98,14 @@ export default function ThreadsBackground({
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    let animationId: number
     let time = 0
 
     const resizeCanvas = () => {
       const rect = canvas.getBoundingClientRect()
-      canvas.width = rect.width * window.devicePixelRatio
-      canvas.height = rect.height * window.devicePixelRatio
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+      const dpr = isLowPerformance ? 1 : Math.min(window.devicePixelRatio || 1, deviceType === 'mobile' ? 1.5 : 2)
+      canvas.width = rect.width * dpr
+      canvas.height = rect.height * dpr
+      ctx.scale(dpr, dpr)
       canvas.style.width = rect.width + 'px'
       canvas.style.height = rect.height + 'px'
     }
@@ -60,15 +129,18 @@ export default function ThreadsBackground({
           Math.pow((mouseRef.current.y - height/2) / (height/2), 2)
         )) : 0
 
-      // Apply amplitude and distance to wave calculations
-      const waveAmplitude = 20 * amplitude
+      // Apply adaptive amplitude and distance to wave calculations
+      const waveAmplitude = 20 * adaptiveAmplitude
       const waveDistance = distance * 10
 
+      // Adaptive thread count based on device
+      const threadCount = isLowPerformance ? 4 : (deviceType === 'mobile' ? 6 : 8)
+
       // Draw multiple threads
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < threadCount; i++) {
         ctx.beginPath()
-        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${intensity * 0.3})`
-        ctx.lineWidth = 2
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${adaptiveIntensity * 0.3})`
+        ctx.lineWidth = isLowPerformance ? 1 : 2
         
         const x1 = (width / 8) * i + Math.sin(time * 0.001 + i) * waveAmplitude
         const y1 = height + Math.cos(time * 0.0008 + i) * (30 + waveDistance)
@@ -162,20 +234,29 @@ export default function ThreadsBackground({
         ctx.stroke()
       }
 
-      // Draw floating particles
-      for (let i = 0; i < 20; i++) {
-        const x = (width / 20) * i + Math.sin(time * 0.0005 + i) * (50 * amplitude)
+      // Draw floating particles with adaptive count
+      const particleCount = isLowPerformance ? 10 : (deviceType === 'mobile' ? 15 : 20)
+      for (let i = 0; i < particleCount; i++) {
+        const x = (width / particleCount) * i + Math.sin(time * 0.0005 + i) * (50 * adaptiveAmplitude)
         const y = height * 0.5 + Math.cos(time * 0.0007 + i) * (100 + waveDistance)
-        const size = (2 + Math.sin(time * 0.001 + i) * 1) * amplitude
+        const size = (2 + Math.sin(time * 0.001 + i) * 1) * adaptiveAmplitude
 
         ctx.beginPath()
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${intensity * 0.4})`
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${adaptiveIntensity * 0.4})`
         ctx.arc(x, y, size, 0, Math.PI * 2)
         ctx.fill()
       }
 
-      time += 16
-      animationId = requestAnimationFrame(drawThreads)
+      time += isLowPerformance ? 32 : 16
+      
+      // Frame rate limiting for performance
+      if (isLowPerformance && frameCount.current % 2 === 0) {
+        // Skip every other frame on low performance devices
+        animationRef.current = requestAnimationFrame(drawThreads)
+        return
+      }
+      
+      animationRef.current = requestAnimationFrame(drawThreads)
     }
 
     // Mouse event handlers
@@ -212,8 +293,8 @@ export default function ThreadsBackground({
         canvas.removeEventListener('mousemove', handleMouseMove)
         canvas.removeEventListener('mouseleave', handleMouseLeave)
       }
-      if (animationId) {
-        cancelAnimationFrame(animationId)
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
       }
     }
   }, [color, intensity, amplitude, distance, enableMouseInteraction])

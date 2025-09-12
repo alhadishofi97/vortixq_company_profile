@@ -23,7 +23,76 @@ export default function Particles({
   const mousePosition = useMousePosition()
   const mouse = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
   const canvasSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 })
-  const dpr = typeof window !== 'undefined' ? window.devicePixelRatio : 1
+  
+  // Device detection and performance optimization
+  const [deviceType, setDeviceType] = React.useState<'mobile' | 'tablet' | 'desktop'>('desktop')
+  const [isLowPerformance, setIsLowPerformance] = React.useState(false)
+  const animationRef = useRef<number | null>(null)
+  const lastFrameTime = useRef<number>(0)
+  const frameCount = useRef<number>(0)
+  
+  // Optimize DPR based on device
+  const dpr = React.useMemo(() => {
+    if (typeof window === 'undefined') return 1
+    const baseDpr = window.devicePixelRatio || 1
+    return isLowPerformance ? 1 : Math.min(baseDpr, deviceType === 'mobile' ? 1.5 : 2)
+  }, [deviceType, isLowPerformance])
+  
+  // Adaptive settings based on device
+  const adaptiveQuantity = React.useMemo(() => {
+    if (isLowPerformance) return Math.min(quantity, 15)
+    if (deviceType === 'mobile') return Math.min(quantity, 20)
+    if (deviceType === 'tablet') return Math.min(quantity, 25)
+    return quantity
+  }, [quantity, deviceType, isLowPerformance])
+
+  // Device detection
+  useEffect(() => {
+    const detectDevice = () => {
+      const width = window.innerWidth
+      const userAgent = navigator.userAgent
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)
+      const isTablet = /iPad|Android/i.test(userAgent) && width >= 768 && width <= 1024
+      
+      if (isMobile || width < 768) {
+        setDeviceType('mobile')
+        setIsLowPerformance(true)
+      } else if (isTablet || (width >= 768 && width <= 1024)) {
+        setDeviceType('tablet')
+        setIsLowPerformance(false)
+      } else {
+        setDeviceType('desktop')
+        setIsLowPerformance(false)
+      }
+    }
+
+    detectDevice()
+    window.addEventListener('resize', detectDevice)
+    return () => window.removeEventListener('resize', detectDevice)
+  }, [])
+
+  // Performance monitoring
+  useEffect(() => {
+    const monitorPerformance = () => {
+      const now = performance.now()
+      frameCount.current++
+      
+      if (now - lastFrameTime.current >= 1000) {
+        const fps = Math.round((frameCount.current * 1000) / (now - lastFrameTime.current))
+        frameCount.current = 0
+        lastFrameTime.current = now
+        
+        if (fps < 30 && !isLowPerformance) {
+          setIsLowPerformance(true)
+        } else if (fps > 45 && isLowPerformance) {
+          setIsLowPerformance(false)
+        }
+      }
+    }
+
+    const interval = setInterval(monitorPerformance, 1000)
+    return () => clearInterval(interval)
+  }, [isLowPerformance])
 
   useEffect(() => {    
     if (canvasRef.current) {
@@ -35,6 +104,9 @@ export default function Particles({
 
     return () => {
       window.removeEventListener('resize', initCanvas)
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
     }
   }, [])
 
@@ -125,7 +197,7 @@ export default function Particles({
 
   const drawParticles = () => {
     clearContext()
-    const particleCount = quantity
+    const particleCount = adaptiveQuantity
     for (let i = 0; i < particleCount; i++) {
       const circle = circleParams()
       drawCircle(circle)
@@ -192,7 +264,15 @@ export default function Particles({
         )
       }
     })
-    window.requestAnimationFrame(animate)
+    
+    // Frame rate limiting for performance
+    if (isLowPerformance && frameCount.current % 2 === 0) {
+      // Skip every other frame on low performance devices
+      animationRef.current = requestAnimationFrame(animate)
+      return
+    }
+    
+    animationRef.current = requestAnimationFrame(animate)
   }
 
   return (
