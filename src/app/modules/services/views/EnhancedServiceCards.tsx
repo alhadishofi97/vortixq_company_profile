@@ -2,12 +2,10 @@
 import React, { useState, useEffect } from "react";
 import BlurText from "@/app/util/reactBits/BlurText";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
-import FloatingElements from "../../../components/animations/FloatingElements";
-import GlowingOrb from "../../../components/animations/GlowingOrb";
 import ServiceTab from "../../../components/animations/ServiceTab";
 import SwipeServiceCarousel from "../../../components/animations/SwipeServiceCarousel";
-import Waves from "../../../../Components/Waves";
-import { motion, useScroll, useTransform } from "framer-motion";
+import LiquidEther from "../../../components/animations/LiquidEther";
+import { motion } from "framer-motion";
 
 const EnhancedServiceCards: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"csa" | "cdo" | "aisa">("csa");
@@ -18,8 +16,6 @@ const EnhancedServiceCards: React.FC = () => {
   const [cdoVisible, setCdoVisible] = useState(true);
   const [aisaVisible, setAisaVisible] = useState(true);
   
-  const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
   // Animation handlers
   const handleAnimationComplete = () => {
@@ -446,73 +442,27 @@ const EnhancedServiceCards: React.FC = () => {
   }, [activeTab]);
 
   return (
-    <div className="relative w-full pt-32 pb-16 overflow-hidden">
-      {/* Fallback Background Gradient */}
-      <div 
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          zIndex: -30,
-          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)',
-          backgroundSize: '400% 400%',
-          animation: 'gradientShift 15s ease infinite'
-        }}
-      />
-      
-      {/* Animated Background Pattern */}
-      <div 
-        className="absolute inset-0 w-full h-full opacity-10"
-        style={{ 
-          zIndex: -25,
-          backgroundImage: `
-            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%)
-          `,
-          backgroundSize: '100% 100%',
-          animation: 'patternMove 20s ease-in-out infinite'
-        }}
-      />
-
-      {/* Enhanced Animated Background */}
-      <motion.div 
-        style={{ y: backgroundY }}
-        className="absolute inset-0 -z-20"
-      >
-        <FloatingElements count={25} />
-      </motion.div>
-      
-      {/* Waves Background */}
-      <Waves
-        lineColor="rgba(255,255,255,0.8)"
-        backgroundColor="transparent"
-        waveSpeedX={0.01}
-        waveSpeedY={0.005}
-        waveAmpX={28}
-        waveAmpY={12}
-        friction={0.93}
-        tension={0.006}
-        maxCursorMove={90}
-        xGap={12}
-        yGap={36}
-        lineWidth={1}
-        opacity={0.3}
-        className="absolute inset-0"
-        style={{ zIndex: -5 }}
-      />
-      
-      {/* Glowing Orbs */}
-      <GlowingOrb 
-        size={400} 
-        color="brand-highlight1" 
-        intensity={0.15}
-        className="top-10 left-1/3 -translate-x-1/2 -z-10"
-      />
-      <GlowingOrb 
-        size={300} 
-        color="brand-secondary" 
-        intensity={0.1}
-        className="bottom-20 right-1/4 -z-10"
-      />
+    <div className="relative w-full pt-32 pb-16 overflow-hidden bg-black">
+      {/* LiquidEther Background */}
+      <div className="absolute inset-0" style={{ zIndex: 0 }}>
+        <LiquidEther
+          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+          mouseForce={20}
+          cursorSize={100}
+          isViscous={false}
+          viscous={30}
+          iterationsViscous={32}
+          iterationsPoisson={32}
+          resolution={0.5}
+          isBounce={false}
+          autoDemo={true}
+          autoSpeed={0.5}
+          autoIntensity={2.2}
+          takeoverDuration={0.25}
+          autoResumeDelay={3000}
+          autoRampDuration={0.6}
+        />
+      </div>
       
       <div className="mx-auto w-[90%]">
         <AnimatedSection animation="fadeInUp" className="relative z-10">
@@ -556,9 +506,9 @@ const EnhancedServiceCards: React.FC = () => {
           </div>
         </AnimatedSection>
 
-        {/* Service Carousel Container - With Background like Contact Form */}
+        {/* Service Carousel Container */}
         <AnimatedSection animation="fadeInUp" delay={0.4} className="relative z-10 mt-12">
-          <div className="relative rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl bg-black/60 backdrop-blur-md">
+          <div className="relative rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl bg-black/50 backdrop-blur-sm">
             <div className="space-y-8">
               <AnimatedSection animation="fadeInUp" delay={0.6}>
                 <div className="text-center">
@@ -607,7 +557,7 @@ const EnhancedServiceCards: React.FC = () => {
 
       
       {/* CTA Section with Animated Button */}
-      <AnimatedSection animation="fadeInUp" delay={0.6} className="relative z-10 mt-8">
+      {/* <AnimatedSection animation="fadeInUp" delay={0.6} className="relative z-10 mt-8">
         <div className="text-center">
           <motion.button
             onClick={() => {
@@ -621,7 +571,7 @@ const EnhancedServiceCards: React.FC = () => {
             Get Started Today
           </motion.button>
         </div>
-      </AnimatedSection>
+      </AnimatedSection> */}
 
         {/* Ready to Transform Section */}
         <AnimatedSection animation="fadeInUp" delay={0.8} className="relative z-10 mt-20">

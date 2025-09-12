@@ -215,12 +215,10 @@ section {
 
 /* Dark theme specific overrides */
 .dark body {
-  background: #0a0a0a;
   color: #e6e7eb;
 }
 
 .light body {
-  background: #ffffff;
   color: #171717;
 }
 
@@ -349,11 +347,11 @@ section {
     @apply border-gray-200 outline-gray-300/50;
  }
   body {
-    @apply bg-slate-900 text-white;
- }
+    @apply text-white;
+  }
 }
 
-/* Video Background Optimizations */
+/* Chrome-optimized Video Background */
 video {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
@@ -364,15 +362,36 @@ video {
   will-change: transform;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hardware acceleration for video containers */
+/* Chrome-optimized Hardware acceleration for video containers */
 .video-container {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform;
+  isolation: isolate;
+  contain: layout style paint;
+}
+
+/* Chrome-specific background fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .video-container {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+  
+  video {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
 }
 
 /* Smooth video transitions */
@@ -385,18 +404,7 @@ video {
   opacity: 1;
 }
 
-/* Background Animations */
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+/* Background Animations - Removed gradientShift as it's no longer used */
 
 @keyframes patternMove {
   0% {
@@ -416,18 +424,72 @@ video {
   }
 }
 
-/* Ensure background covers full viewport */
+/* Chrome-optimized background */
 html, body {
   min-height: 100vh;
   background: #0a0a0a;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
-/* Fallback background for Chrome compatibility */
+/* Chrome-optimized fallback background */
 body {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
-  background-attachment: fixed;
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+  background: #0a0a0a;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Chrome-specific background layer fixes */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  body {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+  
+  /* Force hardware acceleration for background layers */
+  .absolute {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+}
+
+/* Chrome-specific background rendering fixes */
+@supports (-webkit-appearance: none) {
+  /* Chrome-specific background fixes */
+  body {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+  
+  /* Force proper layering in Chrome */
+  .relative {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /* Chrome video optimization */
+  video {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
 }
 
 /* Reduce motion for users who prefer it */
@@ -444,7 +506,6 @@ body {
   
   body {
     animation: none;
-    background: #0a0a0a;
   }
   
   * {

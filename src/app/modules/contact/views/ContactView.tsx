@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import Waves from '../../../../Components/Waves';
+import ThreadsBackground from '../../../components/animations/ThreadsBackground';
 
 const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -51,51 +51,21 @@ const ContactView: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full pt-32 pb-24 bg-transparent">
-      {/* Fallback Background Gradient */}
-      <div 
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          zIndex: -30,
-          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)',
-          backgroundSize: '400% 400%',
-          animation: 'gradientShift 15s ease infinite'
-        }}
-      />
-      
-      {/* Animated Background Pattern */}
-      <div 
-        className="absolute inset-0 w-full h-full opacity-10"
-        style={{ 
-          zIndex: -25,
-          backgroundImage: `
-            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%)
-          `,
-          backgroundSize: '100% 100%',
-          animation: 'patternMove 20s ease-in-out infinite'
-        }}
-      />
+    <div className="relative w-full min-h-screen bg-black overflow-hidden">
+      {/* Threads Background with Orange Color */}
+      <div className="absolute inset-0 w-full h-full">
+        <ThreadsBackground
+          color="#FF6B35"
+          intensity={0.6}
+          amplitude={1.2}
+          distance={0.5}
+          enableMouseInteraction={true}
+          className="opacity-80"
+        />
+      </div>
 
-      {/* Waves Background */}
-      <Waves
-        lineColor="rgba(255,255,255,0.6)"
-        backgroundColor="transparent"
-        waveSpeedX={0.01}
-        waveSpeedY={0.005}
-        waveAmpX={28}
-        waveAmpY={12}
-        friction={0.93}
-        tension={0.006}
-        maxCursorMove={90}
-        xGap={12}
-        yGap={36}
-        lineWidth={0.5}
-        opacity={0.12}
-        className="absolute inset-0 -z-10"
-      />
-      <div className="mx-auto w-[90%]">
+      {/* Content Container */}
+      <div className="relative z-10 mx-auto w-[90%] pt-32 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

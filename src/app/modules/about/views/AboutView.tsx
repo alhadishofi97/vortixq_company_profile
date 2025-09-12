@@ -2,12 +2,10 @@
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
-import FloatingElements from "../../../components/animations/FloatingElements";
-import GlowingOrb from "../../../components/animations/GlowingOrb";
+import Orb from "../../../components/animations/Orb";
 
 const About = () => {
   const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const videoScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.1, 1]);
 
   const features = [
@@ -18,63 +16,20 @@ const About = () => {
   ];
 
   return (
-    <div className="relative mx-auto w-[90%] pt-32 pb-24 bg-transparent overflow-hidden">
-      {/* Fallback Background Gradient */}
+    <div className="relative w-full min-h-screen bg-black overflow-hidden">
+      {/* Black Background - Full Width */}
       <div 
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full bg-black"
         style={{ 
-          zIndex: -30,
-          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)',
-          backgroundSize: '400% 400%',
-          animation: 'gradientShift 15s ease infinite'
-        }}
-      />
-      
-      {/* Animated Background Pattern */}
-      <div 
-        className="absolute inset-0 w-full h-full opacity-10"
-        style={{ 
-          zIndex: -25,
-          backgroundImage: `
-            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%)
-          `,
-          backgroundSize: '100% 100%',
-          animation: 'patternMove 20s ease-in-out infinite'
+          zIndex: 0,
+          backgroundColor: '#000000'
         }}
       />
 
-      {/* Enhanced Animated Background */}
-      <motion.div 
-        style={{ y: backgroundY }}
-        className="absolute inset-0 -z-20"
-      >
-        <FloatingElements count={20} />
-      </motion.div>
-      
-      {/* Glowing Orbs */}
-      <GlowingOrb 
-        size={350} 
-        color="brand-highlight1" 
-        intensity={0.15}
-        className="top-0 right-1/4 -z-10"
-      />
-      <GlowingOrb 
-        size={400} 
-        color="brand-secondary" 
-        intensity={0.1}
-        className="bottom-0 left-1/4 -z-10"
-      />
-      <GlowingOrb 
-        size={250} 
-        color="brand-highlight1" 
-        intensity={0.08}
-        className="top-1/2 right-10 -z-10"
-      />
-
-      <AnimatedSection animation="fadeInUp" className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
+      {/* Content Container - Following existing width */}
+      <div className="relative z-10 mx-auto w-[90%] pt-32 pb-24">
+        <AnimatedSection animation="fadeInUp">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
           {/* Left Section - Text Content */}
           <AnimatedSection animation="fadeInLeft" delay={0.2}>
             <div className="text-left">
@@ -173,45 +128,32 @@ const About = () => {
           </div>
           </AnimatedSection>
 
-          {/* Right Section - Enhanced Video Background */}
+          {/* Right Section - Orb Animation */}
           <AnimatedSection animation="fadeInRight" delay={0.4}>
             <div className="flex justify-center lg:justify-end">
               <motion.div 
-                className="relative w-full h-full rounded-3xl overflow-hidden"
+                className="relative w-full h-[600px] rounded-3xl overflow-hidden bg-black"
                 style={{ scale: videoScale }}
                 whileHover={{ 
                   scale: 1.05,
                   transition: { duration: 0.3 }
                 }}
               >
-                {/* Background Video */}
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover"
-                  width={200}
-                  height={200}
-                  preload="auto"
-                  onLoadStart={() => console.log('Video load started')}
-                  onLoadedData={() => console.log('Video data loaded')}
-                  onError={(e) => console.log('Video error:', e)}
-                >
-                  <source src="/videos/brain.mp4" type="video/mp4" />
-                </video>
-                
-                {/* Interactive Overlay */}
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-brand-highlight1/10 to-brand-secondary/10 opacity-0"
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
+                {/* Orb Animation */}
+                <div className="w-full h-full relative">
+                  <Orb
+                    hoverIntensity={0.5}
+                    rotateOnHover={true}
+                    hue={0}
+                    forceHoverState={false}
+                  />
+                </div>
               </motion.div>
             </div>
           </AnimatedSection>
-        </div>
-      </AnimatedSection>
+          </div>
+        </AnimatedSection>
+      </div>
     </div>
   );
 };

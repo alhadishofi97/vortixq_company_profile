@@ -40,11 +40,7 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${jetbrainsMono.variable} antialiased min-h-screen bg-background text-foreground container-responsive`}
       >
-        {/* Background layers inspired by peris.ai */}
-        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-grid-slate opacity-[0.12]" style={{ backgroundSize: '24px 24px' }} />
-          <div className="absolute inset-0 bg-radial-faded" />
-        </div>
+        {/* Background global yang menyebabkan penumpukan dihilangkan untuk memberi ruang ke background per-section (LiquidEther) */}
         <ThemeProvider>
           {children}
         </ThemeProvider>

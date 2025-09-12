@@ -1,18 +1,10 @@
 "use client";
 import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-// import Image from "next/image";
-// import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
-import FloatingElements from "../../../components/animations/FloatingElements";
-import GlowingOrb from "../../../components/animations/GlowingOrb";
 import ProductCarousel from "../../../components/animations/ProductCarousel";
 
 const ProductsView: React.FC = () => {
-  // const router = useRouter();
-  const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  // const imageRotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
   
 
   // Product data for carousel - only AIRIS
@@ -53,61 +45,18 @@ const ProductsView: React.FC = () => {
 
 
   return (
-    <div className="relative mx-auto w-[90%] pt-32 pb-24 bg-transparent overflow-visible">
-      {/* Fallback Background Gradient */}
-      <div 
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          zIndex: -30,
-          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)',
-          backgroundSize: '400% 400%',
-          animation: 'gradientShift 15s ease infinite'
-        }}
-      />
+    <div className="relative w-full min-h-screen bg-black overflow-hidden">
+      {/* Black Background - Full Width */}
+      <div className="absolute inset-0 w-full h-full bg-black" />
       
-      {/* Animated Background Pattern */}
-      <div 
-        className="absolute inset-0 w-full h-full opacity-10"
-        style={{ 
-          zIndex: -25,
-          backgroundImage: `
-            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%)
-          `,
-          backgroundSize: '100% 100%',
-          animation: 'patternMove 20s ease-in-out infinite'
-        }}
-      />
-
-      {/* Enhanced Animated Background */}
-      <motion.div 
-        style={{ y: backgroundY }}
-        className="absolute inset-0 -z-20"
-      >
-        <FloatingElements count={15} />
-      </motion.div>
-      
-      {/* Glowing Orbs */}
-      <GlowingOrb 
-        size={350} 
-        color="brand-highlight1" 
-        intensity={0.12}
-        className="top-0 -left-16 -z-10"
-      />
-      <GlowingOrb 
-        size={400} 
-        color="brand-secondary" 
-        intensity={0.1}
-        className="bottom-0 -right-24 -z-10"
-      />
-      
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="relative z-10"
-      >
+      {/* Content Container - Following existing width */}
+      <div className="relative z-10 mx-auto w-[90%] pt-32 pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative z-10"
+        >
         {/* Header Section */}
         <div className="mb-16 text-left">
           <div className="flex items-center gap-4 mb-6 text-left">
@@ -175,9 +124,8 @@ const ProductsView: React.FC = () => {
             </div>
           </div>
         </motion.div>
-
-      </motion.div>
-
+        </motion.div>
+      </div>
     </div>
   );
 };

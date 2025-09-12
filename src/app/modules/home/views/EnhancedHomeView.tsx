@@ -1,18 +1,17 @@
 "use client";
-import React, { useCallback, useEffect, useState, ReactNode, useRef } from "react";
+import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import { getHome } from "../controllers/HomeController";
 import { Container, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
-import Waves from "../../../../Components/Waves";
+import Particles from "../../../components/animations/Particles";
 import { motion } from "framer-motion";
 
 const EnhancedHome = () => {
   const [judul,setJudul] = useState<ReactNode>(null);
   const [subjudul,setSubJudul] = useState<ReactNode>(null);
   const [narasi,setNarasi] = useState<ReactNode>(null);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // Video state removed - video background disabled
   
   
 
@@ -123,181 +122,18 @@ const EnhancedHome = () => {
     getData();
   }, [getData]);
 
-  // Optimized video loading and play
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Set video quality and performance optimizations
-    video.defaultPlaybackRate = 1.0;
-    video.playbackRate = 1.0;
-    video.volume = 0; // Ensure muted
-    
-    // Intersection Observer for lazy loading
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && video.paused) {
-            video.play().catch((error) => {
-              console.error('🎬 Video play failed:', error);
-            });
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(video);
-
-    // Cleanup
-    return () => {
-      observer.disconnect();
-      if (video) {
-        video.pause();
-        video.currentTime = 0;
-      }
-    };
-  }, []);
-
-  // User interaction handler for autoplay policies
-  useEffect(() => {
-    const handleUserInteraction = () => {
-      if (videoRef.current && videoRef.current.paused) {
-        videoRef.current.play().catch((error) => {
-          console.error('🎬 Video play failed on user interaction:', error);
-        });
-      }
-    };
-
-    // Throttled event listeners
-    let timeoutId: NodeJS.Timeout;
-    const throttledHandler = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(handleUserInteraction, 100);
-    };
-
-    document.addEventListener('click', throttledHandler, { passive: true });
-    document.addEventListener('touchstart', throttledHandler, { passive: true });
-    document.addEventListener('scroll', throttledHandler, { passive: true });
-
-    return () => {
-      clearTimeout(timeoutId);
-      document.removeEventListener('click', throttledHandler);
-      document.removeEventListener('touchstart', throttledHandler);
-      document.removeEventListener('scroll', throttledHandler);
-    };
-  }, []);
+  // Video-related useEffect removed - video background disabled
 
   return (
-    <div className="relative min-h-screen overflow-hidden pt-20">
-      {/* Fallback Background Gradient */}
-      <div 
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          zIndex: 0,
-          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%)',
-          backgroundSize: '400% 400%',
-          animation: 'gradientShift 15s ease infinite'
-        }}
-      />
-      
-      {/* Animated Background Pattern */}
-      <div 
-        className="absolute inset-0 w-full h-full opacity-20"
-        style={{ 
-          zIndex: 1,
-          backgroundImage: `
-            radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 40% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%)
-          `,
-          backgroundSize: '100% 100%',
-          animation: 'patternMove 20s ease-in-out infinite'
-        }}
+    <div className="relative min-h-screen overflow-hidden pt-20 bg-black">
+      {/* Interactive Particles Background */}
+      <Particles 
+        className="absolute inset-0 pointer-events-none" 
+        quantity={50} 
+        staticity={50}
+        ease={50}
       />
 
-      {/* Waves Background */}
-      <Waves
-        lineColor="rgba(255,255,255,0.6)"
-        backgroundColor="transparent"
-        waveSpeedX={0.01}
-        waveSpeedY={0.005}
-        waveAmpX={28}
-        waveAmpY={12}
-        friction={0.93}
-        tension={0.006}
-        maxCursorMove={90}
-        xGap={12}
-        yGap={36}
-        lineWidth={1}
-        opacity={0.2}
-        className="absolute inset-0"
-        style={{ zIndex: 1 }}
-      />
-
-      {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full video-container" style={{ zIndex: 2 }}>
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover video-fade-in"
-          preload="auto"
-          poster="/videos/bg.mp4"
-          style={{ 
-            zIndex: 2,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: videoLoaded ? 0.7 : 0,
-            transition: 'opacity 1s ease-in-out',
-            display: 'block',
-            visibility: 'visible',
-            pointerEvents: 'none',
-            transform: 'translateZ(0)',
-            willChange: videoLoaded ? 'auto' : 'transform',
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-            WebkitTransform: 'translateZ(0)',
-            WebkitPerspective: '1000px',
-            perspective: '1000px',
-            WebkitFontSmoothing: 'antialiased',
-            imageRendering: 'crisp-edges',
-            mixBlendMode: 'screen'
-          }}
-          onLoadStart={() => {
-            setVideoLoaded(false);
-          }}
-          onCanPlay={() => {
-            setVideoLoaded(true);
-          }}
-          onLoadedData={() => {
-            setVideoLoaded(true);
-          }}
-          onError={(e) => {
-            console.error('🎬 Video error:', e);
-            setVideoLoaded(false);
-          }}
-          onPlay={() => {
-            setVideoLoaded(true);
-          }}
-          onWaiting={() => {
-            setVideoLoaded(false);
-          }}
-          onStalled={() => {
-            setVideoLoaded(false);
-          }}
-        >
-          <source src="/videos/bg.mp4" type="video/mp4" />
-          <source src="/videos/bg.webm" type="video/webm" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
       
       {/* Glowing Orbs */}
       {/* <GlowingOrb 
@@ -316,7 +152,7 @@ const EnhancedHome = () => {
       /> */}
       
       {/* Hero Content with Enhanced Animations */}
-      <div className="relative" style={{ zIndex: 10 }}>
+      <div className="relative" style={{ zIndex: 10, position: 'relative' }}>
         <AnimatedSection animation="scale" duration={1.2}>
         <Box
           sx={{
@@ -342,6 +178,10 @@ const EnhancedHome = () => {
               {subjudul}
             </AnimatedSection>
             
+            {/* Animated Description */}
+            <AnimatedSection animation="fadeInUp" delay={0.5}>
+              {narasi}
+            </AnimatedSection>
             
             {/* Animated CTA Button */}
             <AnimatedSection animation="fadeInUp" delay={0.6}>
