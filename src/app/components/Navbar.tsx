@@ -18,33 +18,34 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Show navbar when scrolling up or at the top
-      if (currentScrollY < lastScrollY || currentScrollY < 100) {
-        setIsVisible(true);
-      } 
-      // Hide navbar when scrolling down (but not at the very top)
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const scrollDifference = currentScrollY - lastScrollY;
+          
+          // Show navbar when scrolling up or at the top
+          if (scrollDifference < 0 || currentScrollY < 50) {
+            setIsVisible(true);
+          } 
+          // Hide navbar when scrolling down (but not at the very top)
+          else if (scrollDifference > 0 && currentScrollY > 50) {
+            setIsVisible(false);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
       }
-      
-      setLastScrollY(currentScrollY);
     };
 
-    // Throttle scroll events for better performance
-    let timeoutId: NodeJS.Timeout;
-    const throttledHandleScroll = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(handleScroll, 10);
-    };
-
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('scroll', throttledHandleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [lastScrollY]);
 
