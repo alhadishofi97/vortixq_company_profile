@@ -56,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   return (
     <motion.header 
       className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md"
-      initial={{ y: -100, opacity: 0 }}
+      initial={{ y: 0, opacity: 1 }}
       animate={{ 
         y: isVisible ? 0 : -100,
         opacity: isVisible ? 1 : 0
