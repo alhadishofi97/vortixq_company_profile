@@ -26,12 +26,16 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           const currentScrollY = window.scrollY;
           const scrollDifference = currentScrollY - lastScrollY;
           
-          // Show navbar when scrolling up or at the top
-          if (scrollDifference < 0 || currentScrollY < 50) {
+          // Always show navbar at the top
+          if (currentScrollY < 10) {
             setIsVisible(true);
-          } 
-          // Hide navbar when scrolling down (but not at the very top)
-          else if (scrollDifference > 0 && currentScrollY > 50) {
+          }
+          // Show navbar when scrolling up (with minimum threshold)
+          else if (scrollDifference < -5) {
+            setIsVisible(true);
+          }
+          // Hide navbar when scrolling down (with minimum threshold)
+          else if (scrollDifference > 5) {
             setIsVisible(false);
           }
           
