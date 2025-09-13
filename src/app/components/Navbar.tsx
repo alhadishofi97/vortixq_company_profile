@@ -30,12 +30,12 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           if (currentScrollY < 10) {
             setIsVisible(true);
           }
-          // Show navbar when scrolling up (with minimum threshold)
-          else if (scrollDifference < -5) {
+          // Show navbar when scrolling up (with threshold)
+          else if (scrollDifference < -2) {
             setIsVisible(true);
           }
-          // Hide navbar when scrolling down (with minimum threshold)
-          else if (scrollDifference > 5) {
+          // Hide navbar when scrolling down (with threshold)
+          else if (scrollDifference > 2) {
             setIsVisible(false);
           }
           
