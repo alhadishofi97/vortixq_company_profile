@@ -111,23 +111,23 @@ export default function SmoothScrollNavbarDemo() {
       {/* <GlassMorphismBackground /> */}     
       <Navbar sections={SECTIONS} activeId={activeId} onNavClick={handleNavClick} />
 
-      <section id="home" className="scroll-mt-30 min-h-[92vh] border-t border-white/5">
+      <section id="home" className="scroll-mt-30 min-h-[92vh]">
         <Home/>
       </section>
-      <section id="about" className="scroll-mt-24 border-t border-white/5">
+      <section id="about" className="scroll-mt-24">
           {<About/>}
       </section>
 
       {/* Services di-home dihapus, gunakan halaman /services */}
-      <section id="services" className="scroll-mt-32 border-t border-white/5">
+      <section id="services" className="scroll-mt-32">
         <ServiceCards/>
       </section>
 
       {/* Produk opsional, bisa diaktifkan jika diperlukan */}
-      <section id="products" className="scroll-mt-24 border-t border-white/5">
+      <section id="products" className="scroll-mt-24">
         <ProductsView/>
       </section>
-      <section id="contact" className="scroll-mt-24 border-t border-white/5">
+      <section id="contact" className="scroll-mt-24">
           <ContactView/>
       </section>
 
