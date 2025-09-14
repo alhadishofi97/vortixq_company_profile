@@ -14,52 +14,16 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
-  useEffect(() => {
-    let ticking = false;
-    
-    const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          const scrollDifference = currentScrollY - lastScrollY;
-          
-          // Always show navbar at the top
-          if (currentScrollY < 10) {
-            setIsVisible(true);
-          }
-          // Show navbar when scrolling up (with threshold)
-          else if (scrollDifference < -1) {
-            setIsVisible(true);
-          }
-          // Hide navbar when scrolling down (with threshold)
-          else if (scrollDifference > 1) {
-            setIsVisible(false);
-          }
-          
-          setLastScrollY(currentScrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollY]);
+  // Navbar always visible - no scroll detection needed
 
   return (
     <motion.header 
       className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md"
       initial={{ y: 0, opacity: 1 }}
       animate={{ 
-        y: isVisible ? 0 : -100,
-        opacity: isVisible ? 1 : 0
+        y: 0,
+        opacity: 1
       }}
       transition={{ 
         duration: 0.4, 
@@ -73,12 +37,12 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           className="flex items-center gap-3"
           initial={{ opacity: 0, x: -20 }}
           animate={{ 
-            opacity: isVisible ? 1 : 0,
-            x: isVisible ? 0 : -20
+            opacity: 1,
+            x: 0
           }}
           transition={{ 
             duration: 0.5, 
-            delay: isVisible ? 0.1 : 0,
+            delay: 0.1,
             ease: [0.25, 0.46, 0.45, 0.94]
           }}
         >
@@ -96,13 +60,13 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           className="hidden md:flex items-center gap-2 p-2 bg-black/30 backdrop-blur-sm rounded-full border border-white/10"
           initial={{ opacity: 0, y: -10, scale: 0.95 }}
           animate={{ 
-            opacity: isVisible ? 1 : 0,
-            y: isVisible ? 0 : -10,
-            scale: isVisible ? 1 : 0.95
+            opacity: 1,
+            y: 0,
+            scale: 1
           }}
           transition={{ 
             duration: 0.5, 
-            delay: isVisible ? 0.2 : 0,
+            delay: 0.2,
             ease: [0.25, 0.46, 0.45, 0.94]
           }}
         >
@@ -146,12 +110,12 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           onClick={() => setMobileOpen((v) => !v)}
           initial={{ opacity: 0, x: 20 }}
           animate={{ 
-            opacity: isVisible ? 1 : 0,
-            x: isVisible ? 0 : 20
+            opacity: 1,
+            x: 0
           }}
           transition={{ 
             duration: 0.5, 
-            delay: isVisible ? 0.3 : 0,
+            delay: 0.3,
             ease: [0.25, 0.46, 0.45, 0.94]
           }}
           whileHover={{ scale: 1.05 }}
