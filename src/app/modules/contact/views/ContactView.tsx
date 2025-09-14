@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import ThreadsBackground from '../../../components/animations/ThreadsBackground';
+import WavesBackground from '../../../components/animations/WavesBackground';
 
 const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -51,21 +51,19 @@ const ContactView: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-black overflow-hidden">
-      {/* Threads Background with Orange Color */}
-      <div className="absolute inset-0 w-full h-full">
-        <ThreadsBackground
+    <div className="relative w-full min-h-screen bg-black" style={{ width: '100vw' }}>
+      {/* Waves Background - Section Only */}
+      <div className="absolute inset-0 w-full h-full" style={{ width: '100vw' }}>
+        <WavesBackground
           color="#FF6B35"
-          intensity={0.6}
-          amplitude={1.2}
-          distance={0.5}
-          enableMouseInteraction={true}
-          className="opacity-80"
+          opacity={0.6}
+          speed={1}
+          lineWidth={2}
         />
       </div>
-
+      
       {/* Content Container */}
-      <div className="relative z-10 mx-auto w-[90%] pt-32 pb-24">
+      <div className="relative z-20 mx-auto w-[90%] pt-32 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -98,7 +96,7 @@ const ContactView: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-white font-medium text-lg">Email</h3>
-                <p className="text-slate-300">jane.teh@vortiqx.com</p>
+                <p className="text-slate-300">contact@vortiqx.com</p>
               </div>
             </div>
 

@@ -58,7 +58,7 @@ const EnhancedServiceCards: React.FC = () => {
       case "cdo":
         return "Advanced cyber defense and operational services designed to protect your organization from evolving threats and ensure continuous security monitoring.";
       case "aisa":
-        return "AI-powered security advisory services leveraging cutting-edge artificial intelligence to enhance your organization&apos;s security posture and threat detection capabilities.";
+        return "AI-powered security advisory services leveraging cutting-edge artificial intelligence to enhance your security posture and threat detection capabilities.";
       default:
         return "Comprehensive cybersecurity advisory services to help organizations build robust security frameworks and maintain compliance with industry standards.";
     }
@@ -140,9 +140,9 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "01 - Compliance Assessment",
-      shortDescription: "An advisory service to ensure the organization&apos;s adherence to industry standards and regulatory compliance.",
-      fullDescription: "An advisory service to ensure the organization&apos;s adherence to industry standards and regulatory compliance. Provide gap report and recommendation for improvement.",
-      className: "bg-gradient-to-br from-blue-900/80 to-cyan-900/80 border-blue-500/60"
+      shortDescription: "An advisory service to ensure the adherence to industry standards and regulatory compliance.",
+      fullDescription: "An advisory service to ensure the adherence to industry standards and regulatory compliance. Provide gap report and recommendation for improvement.",
+      className: "bg-black border-white/10"
     },
     {
       id: "cyber-maturity-assessment",
@@ -152,9 +152,9 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "02 - Cyber Maturity Assessment (CMA)",
-      shortDescription: "A cybersecurity maturity assessment is a systematic evaluation of an organization&apos;s cybersecurity posture.",
-      fullDescription: "A cybersecurity maturity assessment is a systematic evaluation of an organization&apos;s cybersecurity posture, capabilities, and processes. It aims to determine the organization&apos;s current level of maturity in managing and mitigating cybersecurity risks.",
-      className: "bg-gradient-to-br from-green-900/80 to-emerald-900/80 border-green-500/60"
+      shortDescription: "A cybersecurity maturity assessment is a systematic evaluation of cybersecurity posture.",
+      fullDescription: "A cybersecurity maturity assessment is a systematic evaluation of cybersecurity posture, capabilities, and processes. It aims to determine the current level of maturity in managing and mitigating cybersecurity risks.",
+      className: "bg-black border-white/10"
     },
     {
       id: "isms-advisory",
@@ -166,7 +166,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "03 - ISMS Advisory (ISO 27001)",
       shortDescription: "Guiding organizations through ISO 27001 certification via gap analysis, policy development, and risk assessment.",
       fullDescription: "Guiding organizations through ISO 27001 certification via gap analysis, policy development, risk assessment, implementation guidance, audit preparation, and continuous improvement, ensuring robust information security",
-      className: "bg-gradient-to-br from-purple-900/80 to-violet-900/80 border-purple-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "enterprise-security-architecture",
@@ -177,8 +177,8 @@ const EnhancedServiceCards: React.FC = () => {
       ),
       title: "04 - Enterprise Security Architecture",
       shortDescription: "Enterprise security architecture provides the blueprint for a comprehensive defense.",
-      fullDescription: "Enterprise security architecture provides the blueprint for a comprehensive defense, encompassing all layers of protection to safeguard an organization&apos;s assets and data.",
-      className: "bg-gradient-to-br from-amber-900/80 to-orange-900/80 border-amber-500/60"
+      fullDescription: "Enterprise security architecture provides the blueprint for a comprehensive defense, encompassing all layers of protection to safeguard assets and data.",
+      className: "bg-black border-white/10"
     },
     {
       id: "cyber-transformation-m-a",
@@ -190,7 +190,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "05 - Cyber Transformation Advisory (M&A)",
       shortDescription: "Cyber transformation in M&A ensures secure integration through risk assessment and technology alignment.",
       fullDescription: "Cyber transformation in M&A ensures secure integration through risk assessment, technology alignment, and security control harmonization, minimizing vulnerabilities and maximizing operational synergy",
-      className: "bg-gradient-to-br from-red-900/80 to-rose-900/80 border-red-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "cyber-risk-management",
@@ -200,9 +200,9 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "06 - Cyber Risk Management",
-      shortDescription: "Cyber risk management focuses on proactively managing and reducing an organization&apos;s exposure to cyber threats.",
-      fullDescription: "Cyber risk management focuses on proactively managing and reducing an organization&apos;s exposure to cyber threats. Activity includes identifies, assesses, and mitigates potential cyber threats to protect an organization&apos;s assets.",
-      className: "bg-gradient-to-br from-yellow-900/80 to-amber-900/80 border-yellow-500/60"
+      shortDescription: "Cyber risk management focuses on proactively managing and reducing exposure to cyber threats.",
+      fullDescription: "Cyber risk management focuses on proactively managing and reducing exposure to cyber threats. Activity includes identifies, assesses, and mitigates potential cyber threats to protect assets.",
+      className: "bg-black border-white/10"
     },
     {
       id: "third-party-risk-assessment",
@@ -214,7 +214,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "07 - Third Party Risk Assessment",
       shortDescription: "Third-party risk assessment focuses on assessing and managing the security risks introduced by external parties.",
       fullDescription: "Third-party risk assessment focuses on assessing and managing the security risks introduced by external parties. This is includes evaluates the cybersecurity posture of vendors and partners to minimize supply chain vulnerabilities.",
-      className: "bg-gradient-to-br from-indigo-900/80 to-purple-900/80 border-indigo-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "ics-ot-security-assurance",
@@ -226,7 +226,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "08 - ICS OT Security Assurance",
       shortDescription: "Industrial Control Systems and Operational Technology security assurance services.",
       fullDescription: "Industrial Control Systems and Operational Technology security assurance services to protect critical infrastructure and industrial environments from cyber threats.",
-      className: "bg-gradient-to-br from-teal-900/80 to-cyan-900/80 border-teal-500/60"
+      className: "bg-black border-white/10"
     }
   ];
 
@@ -242,7 +242,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "01 - SOC Maturity Assessment",
       shortDescription: "SOC maturity review analyzes current SOC operations, providing recommendations to enhance threat detection and response.",
       fullDescription: "SOC maturity review analyzes current SOC operations, providing recommendations to enhance threat detection and response.",
-      className: "bg-gradient-to-br from-blue-900/80 to-cyan-900/80 border-blue-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "cyber-security-operation-centre",
@@ -254,7 +254,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "02 - Cyber-Security Operation Centre (C-SOC)",
       shortDescription: "Cyber Security Operation Center (C-SOC) provides a lean, technologically advanced approach to security.",
       fullDescription: "Cyber Security Operation Center (C-SOC) provides a lean, technologically advanced approach to security, offering cost-efficient, scalable, and future-proof managed security services.",
-      className: "bg-gradient-to-br from-green-900/80 to-emerald-900/80 border-green-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "table-top-exercise",
@@ -266,7 +266,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "03 - Table-Top Exercise",
       shortDescription: "Tabletop exercises simulate cyber incidents to test response plans and improve team coordination.",
       fullDescription: "Tabletop exercises simulate cyber incidents to test response plans and improve team coordination, using frameworks like NIST or MITRE ATT&CK to structure realistic scenarios and identify vulnerabilities",
-      className: "bg-gradient-to-br from-purple-900/80 to-violet-900/80 border-purple-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "compromise-assessment",
@@ -278,7 +278,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "04 - Compromise Assessment",
       shortDescription: "Compromise assessments proactively identify existing or past security breaches within your environment.",
       fullDescription: "Compromise assessments proactively identify existing or past security breaches within your environment, uncovering indicators of compromise (IOCs) and assessing the scope of potential damage",
-      className: "bg-gradient-to-br from-amber-900/80 to-orange-900/80 border-amber-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "vulnerability-assessment-penetration-testing",
@@ -290,7 +290,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "05 - Vulnerability Assessment & Penetration Testing",
       shortDescription: "Vulnerability Assessment and Penetration Testing (VAPT) identifies and exploits security weaknesses in systems.",
       fullDescription: "Vulnerability Assessment and Penetration Testing (VAPT) identifies and exploits security weaknesses in systems and applications, providing a detailed report of vulnerabilities and remediation recommendations",
-      className: "bg-gradient-to-br from-red-900/80 to-rose-900/80 border-red-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "red-teaming-exercise",
@@ -300,9 +300,9 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "06 - Red Teaming Exercise",
-      shortDescription: "Red teaming exercises simulate real-world, targeted attacks to evaluate an organization&apos;s security posture.",
-      fullDescription: "Red teaming exercises simulate real-world, targeted attacks to evaluate an organization&apos;s security posture and response capabilities, providing insights into potential weaknesses from an attacker&apos;s perspective.",
-      className: "bg-gradient-to-br from-yellow-900/80 to-amber-900/80 border-yellow-500/60"
+      shortDescription: "Red teaming exercises simulate real-world, targeted attacks to evaluate security posture.",
+      fullDescription: "Red teaming exercises simulate real-world, targeted attacks to evaluate security posture and response capabilities, providing insights into potential weaknesses from an attacker perspective.",
+      className: "bg-black border-white/10"
     },
     {
       id: "cyber-threat-intelligence",
@@ -314,7 +314,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "07 - Cyber Threat Intelligence",
       shortDescription: "Cyber threat intelligence provides actionable insights into emerging threats, enabling proactive defense strategies.",
       fullDescription: "Cyber threat intelligence provides actionable insights into emerging threats, enabling proactive defense strategies by gathering, analyzing, and disseminating information on adversary tactics, techniques, and procedures",
-      className: "bg-gradient-to-br from-indigo-900/80 to-purple-900/80 border-indigo-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "centralized-ai-enabled-data-lake",
@@ -326,7 +326,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "08 - Centralized AI-Enabled Data Lake Integration",
       shortDescription: "Automated AI data lake enablement and integration that allows all end points and other security tools logs ingestion.",
       fullDescription: "Automated AI data lake enablement and integration that allows all end points and other security tools logs ingestion, for enterprise asset visibility monitoring and correlation.",
-      className: "bg-gradient-to-br from-teal-900/80 to-cyan-900/80 border-teal-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "ransomware-prevention-deployment",
@@ -338,7 +338,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "09 - Ransomware Prevention Deployment",
       shortDescription: "Strategic deployment of multi-layered security controls to prevent ransomware infections and ensure business continuity.",
       fullDescription: "Strategic deployment of multi-layered security controls, including advanced threat detection, employee training, robust backups, and proactive patching, to prevent ransomware infections and ensure business continuity",
-      className: "bg-gradient-to-br from-pink-900/80 to-rose-900/80 border-pink-500/60"
+      className: "bg-black border-white/10"
     }
   ];
 
@@ -354,7 +354,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "01 - Double Diamond Framework",
       shortDescription: "The Double Diamond Framework for AI refers to the application of the Double Diamond design process.",
       fullDescription: "The Double Diamond Framework for AI refers to the application of the Double Diamond design process – Discover, Define, Develop, and Deliver – specifically to projects involving Artificial Intelligence.",
-      className: "bg-gradient-to-br from-blue-900/80 to-cyan-900/80 border-blue-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "knowledge-based-management",
@@ -366,7 +366,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "02 - Knowledge Based Management",
       shortDescription: "Knowledge-Based Management focuses on explicitly encoding knowledge in a structured format that AI can understand.",
       fullDescription: "Knowledge-Based Management focuses on explicitly encoding knowledge in a structured format that AI can understand, reason with, and learn from, rather than relying solely on pattern recognition from raw data.",
-      className: "bg-gradient-to-br from-green-900/80 to-emerald-900/80 border-green-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "small-language-model-training",
@@ -378,7 +378,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "03 - Small Language Model Training",
       shortDescription: "Small Language Model (SLM) Training for AI refers to the process of teaching a smaller-scale Artificial Intelligence model.",
       fullDescription: "Small Language Model (SLM) Training for AI refers to the process of teaching a smaller-scale Artificial Intelligence model to understand and generate human-like text. SLMs have significantly fewer parameters (typically under a few tens of billions) and are often trained on smaller, more focused datasets",
-      className: "bg-gradient-to-br from-purple-900/80 to-violet-900/80 border-purple-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "ai-integration-readiness-assessment",
@@ -388,9 +388,9 @@ const EnhancedServiceCards: React.FC = () => {
         </svg>
       ),
       title: "04 - AI Integration Readiness Assessment",
-      shortDescription: "The AI Integration Readiness Assessment is a comprehensive evaluation of an organization&apos;s preparedness.",
-      fullDescription: "The AI Integration Readiness Assessment is a comprehensive evaluation of an organization&apos;s preparedness to effectively adopt and integrate Artificial Intelligence technologies into its operations, products, and services.",
-      className: "bg-gradient-to-br from-amber-900/80 to-orange-900/80 border-amber-500/60"
+      shortDescription: "The AI Integration Readiness Assessment is a comprehensive evaluation of preparedness.",
+      fullDescription: "The AI Integration Readiness Assessment is a comprehensive evaluation of preparedness to effectively adopt and integrate Artificial Intelligence technologies into operations, products, and services.",
+      className: "bg-black border-white/10"
     },
     {
       id: "ai-consultancy-solution-architect",
@@ -402,7 +402,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "05 - AI Consultancy & Solution Architect",
       shortDescription: "AI Consultancy & Solution Architect Service offers expert guidance and design blueprints for organizations.",
       fullDescription: "AI Consultancy & Solution Architect Service offers expert guidance and design blueprints for organizations aiming to integrate artificial intelligence. This service involves close collaboration with clients to understand their business goals, define suitable AI solutions, and architect secure and scalable application designs",
-      className: "bg-gradient-to-br from-red-900/80 to-rose-900/80 border-red-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "ai-deployment-managed-service",
@@ -414,7 +414,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "06 - AI Deployment & Managed Service",
       shortDescription: "AI Deployment and Managed Services ensure the seamless transition of AI solutions into production.",
       fullDescription: "AI Deployment and Managed Services ensure the seamless transition of AI solutions into production and their continuous, optimal operation. This includes deployment, ongoing monitoring, maintenance, updates, security, and support, guaranteeing sustained reliability and value.",
-      className: "bg-gradient-to-br from-yellow-900/80 to-amber-900/80 border-yellow-500/60"
+      className: "bg-black border-white/10"
     },
     {
       id: "deepai-gpu",
@@ -426,7 +426,7 @@ const EnhancedServiceCards: React.FC = () => {
       title: "07 - DeepAI GPU",
       shortDescription: "The powerful GPU hardware that underpins DeepAI's AI services and the general importance of GPUs.",
       fullDescription: "The powerful GPU hardware that underpins DeepAI's AI services and the general importance of GPUs for performing the complex computations required in deep learning",
-      className: "bg-gradient-to-br from-indigo-900/80 to-purple-900/80 border-indigo-500/60"
+      className: "bg-black border-white/10"
     }
   ];
 
@@ -543,7 +543,7 @@ const EnhancedServiceCards: React.FC = () => {
               </AnimatedSection>
               
               <AnimatedSection animation="fadeInUp" delay={0.8}>
-                <div className="px-4 sm:px-6 lg:px-8">
+                <div className="px-2 sm:px-6 lg:px-8">
                   <SwipeServiceCarousel 
                     services={getCurrentServices()} 
                     autoSlideInterval={5000}
@@ -580,7 +580,7 @@ const EnhancedServiceCards: React.FC = () => {
             Ready to Transform Your Business?
           </h2>
           <p className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Let&apos;s discuss how our AI integration and cybersecurity services can help your organization achieve its goals.
+            Let us discuss how our AI integration and cybersecurity services can help your organization achieve its goals.
           </p>
           <motion.button
             onClick={() => {

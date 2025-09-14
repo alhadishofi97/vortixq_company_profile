@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="border-t border-white/10 bg-black/60 backdrop-blur-sm">
+    <footer className="border-t border-white/10 bg-black">
       <div className="mx-auto w-[90%] py-10 sm:py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 lg:gap-16 text-white/80">
           {/* Brand */}

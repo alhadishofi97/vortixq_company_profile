@@ -78,7 +78,7 @@ const ProductsView: React.FC = () => {
         {/* Our Products Carousel Section */}
           <div className="mb-16">
             <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-8 text-center">
-            Our Products
+            {/* Our Products */}
             </h3>
             <p className="text-sm xs:text-base sm:text-lg text-slate-300 mb-12 text-center max-w-3xl mx-auto">
               Discover our comprehensive suite of AI-native cybersecurity and compliance solutions designed to protect and empower your organization.

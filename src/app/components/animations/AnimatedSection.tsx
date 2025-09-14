@@ -20,7 +20,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   staggerChildren = 0.1
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-50px", amount: 0.2 });
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
@@ -33,33 +33,68 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
     switch (animation) {
       case "fadeInUp":
         return {
-          initial: { opacity: 0, y: 60 },
-          animate: isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 },
-          transition: { duration, delay }
+          initial: { opacity: 0, y: 40 },
+          animate: isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 },
+          transition: { 
+            duration, 
+            delay, 
+            ease: [0.25, 0.46, 0.45, 0.94],
+            type: "spring",
+            stiffness: 100,
+            damping: 15
+          }
         };
       case "fadeInLeft":
         return {
-          initial: { opacity: 0, x: -60 },
-          animate: isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 },
-          transition: { duration, delay }
+          initial: { opacity: 0, x: -40 },
+          animate: isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 },
+          transition: { 
+            duration, 
+            delay, 
+            ease: [0.25, 0.46, 0.45, 0.94],
+            type: "spring",
+            stiffness: 100,
+            damping: 15
+          }
         };
       case "fadeInRight":
         return {
-          initial: { opacity: 0, x: 60 },
-          animate: isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 60 },
-          transition: { duration, delay }
+          initial: { opacity: 0, x: 40 },
+          animate: isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 },
+          transition: { 
+            duration, 
+            delay, 
+            ease: [0.25, 0.46, 0.45, 0.94],
+            type: "spring",
+            stiffness: 100,
+            damping: 15
+          }
         };
       case "scale":
         return {
-          initial: { opacity: 0, scale: 0.8 },
-          animate: isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 },
-          transition: { duration, delay }
+          initial: { opacity: 0, scale: 0.9 },
+          animate: isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 },
+          transition: { 
+            duration, 
+            delay, 
+            ease: [0.25, 0.46, 0.45, 0.94],
+            type: "spring",
+            stiffness: 120,
+            damping: 18
+          }
         };
       default:
         return {
-          initial: { opacity: 0, y: 60 },
-          animate: isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 },
-          transition: { duration, delay }
+          initial: { opacity: 0, y: 40 },
+          animate: isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 },
+          transition: { 
+            duration, 
+            delay, 
+            ease: [0.25, 0.46, 0.45, 0.94],
+            type: "spring",
+            stiffness: 100,
+            damping: 15
+          }
         };
     }
   };

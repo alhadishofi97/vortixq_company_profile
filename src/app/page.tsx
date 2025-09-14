@@ -82,7 +82,7 @@ function useScrollSpy(ids: string[], options: IntersectionObserverInit = {}): st
 
 export default function SmoothScrollNavbarDemo() {
   const router = useRouter();
-  const sectionIds = useMemo(() => ["home","about","contact"], []);
+  const sectionIds = useMemo(() => ["home","about","services","products","contact"], []);
   const activeId = useScrollSpy(sectionIds);
 
   const handleNavClick = (id: string) => {

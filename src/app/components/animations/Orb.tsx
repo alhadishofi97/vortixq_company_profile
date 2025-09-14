@@ -8,28 +8,31 @@ interface OrbProps {
   hoverIntensity?: number;
   rotateOnHover?: boolean;
   forceHoverState?: boolean;
+  orangeVariant?: 'sunset' | 'vibrant' | 'golden' | 'default';
 }
 
 export default function Orb({
   hue = 0,
   hoverIntensity = 0.2,
   rotateOnHover = true,
-  forceHoverState = false
+  forceHoverState = false,
+  orangeVariant = 'default'
 }: OrbProps) {
   const ctnDom = useRef<HTMLDivElement>(null);
 
-  const vert = /* glsl */ `
-    precision highp float;
-    attribute vec2 position;
-    attribute vec2 uv;
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = vec4(position, 0.0, 1.0);
-    }
-  `;
+  useEffect(() => {
+    const vert = /* glsl */ `
+      precision highp float;
+      attribute vec2 position;
+      attribute vec2 uv;
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = vec4(position, 0.0, 1.0);
+      }
+    `;
 
-  const frag = /* glsl */ `
+    const frag = /* glsl */ `
     precision highp float;
 
     uniform float iTime;
@@ -38,6 +41,7 @@ export default function Orb({
     uniform float hover;
     uniform float rot;
     uniform float hoverIntensity;
+    uniform int orangeVariant;
     varying vec2 vUv;
 
     vec3 rgb2yiq(vec3 c) {
@@ -107,9 +111,42 @@ export default function Orb({
       return vec4(colorIn.rgb / (a + 1e-5), a);
     }
     
-    const vec3 baseColor1 = vec3(0.611765, 0.262745, 0.996078);
-    const vec3 baseColor2 = vec3(0.298039, 0.760784, 0.913725);
-    const vec3 baseColor3 = vec3(0.062745, 0.078431, 0.600000);
+    // Orange gradient colors inspired by the screenshot
+    vec3 getOrangeColors(int variant) {
+      if (variant == 1) { // sunset
+        return vec3(0.847059, 0.262745, 0.082353);     // Deep red-orange (#d84315)
+      } else if (variant == 2) { // vibrant
+        return vec3(0.901961, 0.341176, 0.133333);     // Red-orange (#ff5722)
+      } else if (variant == 3) { // golden
+        return vec3(1.0, 0.756863, 0.027451);          // Golden yellow (#ffc107)
+      } else { // default
+        return vec3(1.0, 0.419608, 0.207843);          // Deep orange-red (#ff6b35)
+      }
+    }
+    
+    vec3 getOrangeColors2(int variant) {
+      if (variant == 1) { // sunset
+        return vec3(1.0, 0.239216, 0.0);               // Bright red-orange (#ff3d00)
+      } else if (variant == 2) { // vibrant
+        return vec3(1.0, 0.596078, 0.0);               // Pure orange (#ff9800)
+      } else if (variant == 3) { // golden
+        return vec3(1.0, 0.870588, 0.0);               // Bright yellow (#ffeb3b)
+      } else { // default
+        return vec3(1.0, 0.549020, 0.258824);          // Bright orange (#ff8c42)
+      }
+    }
+    
+    vec3 getOrangeColors3(int variant) {
+      if (variant == 1) { // sunset
+        return vec3(1.0, 0.560784, 0.0);               // Orange (#ff8f00)
+      } else if (variant == 2) { // vibrant
+        return vec3(1.0, 0.756863, 0.027451);          // Amber (#ffc107)
+      } else if (variant == 3) { // golden
+        return vec3(1.0, 0.945098, 0.462745);          // Light yellow (#fff176)
+      } else { // default
+        return vec3(1.0, 0.654902, 0.149020);          // Golden orange (#ffa726)
+      }
+    }
     const float innerRadius = 0.6;
     const float noiseScale = 0.65;
     
@@ -122,6 +159,10 @@ export default function Orb({
     }
     
     vec4 draw(vec2 uv) {
+      vec3 baseColor1 = getOrangeColors(orangeVariant);
+      vec3 baseColor2 = getOrangeColors2(orangeVariant);
+      vec3 baseColor3 = getOrangeColors3(orangeVariant);
+      
       vec3 color1 = adjustHue(baseColor1, hue);
       vec3 color2 = adjustHue(baseColor2, hue);
       vec3 color3 = adjustHue(baseColor3, hue);
@@ -175,9 +216,8 @@ export default function Orb({
       vec4 col = mainImage(fragCoord);
       gl_FragColor = vec4(col.rgb * col.a, col.a);
     }
-  `;
+    `;
 
-  useEffect(() => {
     const container = ctnDom.current;
     if (!container) return;
 
@@ -187,6 +227,15 @@ export default function Orb({
     container.appendChild(gl.canvas);
 
     const geometry = new Triangle(gl);
+    const getVariantValue = (variant: string) => {
+      switch (variant) {
+        case 'sunset': return 1;
+        case 'vibrant': return 2;
+        case 'golden': return 3;
+        default: return 0;
+      }
+    };
+
     const program = new Program(gl, {
       vertex: vert,
       fragment: frag,
@@ -198,7 +247,8 @@ export default function Orb({
         hue: { value: hue },
         hover: { value: 0 },
         rot: { value: 0 },
-        hoverIntensity: { value: hoverIntensity }
+        hoverIntensity: { value: hoverIntensity },
+        orangeVariant: { value: getVariantValue(orangeVariant) }
       }
     });
 
@@ -277,7 +327,7 @@ export default function Orb({
       container.removeChild(gl.canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  }, [hue, hoverIntensity, rotateOnHover, forceHoverState]);
+  }, [hue, hoverIntensity, rotateOnHover, forceHoverState, orangeVariant]);
 
   return <div ref={ctnDom} className="w-full h-full" />;
 }

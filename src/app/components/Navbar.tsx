@@ -17,34 +17,25 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Tampilkan saat di paling atas, saat scroll ke atas, sembunyikan saat scroll ke bawah
+  // Hide navbar saat scroll down, show saat scroll up
   useEffect(() => {
-    let ticking = false;
-
     const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY;
-          const diff = currentScrollY - lastScrollY;
-
-          // Selalu tampilkan saat di paling atas
-          if (currentScrollY < 10) {
-            setIsVisible(true);
-          } 
-          // Tampilkan saat scroll ke atas
-          else if (currentScrollY < lastScrollY) {
-            setIsVisible(true);
-          } 
-          // Sembunyikan saat scroll ke bawah
-          else if (currentScrollY > lastScrollY) {
-            setIsVisible(false);
-          }
-
-          setLastScrollY(currentScrollY);
-          ticking = false;
-        });
-        ticking = true;
+      const currentScrollY = window.scrollY;
+      
+      // Selalu tampilkan saat di paling atas
+      if (currentScrollY <= 50) {
+        setIsVisible(true);
+      } 
+      // Sembunyikan saat scroll ke bawah
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } 
+      // Tampilkan saat scroll ke atas
+      else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
       }
+
+      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -52,18 +43,10 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   }, [lastScrollY]);
 
   return (
-    <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md"
-      initial={{ y: 0, opacity: 1 }}
-      animate={{ 
-        y: isVisible ? 0 : -100,
-        opacity: isVisible ? 1 : 0
-      }}
-      transition={{ 
-        duration: 0.4, 
-        ease: [0.25, 0.46, 0.45, 0.94], // Custom cubic-bezier for smooth animation
-        type: "tween"
-      }}
+    <header 
+      className={`sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 transition-transform duration-300 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
     >
       <nav className="mx-auto flex w-[90%] items-center justify-between gap-3 py-4" aria-label="Primary">
         {/* Logo */}
@@ -91,7 +74,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
 
         {/* Desktop Menu */}
         <motion.div 
-          className="hidden md:flex items-center gap-2 p-2 bg-black/30 backdrop-blur-sm rounded-full border border-white/10"
+          className="hidden md:flex items-center gap-2 p-2 bg-black/30 backdrop-blur-sm rounded-full"
           initial={{ opacity: 0, y: -10, scale: 0.95 }}
           animate={{ 
             opacity: 1,
@@ -201,7 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           })}
         </motion.div>
       )}
-    </motion.header>
+    </header>
   );
 };
 

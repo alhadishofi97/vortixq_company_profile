@@ -47,21 +47,27 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         let newCardWidth;
         let newVisibleCards;
         
-        if (containerWidth < 640) { // Mobile
+        // Jika hanya ada 1 produk, posisikan di tengah
+        if (products.length === 1) {
           newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 16, 400);
-        } else if (containerWidth < 768) { // Small tablet
-          newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 32, 450);
-        } else if (containerWidth < 1024) { // Tablet
-          newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 48, 500);
-        } else if (containerWidth < 1280) { // Small desktop
-          newVisibleCards = 1;
-          newCardWidth = Math.min(containerWidth - 48, 600);
-        } else { // Large desktop
-          newVisibleCards = 2;
-          newCardWidth = Math.min((containerWidth - 64) / 2, 500);
+          newCardWidth = Math.min(containerWidth * 0.8, 600); // 80% dari container width, max 600px
+        } else {
+          if (containerWidth < 640) { // Mobile
+            newVisibleCards = 1;
+            newCardWidth = Math.min(containerWidth - 16, 400);
+          } else if (containerWidth < 768) { // Small tablet
+            newVisibleCards = 1;
+            newCardWidth = Math.min(containerWidth - 32, 450);
+          } else if (containerWidth < 1024) { // Tablet
+            newVisibleCards = 1;
+            newCardWidth = Math.min(containerWidth - 48, 500);
+          } else if (containerWidth < 1280) { // Small desktop
+            newVisibleCards = 1;
+            newCardWidth = Math.min(containerWidth - 48, 600);
+          } else { // Large desktop
+            newVisibleCards = 2;
+            newCardWidth = Math.min((containerWidth - 64) / 2, 500);
+          }
         }
         
         setCardWidth(newCardWidth);
@@ -72,11 +78,11 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
     updateCardWidth();
     window.addEventListener('resize', updateCardWidth);
     return () => window.removeEventListener('resize', updateCardWidth);
-  }, []);
+  }, [products.length]);
 
-  // Auto slide functionality
+  // Auto slide functionality - tidak berjalan jika hanya ada 1 produk
   useEffect(() => {
-    if (!isPaused && !isDragging && products.length > visibleCards) {
+    if (!isPaused && !isDragging && products.length > visibleCards && products.length > 1) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => {
           const maxIndex = Math.max(0, products.length - visibleCards);
@@ -96,7 +102,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    if (!isPaused && !isDragging && products.length > visibleCards) {
+    if (!isPaused && !isDragging && products.length > visibleCards && products.length > 1) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => {
           const maxIndex = Math.max(0, products.length - visibleCards);
@@ -143,17 +149,17 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
   const dotsIndicator = useMemo(() => {
     const maxSlides = Math.max(1, products.length - visibleCards + 1);
     return (
-      <div className="flex justify-center mt-6">
-        <div className="flex items-center gap-2">
+      <div className="flex justify-center mt-4 sm:mt-6">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           {Array.from({ length: maxSlides }, (_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-200 ${
-              index === currentIndex
-                ? 'bg-orange-500 scale-125 shadow-lg shadow-orange-500/50'
-                : 'bg-orange-500/40 hover:bg-orange-500/60'
-            }`}
+              className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300 ease-out ${
+                index === currentIndex
+                  ? 'bg-orange-500 scale-110 sm:scale-125 shadow-md sm:shadow-lg shadow-orange-500/50'
+                  : 'bg-orange-500/40 hover:bg-orange-500/60 active:bg-orange-500/80'
+              }`}
             />
           ))}
         </div>
@@ -174,9 +180,11 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
 
   const handleDragEnd = useCallback((event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const dragDistance = info.point.x - dragStart;
-    const threshold = 50;
+    const threshold = 30; // Reduced threshold for more responsive swipe
+    const velocity = Math.abs(info.velocity.x);
     
-    if (Math.abs(dragDistance) > threshold) {
+    // More responsive: check distance OR velocity
+    if (Math.abs(dragDistance) > threshold || velocity > 0.5) {
       if (dragDistance > 0) {
         prevSlide();
       } else {
@@ -203,20 +211,24 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         style={{ width: '100%' }}
       >
         <motion.div
-          className="flex cursor-grab active:cursor-grabbing"
+          className={`flex cursor-grab active:cursor-grabbing ${products.length === 1 ? 'justify-center' : ''}`}
           animate={{ 
-            x: isDragging ? -currentIndex * cardWidth + dragX : -currentIndex * cardWidth 
+            x: products.length === 1 
+              ? 0 // Untuk 1 produk, posisikan di tengah (x = 0)
+              : isDragging ? -currentIndex * cardWidth + dragX : -currentIndex * cardWidth 
           }}
           transition={{ 
-            type: "tween", 
-            duration: isDragging ? 0 : 0.4,
-            ease: "easeOut"
+            type: "spring", 
+            stiffness: 300,
+            damping: 30,
+            mass: 0.8,
+            duration: isDragging ? 0 : 0.6
           }}
           style={{ 
-            width: `${products.length * cardWidth}px`,
+            width: products.length === 1 ? '100%' : `${products.length * cardWidth}px`,
             willChange: isDragging ? 'transform' : 'auto'
           }}
-          drag="x"
+          drag={products.length > 1 ? "x" : false} // Disable drag untuk 1 produk
           dragConstraints={{ 
             left: -Math.max(0, products.length - visibleCards) * cardWidth, 
             right: 0 
@@ -224,7 +236,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
           onDragStart={handleDragStart}
           onDrag={handleDrag}
           onDragEnd={handleDragEnd}
-          dragElastic={0.05}
+          dragElastic={0.1}
           dragMomentum={false}
           dragPropagation={false}
         >
@@ -236,8 +248,8 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
                 width: cardWidth,
                 transform: 'translateZ(0)',
                 backfaceVisibility: 'hidden',
-                paddingLeft: index === 0 ? '0px' : '8px',
-                paddingRight: index === products.length - 1 ? '0px' : '8px'
+                paddingLeft: index === 0 ? '0px' : '4px',
+                paddingRight: index === products.length - 1 ? '0px' : '4px'
               }}
             >
               <ProductCard
@@ -252,27 +264,30 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         </motion.div>
       </div>
 
-      {/* Dots Indicator */}
-      {dotsIndicator}
+      {/* Dots Indicator - hanya tampil jika ada lebih dari 1 produk */}
+      {products.length > 1 && dotsIndicator}
 
-      {/* Swipe Indicator */}
-      <div className="flex justify-center mt-4">
-        <div className="flex items-center space-x-2 text-white/60 text-sm">
-          <motion.div
-            className="w-2 h-2 bg-orange-500 rounded-full"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.5, 1, 0.5]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <span>Swipe to navigate</span>
+      {/* Swipe Indicator - hanya tampil jika ada lebih dari 1 produk */}
+      {products.length > 1 && (
+        <div className="flex justify-center mt-3 sm:mt-4">
+          <div className="flex items-center space-x-1.5 sm:space-x-2 text-white/50 sm:text-white/60 text-xs sm:text-sm">
+            <motion.div
+              className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.4, 0.8, 0.4]
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <span className="hidden xs:inline">Swipe to navigate</span>
+            <span className="xs:hidden">Swipe</span>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

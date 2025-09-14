@@ -27,10 +27,10 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
   return (
     <motion.div
       ref={cardRef}
-      className={`relative w-full p-4 sm:p-5 md:p-6 shadow-xl rounded-xl flex flex-col min-h-48 cursor-pointer ${className} ${
+      className={`relative w-full p-4 sm:p-4 md:p-5 lg:p-6 shadow-xl rounded-xl flex flex-col min-h-48 cursor-pointer ${className} ${
         isSelected 
-          ? 'bg-orange-500/10 border-2 border-orange-500 shadow-orange-500/20' 
-          : 'bg-white/5 border border-white/10'
+          ? 'bg-black border-2 border-orange-500 shadow-orange-500/20' 
+          : 'bg-black border border-white/10'
       }`}
       layout
       transition={{ duration: 0.25, ease: "easeInOut" }}
@@ -38,7 +38,9 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
       style={{ 
         minHeight: isExpanded ? '280px' : '200px',
         minWidth: '280px',
-        maxWidth: '100%'
+        maxWidth: '100%',
+        width: '100%',
+        isolation: 'isolate'
       }}
     >
       {/* Orange indicator when selected */}
@@ -92,16 +94,18 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
         />
       )}
       
-      <div className="flex items-start justify-between gap-3 flex-shrink-0">
-        <div className="flex items-start gap-3 flex-1 min-w-0">
+      <div className="flex items-center sm:items-start justify-between gap-3 flex-shrink-0">
+        <div className="flex items-center sm:items-start gap-3 flex-1 min-w-0">
           <div className="rounded-full bg-orange-500/20 p-2 sm:p-3 text-white flex-shrink-0">
             {icon}
           </div>
-          <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-semibold text-white break-normal hyphens-auto leading-tight flex-1">{title}</h3>
+          <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-semibold text-white leading-snug break-words hyphens-none flex-1 pr-10 sm:pr-0">
+            {title}
+          </h3>
         </div>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="p-1 sm:p-2 rounded-full bg-orange-500/20 hover:bg-orange-500/30 transition-colors text-orange-500 flex-shrink-0"
+          className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-orange-500/20 hover:bg-orange-500/30 transition-colors text-orange-500 flex-shrink-0 self-center sm:self-start"
           aria-expanded={isExpanded}
           aria-label={isExpanded ? "Collapse" : "Expand"}
         >
@@ -111,7 +115,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${
+            className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-300 ${
               isExpanded ? "rotate-180" : ""
             }`}
           >
@@ -146,7 +150,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
             className="mt-3 space-y-3 flex-1 flex flex-col"
           >
             <motion.p 
-              className="text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed break-normal hyphens-auto overflow-y-auto"
+              className="text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-snug sm:leading-relaxed break-words hyphens-none overflow-y-auto"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1, duration: 0.3 }}
@@ -160,7 +164,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
             initial={{ opacity: 0, height: 0, y: 10 }}
             animate={{ 
               opacity: 1, 
-              height: "80px", 
+              height: "84px", 
               y: 0 
             }}
             exit={{ 
@@ -172,7 +176,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
               duration: 0.4, 
               ease: [0.25, 0.46, 0.45, 0.94] 
             }}
-            className="mt-3 text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-relaxed break-normal hyphens-auto flex-1 flex flex-col justify-center"
+            className="mt-3 text-xs xs:text-sm sm:text-sm md:text-base text-slate-300 leading-snug sm:leading-relaxed break-words hyphens-none overflow-hidden flex-1 flex flex-col justify-center"
           >
             {shortDescription}
           </motion.p>

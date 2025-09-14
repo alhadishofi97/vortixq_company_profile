@@ -35,7 +35,7 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
         className={`absolute inset-0 rounded-2xl ${
           isActive 
             ? "bg-gradient-to-r from-orange-500/40 to-orange-400/40 border-2 border-orange-500/60 shadow-lg shadow-orange-500/30" 
-            : "bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20"
+            : "bg-black border border-white/10 hover:bg-black/80 hover:border-white/20"
         }`}
         layoutId="serviceTab"
         transition={{ duration: 0.3, ease: "easeInOut" }}
