@@ -44,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
 
   return (
     <header 
-      className={`sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 transition-transform duration-300 ${
+      className={`sticky top-0 z-50 bg-black/80 backdrop-blur-md transition-transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
