@@ -14,11 +14,10 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Tampilkan saat scroll ke atas, sembunyikan saat scroll ke bawah,
-  // dan sembunyikan saat berada di paling atas (< 10px)
+  // Tampilkan saat di paling atas, saat scroll ke atas, sembunyikan saat scroll ke bawah
   useEffect(() => {
     let ticking = false;
 
@@ -28,11 +27,16 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           const currentScrollY = window.scrollY;
           const diff = currentScrollY - lastScrollY;
 
+          // Selalu tampilkan saat di paling atas
           if (currentScrollY < 10) {
-            setIsVisible(false);
-          } else if (diff < -5) {
             setIsVisible(true);
-          } else if (diff > 5) {
+          } 
+          // Tampilkan saat scroll ke atas
+          else if (diff < -5) {
+            setIsVisible(true);
+          } 
+          // Sembunyikan saat scroll ke bawah
+          else if (diff > 5) {
             setIsVisible(false);
           }
 
