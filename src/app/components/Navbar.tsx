@@ -32,11 +32,11 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
             setIsVisible(true);
           } 
           // Tampilkan saat scroll ke atas
-          else if (diff < -5) {
+          else if (currentScrollY < lastScrollY) {
             setIsVisible(true);
           } 
           // Sembunyikan saat scroll ke bawah
-          else if (diff > 5) {
+          else if (currentScrollY > lastScrollY) {
             setIsVisible(false);
           }
 
