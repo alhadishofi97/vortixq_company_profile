@@ -14,16 +14,46 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Navbar always visible - no scroll detection needed
+  // Tampilkan saat scroll ke atas, sembunyikan saat scroll ke bawah,
+  // dan sembunyikan saat berada di paling atas (< 10px)
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const diff = currentScrollY - lastScrollY;
+
+          if (currentScrollY < 10) {
+            setIsVisible(false);
+          } else if (diff < -5) {
+            setIsVisible(true);
+          } else if (diff > 5) {
+            setIsVisible(false);
+          }
+
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   return (
     <motion.header 
       className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md"
       initial={{ y: 0, opacity: 1 }}
       animate={{ 
-        y: 0,
-        opacity: 1
+        y: isVisible ? 0 : -100,
+        opacity: isVisible ? 1 : 0
       }}
       transition={{ 
         duration: 0.4, 
