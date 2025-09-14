@@ -38,8 +38,8 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
           transition: { 
             duration, 
             delay, 
-            ease: [0.25, 0.46, 0.45, 0.94],
-            type: "spring",
+            ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+            type: "spring" as const,
             stiffness: 100,
             damping: 15
           }
@@ -51,8 +51,8 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
           transition: { 
             duration, 
             delay, 
-            ease: [0.25, 0.46, 0.45, 0.94],
-            type: "spring",
+            ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+            type: "spring" as const,
             stiffness: 100,
             damping: 15
           }
@@ -64,8 +64,8 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
           transition: { 
             duration, 
             delay, 
-            ease: [0.25, 0.46, 0.45, 0.94],
-            type: "spring",
+            ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+            type: "spring" as const,
             stiffness: 100,
             damping: 15
           }
@@ -77,8 +77,8 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
           transition: { 
             duration, 
             delay, 
-            ease: [0.25, 0.46, 0.45, 0.94],
-            type: "spring",
+            ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+            type: "spring" as const,
             stiffness: 120,
             damping: 18
           }
@@ -90,8 +90,8 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
           transition: { 
             duration, 
             delay, 
-            ease: [0.25, 0.46, 0.45, 0.94],
-            type: "spring",
+            ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
+            type: "spring" as const,
             stiffness: 100,
             damping: 15
           }
