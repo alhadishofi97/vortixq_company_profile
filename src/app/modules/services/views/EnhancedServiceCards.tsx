@@ -15,17 +15,28 @@ const EnhancedServiceCards: React.FC = () => {
   const [csaVisible, setCsaVisible] = useState(true);
   const [cdoVisible, setCdoVisible] = useState(true);
   const [aisaVisible, setAisaVisible] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
 
-  // Detect mobile device for performance optimization
+  // Detect device type for performance optimization
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const checkDevice = () => {
+      const width = window.innerWidth;
+      const userAgent = navigator.userAgent;
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      const isTablet = /iPad|Android/i.test(userAgent) && width >= 768 && width <= 1024;
+      
+      if (isMobile || width < 768) {
+        setDeviceType('mobile');
+      } else if (isTablet || (width >= 768 && width <= 1024)) {
+        setDeviceType('tablet');
+      } else {
+        setDeviceType('desktop');
+      }
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    checkDevice();
+    window.addEventListener('resize', checkDevice);
+    return () => window.removeEventListener('resize', checkDevice);
   }, []);
   
 
@@ -455,35 +466,37 @@ const EnhancedServiceCards: React.FC = () => {
 
   return (
     <div className="relative w-full pt-32 pb-16 overflow-hidden bg-black">
-      {/* Optimized LiquidEther Background */}
-      <div className="absolute inset-0" style={{ zIndex: 0 }}>
+      {/* Optimized LiquidEther Background - Always visible */}
+      <div className="absolute inset-0" style={{ zIndex: 1 }}>
         <LiquidEther
-          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-          mouseForce={isMobile ? 10 : 15}
-          cursorSize={isMobile ? 60 : 80}
-          isViscous={false}
-          viscous={isMobile ? 15 : 20}
-          iterationsViscous={isMobile ? 8 : 16}
-          iterationsPoisson={isMobile ? 8 : 16}
-          resolution={isMobile ? 0.2 : 0.3}
+          colors={["#FF6B35", "#FF9FFC", "#B19EEF", "#5227FF"]}
+          mouseForce={deviceType === 'mobile' ? 15 : deviceType === 'tablet' ? 25 : 35}
+          cursorSize={deviceType === 'mobile' ? 50 : deviceType === 'tablet' ? 80 : 120}
+          isViscous={deviceType === 'mobile' ? false : deviceType === 'tablet' ? true : true}
+          viscous={deviceType === 'mobile' ? 3 : deviceType === 'tablet' ? 8 : 12}
+          iterationsViscous={deviceType === 'mobile' ? 6 : deviceType === 'tablet' ? 16 : 24}
+          iterationsPoisson={deviceType === 'mobile' ? 6 : deviceType === 'tablet' ? 16 : 24}
+          resolution={deviceType === 'mobile' ? 0.25 : deviceType === 'tablet' ? 0.4 : 0.6}
           isBounce={false}
           autoDemo={true}
-          autoSpeed={isMobile ? 0.2 : 0.3}
-          autoIntensity={isMobile ? 1.0 : 1.5}
-          takeoverDuration={0.15}
-          autoResumeDelay={isMobile ? 3000 : 2000}
-          autoRampDuration={0.4}
+          autoSpeed={deviceType === 'mobile' ? 0.2 : deviceType === 'tablet' ? 0.4 : 0.6}
+          autoIntensity={deviceType === 'mobile' ? 1.2 : deviceType === 'tablet' ? 2.0 : 2.5}
+          takeoverDuration={deviceType === 'mobile' ? 0.05 : deviceType === 'tablet' ? 0.15 : 0.2}
+          autoResumeDelay={deviceType === 'mobile' ? 200 : deviceType === 'tablet' ? 400 : 500}
+          autoRampDuration={deviceType === 'mobile' ? 0.3 : deviceType === 'tablet' ? 0.5 : 0.6}
+          dt={deviceType === 'mobile' ? 0.025 : deviceType === 'tablet' ? 0.018 : 0.016}
+          BFECC={deviceType === 'mobile' ? false : deviceType === 'tablet' ? false : true}
         />
       </div>
       
-      <div className="mx-auto w-[90%]">
+      <div className="mx-auto w-[90%] relative z-20">
         <AnimatedSection animation="fadeInUp" className="relative z-10">
           <h2 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight leading-tight text-white">
             Consulting Service
           </h2>
         </AnimatedSection>
 
-        <AnimatedSection animation="fadeInUp" delay={isMobile ? 0.1 : 0.2} className="relative z-10">
+        <AnimatedSection animation="fadeInUp" delay={deviceType === 'mobile' ? 0.1 : 0.2} className="relative z-10">
           <div className="mt-16 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-6xl mx-auto">
             <ServiceTab
               label="Cyber Security Advisory (CSA)"
@@ -556,11 +569,11 @@ const EnhancedServiceCards: React.FC = () => {
                 </div>
               </AnimatedSection>
               
-              <AnimatedSection animation="fadeInUp" delay={isMobile ? 0.4 : 0.8}>
+              <AnimatedSection animation="fadeInUp" delay={deviceType === 'mobile' ? 0.4 : 0.8}>
                 <div className="px-2 sm:px-6 lg:px-8">
                   <SwipeServiceCarousel 
                     services={getCurrentServices()} 
-                    autoSlideInterval={isMobile ? 8000 : 6000}
+                    autoSlideInterval={0}
                     pauseOnHover={true}
                   />
                 </div>

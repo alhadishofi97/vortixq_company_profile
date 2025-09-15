@@ -76,7 +76,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
 
   // Auto slide functionality
   useEffect(() => {
-    if (!isPaused && !isDragging && services.length > visibleCards) {
+    if (!isPaused && !isDragging && services.length > visibleCards && autoSlideInterval > 0) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => {
           const maxIndex = Math.max(0, services.length - visibleCards);
@@ -96,7 +96,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    if (!isPaused && !isDragging && services.length > visibleCards) {
+    if (!isPaused && !isDragging && services.length > visibleCards && autoSlideInterval > 0) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => {
           const maxIndex = Math.max(0, services.length - visibleCards);
@@ -112,7 +112,7 @@ const SwipeServiceCarousel: React.FC<SwipeServiceCarouselProps> = ({
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    if (!isPaused && !isDragging && services.length > 1) {
+    if (!isPaused && !isDragging && services.length > 1 && autoSlideInterval > 0) {
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % services.length);
       }, autoSlideInterval);

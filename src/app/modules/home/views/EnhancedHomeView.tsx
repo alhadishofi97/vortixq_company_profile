@@ -178,12 +178,12 @@ const EnhancedHome = () => {
             </AnimatedSection>
             
             {/* Animated Description */}
-            <AnimatedSection animation="fadeInUp" delay={0.5}>
+            <AnimatedSection animation="fadeInUp" delay={0.6}>
               {narasi}
             </AnimatedSection>
             
-            {/* Animated CTA Button */}
-            <AnimatedSection animation="fadeInUp" delay={0.6}>
+            {/* Animated CTA Button - muncul setelah judul dan narasi */}
+            <AnimatedSection animation="fadeInUp" delay={3.0}>
               <div className="mt-12 flex items-center justify-center">
                 <Button
                   variant="outlined"

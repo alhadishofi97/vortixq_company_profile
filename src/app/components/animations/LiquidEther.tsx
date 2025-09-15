@@ -134,8 +134,9 @@ export default function LiquidEther({
         perf.frameCount = 0;
         perf.lastTime = now;
         
-        // Adjust performance based on FPS
-        if (perf.fps < 30 && !isLowPerformance) {
+        // Adjust performance based on FPS - but keep autoDemo always enabled
+        const fpsThreshold = deviceType === 'mobile' ? 15 : deviceType === 'tablet' ? 25 : 20;
+        if (perf.fps < fpsThreshold && !isLowPerformance) {
           setIsLowPerformance(true);
         } else if (perf.fps > 45 && isLowPerformance) {
           setIsLowPerformance(false);
@@ -197,14 +198,15 @@ export default function LiquidEther({
       init(container: HTMLElement) {
         this.container = container;
         // Optimize pixel ratio for performance
-        this.pixelRatio = isLowPerformance ? 1 : Math.min(window.devicePixelRatio || 1, deviceType === 'mobile' ? 1.5 : 2);
+        this.pixelRatio = isLowPerformance ? 1 : Math.min(window.devicePixelRatio || 1, 
+          deviceType === 'mobile' ? 1 : deviceType === 'tablet' ? 1.5 : 2);
         this.resize();
         
         // Optimize WebGL renderer settings
         const rendererOptions: THREE.WebGLRendererParameters = {
-          antialias: !isLowPerformance && deviceType !== 'mobile',
+          antialias: !isLowPerformance && deviceType === 'desktop',
           alpha: true,
-          powerPreference: isLowPerformance ? 'low-power' : 'high-performance',
+          powerPreference: isLowPerformance ? 'low-power' : (deviceType === 'mobile' ? 'low-power' : 'high-performance'),
           failIfMajorPerformanceCaveat: false
         };
         
@@ -215,7 +217,10 @@ export default function LiquidEther({
         this.renderer.setSize(this.width, this.height);
         
         // Optimize renderer settings
-        if (isLowPerformance) {
+        if (isLowPerformance || deviceType === 'mobile') {
+          this.renderer.shadowMap.enabled = false;
+          this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+        } else if (deviceType === 'tablet') {
           this.renderer.shadowMap.enabled = false;
           this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         }
@@ -303,6 +308,7 @@ export default function LiquidEther({
       }
       onDocumentMouseMove(event: MouseEvent) {
         if (this.onInteract) this.onInteract();
+        // Keep autoDemo running even with mouse interaction
         if (this.isAutoActive && !this.hasUserControl && !this.takeoverActive) {
           if (!this.container) return;
           const rect = this.container.getBoundingClientRect();
@@ -313,7 +319,8 @@ export default function LiquidEther({
           this.takeoverStartTime = performance.now();
           this.takeoverActive = true;
           this.hasUserControl = true;
-          this.isAutoActive = false;
+          // Don't disable autoActive - keep it running
+          // this.isAutoActive = false;
           return;
         }
         this.setCoords(event.clientX, event.clientY);
@@ -359,7 +366,8 @@ export default function LiquidEther({
         this.diff.subVectors(this.coords, this.coords_old);
         this.coords_old.copy(this.coords);
         if (this.coords_old.x === 0 && this.coords_old.y === 0) this.diff.set(0, 0);
-        if (this.isAutoActive && !this.takeoverActive) this.diff.multiplyScalar(this.autoIntensity);
+        // Always apply autoIntensity when autoActive, regardless of takeover
+        if (this.isAutoActive) this.diff.multiplyScalar(this.autoIntensity);
       }
     }
     const Mouse = new MouseClass();
@@ -403,22 +411,27 @@ export default function LiquidEther({
         if (!this.enabled) return;
         const now = performance.now();
         const idle = now - this.manager.lastUserInteraction;
-        if (idle < this.resumeDelay) {
+        // Reduce resume delay to make animation more responsive
+        if (idle < Math.min(this.resumeDelay, 500)) {
           if (this.active) this.forceStop();
           return;
         }
-        if (this.mouse.isHoverInside) {
-          if (this.active) this.forceStop();
-          return;
-        }
+        // Don't stop on hover - keep animation running
+        // if (this.mouse.isHoverInside) {
+        //   if (this.active) this.forceStop();
+        //   return;
+        // }
+        
+        // Always keep autoDriver active
         if (!this.active) {
           this.active = true;
           this.current.copy(this.mouse.coords);
           this.lastTime = now;
           this.activationTime = now;
         }
-        if (!this.active) return;
+        // Always keep autoDriver active
         this.mouse.isAutoActive = true;
+        this.mouse.hasUserControl = false; // Reset user control to keep autoDemo running
         let dtSec = (now - this.lastTime) / 1000;
         this.lastTime = now;
         if (dtSec > 0.2) dtSec = 0.016;
@@ -1075,12 +1088,13 @@ export default function LiquidEther({
         Mouse.takeoverDuration = props.takeoverDuration;
         Mouse.onInteract = () => {
           this.lastUserInteraction = performance.now();
-          if (this.autoDriver) this.autoDriver.forceStop();
+          // Don't force stop autoDriver on interaction - keep it running
+          // if (this.autoDriver) this.autoDriver.forceStop();
         };
         this.autoDriver = new AutoDriver(Mouse, this as any, {
-          enabled: props.autoDemo,
+          enabled: true, // Always enable autoDemo
           speed: props.autoSpeed,
-          resumeDelay: props.autoResumeDelay,
+          resumeDelay: Math.min(props.autoResumeDelay, 500), // Reduce resume delay
           rampDuration: props.autoRampDuration
         });
         this.init();
@@ -1089,8 +1103,14 @@ export default function LiquidEther({
           const hidden = document.hidden;
           if (hidden) {
             this.pause();
-          } else if (isVisibleRef.current) {
+          } else {
+            // Always start when document is visible, regardless of intersection
             this.start();
+            // Force restart autoDriver
+            if (this.autoDriver) {
+              this.autoDriver.active = true;
+              this.autoDriver.mouse.isAutoActive = true;
+            }
           }
         };
         document.addEventListener('visibilitychange', this._onVisibility);
@@ -1105,7 +1125,12 @@ export default function LiquidEther({
         this.output.resize();
       }
       render() {
-        if (this.autoDriver) this.autoDriver.update();
+        if (this.autoDriver) {
+          this.autoDriver.update();
+          // Force keep autoDriver active
+          this.autoDriver.active = true;
+          this.autoDriver.mouse.isAutoActive = true;
+        }
         Mouse.update();
         Common.update();
         this.output.update();
@@ -1113,12 +1138,21 @@ export default function LiquidEther({
       loop() {
         if (!this.running) return;
         
-        // Frame rate limiting for low performance devices
+        // Frame rate limiting for low performance devices - but keep animation running
         const perf = performanceRef.current;
         perf.frameCount++;
         
-        if (isLowPerformance && perf.frameCount % 2 === 0) {
-          // Skip every other frame on low performance devices
+        // Skip frames based on device type and performance
+        if (deviceType === 'mobile' && perf.frameCount % 2 === 0) {
+          // Skip every other frame on mobile
+          rafRef.current = requestAnimationFrame(this._loop);
+          return;
+        } else if (deviceType === 'tablet' && isLowPerformance && perf.frameCount % 3 === 0) {
+          // Skip every third frame on low performance tablets
+          rafRef.current = requestAnimationFrame(this._loop);
+          return;
+        } else if (isLowPerformance && perf.fps < 15 && perf.frameCount % 4 === 0) {
+          // Skip every fourth frame on very low performance devices
           rafRef.current = requestAnimationFrame(this._loop);
           return;
         }
@@ -1129,6 +1163,11 @@ export default function LiquidEther({
       start() {
         if (this.running) return;
         this.running = true;
+        // Force start autoDriver
+        if (this.autoDriver) {
+          this.autoDriver.active = true;
+          this.autoDriver.mouse.isAutoActive = true;
+        }
         this._loop();
       }
       pause() {
@@ -1137,6 +1176,10 @@ export default function LiquidEther({
           cancelAnimationFrame(rafRef.current);
           rafRef.current = null;
         }
+        // Don't pause autoDriver - keep it running
+        // if (this.autoDriver) {
+        //   this.autoDriver.forceStop();
+        // }
       }
       dispose() {
         try {
@@ -1160,14 +1203,14 @@ export default function LiquidEther({
 
     // Adaptive settings based on device type and performance
     const adaptiveSettings = {
-      resolution: isLowPerformance ? 0.25 : (deviceType === 'mobile' ? 0.3 : deviceType === 'tablet' ? 0.4 : resolution),
-      iterationsViscous: isLowPerformance ? 8 : (deviceType === 'mobile' ? 16 : deviceType === 'tablet' ? 24 : iterationsViscous),
-      iterationsPoisson: isLowPerformance ? 8 : (deviceType === 'mobile' ? 16 : deviceType === 'tablet' ? 24 : iterationsPoisson),
-      mouseForce: isLowPerformance ? 10 : (deviceType === 'mobile' ? 15 : mouseForce),
-      cursorSize: isLowPerformance ? 50 : (deviceType === 'mobile' ? 75 : cursorSize),
-      autoDemo: isLowPerformance ? false : autoDemo,
-      isViscous: isLowPerformance ? false : isViscous,
-      BFECC: isLowPerformance ? false : BFECC
+      resolution: isLowPerformance ? 0.2 : (deviceType === 'mobile' ? 0.25 : deviceType === 'tablet' ? 0.4 : resolution),
+      iterationsViscous: isLowPerformance ? 4 : (deviceType === 'mobile' ? 6 : deviceType === 'tablet' ? 16 : iterationsViscous),
+      iterationsPoisson: isLowPerformance ? 4 : (deviceType === 'mobile' ? 6 : deviceType === 'tablet' ? 16 : iterationsPoisson),
+      mouseForce: isLowPerformance ? 8 : (deviceType === 'mobile' ? 15 : deviceType === 'tablet' ? 25 : mouseForce),
+      cursorSize: isLowPerformance ? 40 : (deviceType === 'mobile' ? 50 : deviceType === 'tablet' ? 80 : cursorSize),
+      autoDemo: true, // Always enable auto demo
+      isViscous: isLowPerformance ? false : (deviceType === 'mobile' ? false : deviceType === 'tablet' ? true : isViscous),
+      BFECC: isLowPerformance ? false : (deviceType === 'mobile' ? false : deviceType === 'tablet' ? false : BFECC)
     };
 
     const webgl = new WebGLManager({
@@ -1201,24 +1244,28 @@ export default function LiquidEther({
       if (adaptiveSettings.resolution !== prevRes) sim.resize();
     };
     applyOptionsFromProps();
+    // Always start LiquidEther immediately
     webgl.start();
 
-    const io = new IntersectionObserver(
-      entries => {
-        const entry = entries[0];
-        const isVisible = entry.isIntersecting && entry.intersectionRatio > 0;
-        isVisibleRef.current = isVisible;
-        if (!webglRef.current) return;
-        if (isVisible && !document.hidden) {
-          webglRef.current.start();
-        } else {
-          webglRef.current.pause();
-        }
-      },
-      { threshold: [0, 0.01, 0.1] }
-    );
-    io.observe(container);
-    intersectionObserverRef.current = io;
+    // Always keep LiquidEther running - disable intersection observer completely
+    isVisibleRef.current = true;
+    
+    // Don't use intersection observer at all - keep animation always running
+    // const io = new IntersectionObserver(
+    //   entries => {
+    //     const entry = entries[0];
+    //     const isVisible = entry.isIntersecting && entry.intersectionRatio > 0;
+    //     isVisibleRef.current = isVisible;
+    //     if (!webglRef.current) return;
+    //     // Always start, never pause based on visibility
+    //     if (!document.hidden) {
+    //       webglRef.current.start();
+    //     }
+    //   },
+    //   { threshold: [0, 0.01, 0.1] }
+    // );
+    // io.observe(container);
+    // intersectionObserverRef.current = io;
 
     const ro = new ResizeObserver(() => {
       if (!webglRef.current) return;
@@ -1240,13 +1287,14 @@ export default function LiquidEther({
           /* noop */
         }
       }
-      if (intersectionObserverRef.current) {
-        try {
-          intersectionObserverRef.current.disconnect();
-        } catch {
-          /* noop */
-        }
-      }
+      // Don't disconnect intersection observer since we're not using it
+      // if (intersectionObserverRef.current) {
+      //   try {
+      //     intersectionObserverRef.current.disconnect();
+      //   } catch {
+      //     /* noop */
+      //   }
+      // }
       if (webglRef.current) {
         webglRef.current.dispose();
       }
@@ -1323,7 +1371,7 @@ export default function LiquidEther({
   return (
     <div 
       ref={mountRef} 
-      className={`w-full h-full relative overflow-hidden pointer-events-none ${className || ''}`} 
+      className={`w-full h-full relative overflow-hidden pointer-events-auto ${className || ''}`} 
       style={style} 
     />
   );

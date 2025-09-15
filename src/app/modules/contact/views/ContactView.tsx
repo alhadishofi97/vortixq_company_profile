@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import WavesBackground from '../../../components/animations/WavesBackground';
+import Threads from '../../../components/animations/Threads';
 
 const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -52,13 +52,13 @@ const ContactView: React.FC = () => {
 
   return (
     <div className="relative w-full min-h-screen bg-black" style={{ width: '100vw' }}>
-      {/* Waves Background - Section Only */}
+      {/* Threads Background - Section Only */}
       <div className="absolute inset-0 w-full h-full" style={{ width: '100vw' }}>
-        <WavesBackground
-          color="#FF6B35"
-          opacity={0.6}
-          speed={1}
-          lineWidth={2}
+        <Threads
+          color={[1, 0.42, 0.21]}
+          amplitude={1}
+          distance={0}
+          enableMouseInteraction={true}
         />
       </div>
       
@@ -116,7 +116,7 @@ const ContactView: React.FC = () => {
             {/* Office */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-6 h-6 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">image.png
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
