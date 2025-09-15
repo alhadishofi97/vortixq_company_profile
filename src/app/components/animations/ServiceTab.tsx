@@ -31,46 +31,22 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
       }}
     >
       {/* Background */}
-      <motion.div
-        className={`absolute inset-0 rounded-2xl ${
+      <div
+        className={`absolute inset-0 rounded-2xl border-2 border-white ${
           isActive 
-            ? "bg-gradient-to-r from-orange-500/40 to-orange-400/40 border-2 border-orange-500/60 shadow-lg shadow-orange-500/30" 
-            : "bg-black border border-white/10 hover:bg-black/80 hover:border-white/20"
+            ? "bg-gradient-to-r from-orange-500 to-orange-400 shadow-lg shadow-orange-500/30" 
+            : "bg-black hover:bg-black/80"
         }`}
-        layoutId="serviceTab"
-        transition={{ duration: 0.3, ease: "easeInOut" }}
       />
       
       {/* Glow Effect */}
       {isActive && (
-        <motion.div
-          className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/20 to-orange-400/20"
-          animate={{
-            opacity: [0.6, 1, 0.6],
-            scale: [1, 1.02, 1]
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/30 to-orange-400/30" />
       )}
 
       {/* Ripple Effect */}
       {isActive && (
-        <motion.div
-          className="absolute inset-0 rounded-2xl border-2 border-orange-500/40"
-          animate={{
-            scale: [1, 1.05, 1],
-            opacity: [0.5, 0.8, 0.5]
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+        <div className="absolute inset-0 rounded-2xl border-2 border-white" />
       )}
       
       {/* Content */}
@@ -92,23 +68,7 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
         
         {/* Active Indicator */}
         {isActive && (
-          <motion.div
-            className="w-2 h-2 sm:w-3 sm:h-3 bg-orange-500 rounded-full shadow-lg shadow-orange-500/50 flex-shrink-0"
-            animate={{
-              scale: [1, 1.4, 1],
-              opacity: [0.8, 1, 0.8],
-              boxShadow: [
-                "0 0 0 0 rgba(255, 107, 53, 0.5)",
-                "0 0 0 6px rgba(255, 107, 53, 0)",
-                "0 0 0 0 rgba(255, 107, 53, 0.5)"
-              ]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
+          <div className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full shadow-lg shadow-white/50 flex-shrink-0" />
         )}
       </div>
     </motion.button>

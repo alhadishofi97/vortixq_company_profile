@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import GlassMorphismBackground from "@/Components/GlassMorphismBackground/GlassMorphismBackground";
+import Image from "next/image";
 import ProductModal from "../../components/animations/ProductModal";
 
 const AirisProductPage: React.FC = () => {
@@ -194,7 +194,6 @@ const AirisProductPage: React.FC = () => {
 
   return (
     <div className="min-h-screen text-slate-100 font-sans">
-      <GlassMorphismBackground />
       <div className="relative mx-auto w-[90%] py-24 bg-transparent">
         {/* Animated background blobs */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -208,6 +207,24 @@ const AirisProductPage: React.FC = () => {
           transition={{ duration: 0.6 }}
           className="relative z-10"
         >
+          {/* Back to Home Button */}
+          <motion.button
+            onClick={() => {
+              window.location.href = '/';
+            }}
+            className="flex items-center gap-2 text-orange-500 hover:text-orange-400 mb-8 group transition-all duration-200"
+            whileHover={{ x: -5 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <svg className="w-6 h-6 text-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 19-7-7 7-7"/>
+            </svg>
+            <span className="text-sm font-medium">Back to Home</span>
+          </motion.button>
+
           {/* Header Section */}
           <div className="mb-12 sm:mb-16 text-center px-4 sm:px-0">
             <h1 className="font-display text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 sm:mb-6">
@@ -229,10 +246,11 @@ const AirisProductPage: React.FC = () => {
               >
                 {/* Product Image */}
                 <div className="relative w-full h-48 sm:h-56 md:h-64 mb-4 rounded-lg overflow-hidden">
-                  <img
+                  <Image
                     src={product.dashboardImage}
                     alt={product.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
             </div>
 

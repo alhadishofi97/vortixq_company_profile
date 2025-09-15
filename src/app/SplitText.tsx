@@ -16,7 +16,7 @@ export interface SplitTextProps {
     to?: gsap.TweenVars;
     threshold?: number;
     rootMargin?: string;
-    textAlign?: React.CSSProperties["textAlign"];
+    textAlign?: "left" | "center" | "right" | "justify";
     onLetterAnimationComplete?: () => void;
 }
 

@@ -15,6 +15,18 @@ const EnhancedServiceCards: React.FC = () => {
   const [csaVisible, setCsaVisible] = useState(true);
   const [cdoVisible, setCdoVisible] = useState(true);
   const [aisaVisible, setAisaVisible] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device for performance optimization
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
 
   // Animation handlers
@@ -443,24 +455,24 @@ const EnhancedServiceCards: React.FC = () => {
 
   return (
     <div className="relative w-full pt-32 pb-16 overflow-hidden bg-black">
-      {/* LiquidEther Background */}
+      {/* Optimized LiquidEther Background */}
       <div className="absolute inset-0" style={{ zIndex: 0 }}>
         <LiquidEther
           colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-          mouseForce={20}
-          cursorSize={100}
+          mouseForce={isMobile ? 10 : 15}
+          cursorSize={isMobile ? 60 : 80}
           isViscous={false}
-          viscous={30}
-          iterationsViscous={32}
-          iterationsPoisson={32}
-          resolution={0.5}
+          viscous={isMobile ? 15 : 20}
+          iterationsViscous={isMobile ? 8 : 16}
+          iterationsPoisson={isMobile ? 8 : 16}
+          resolution={isMobile ? 0.2 : 0.3}
           isBounce={false}
           autoDemo={true}
-          autoSpeed={0.5}
-          autoIntensity={2.2}
-          takeoverDuration={0.25}
-          autoResumeDelay={3000}
-          autoRampDuration={0.6}
+          autoSpeed={isMobile ? 0.2 : 0.3}
+          autoIntensity={isMobile ? 1.0 : 1.5}
+          takeoverDuration={0.15}
+          autoResumeDelay={isMobile ? 3000 : 2000}
+          autoRampDuration={0.4}
         />
       </div>
       
@@ -471,8 +483,8 @@ const EnhancedServiceCards: React.FC = () => {
           </h2>
         </AnimatedSection>
 
-        <AnimatedSection animation="fadeInUp" delay={0.2} className="relative z-10">
-          <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-6xl mx-auto">
+        <AnimatedSection animation="fadeInUp" delay={isMobile ? 0.1 : 0.2} className="relative z-10">
+          <div className="mt-16 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center max-w-6xl mx-auto">
             <ServiceTab
               label="Cyber Security Advisory (CSA)"
               isActive={activeTab === "csa"}
@@ -529,24 +541,26 @@ const EnhancedServiceCards: React.FC = () => {
                     )}
                   </div>
                   {getCurrentVisible() && (
-                    <BlurText
-                      key={`${activeTab}-${getCurrentAnimationKey()}`}
-                      text={getCurrentDescription()}
-                      delay={20}
-                      animateBy="words"
-                      direction="top"
-                      onAnimationComplete={handleAnimationComplete}
-                      className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl mx-auto"
-                    />
+                    <div className="flex justify-center">
+                      <BlurText
+                        key={`${activeTab}-${getCurrentAnimationKey()}`}
+                        text={getCurrentDescription()}
+                        delay={20}
+                        animateBy="words"
+                        direction="top"
+                        onAnimationComplete={handleAnimationComplete}
+                        className="text-sm xs:text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-4xl text-center"
+                      />
+                    </div>
                   )}
                 </div>
               </AnimatedSection>
               
-              <AnimatedSection animation="fadeInUp" delay={0.8}>
+              <AnimatedSection animation="fadeInUp" delay={isMobile ? 0.4 : 0.8}>
                 <div className="px-2 sm:px-6 lg:px-8">
                   <SwipeServiceCarousel 
                     services={getCurrentServices()} 
-                    autoSlideInterval={5000}
+                    autoSlideInterval={isMobile ? 8000 : 6000}
                     pauseOnHover={true}
                   />
                 </div>

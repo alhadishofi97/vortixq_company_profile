@@ -32,8 +32,7 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
           ? 'bg-black border-2 border-orange-500 shadow-orange-500/20' 
           : 'bg-black border border-white/10'
       }`}
-      layout
-      transition={{ duration: 0.25, ease: "easeInOut" }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       onClick={onSelect}
       style={{ 
         minHeight: isExpanded ? '280px' : '200px',
@@ -49,11 +48,11 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
           className="absolute top-3 right-3 w-3 h-3 bg-orange-500 rounded-full shadow-lg shadow-orange-500/50"
           initial={{ scale: 0 }}
           animate={{ 
-            scale: [1, 1.2, 1],
+            scale: [1, 1.1, 1],
             opacity: [0.8, 1, 0.8]
           }}
           transition={{ 
-            duration: 2,
+            duration: 3,
             repeat: Infinity,
             ease: "easeInOut"
           }}
@@ -66,11 +65,11 @@ const ExpandableServiceCard: React.FC<ExpandableServiceCardProps> = ({
           className="absolute inset-0 rounded-xl border-2 border-orange-500/30 pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ 
-            opacity: [0.3, 0.6, 0.3],
-            scale: [1, 1.02, 1]
+            opacity: [0.2, 0.4, 0.2],
+            scale: [1, 1.01, 1]
           }}
           transition={{ 
-            duration: 2,
+            duration: 4,
             repeat: Infinity,
             ease: "easeInOut"
           }}

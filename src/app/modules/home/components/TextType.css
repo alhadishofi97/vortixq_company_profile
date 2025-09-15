@@ -1,27 +1,17 @@
 .text-type {
   display: inline-block;
-  position: relative;
+  font-family: inherit;
 }
 
 .text-type__content {
-  display: inline-block;
-  font-family: inherit;
-  font-weight: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
+  display: inline;
 }
 
 .text-type__cursor {
   display: inline-block;
-  font-family: inherit;
   font-weight: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  color: #C16B32;
+  color: inherit;
   animation: blink 1s infinite;
-  margin-left: 2px;
 }
 
 .text-type__cursor--hidden {
@@ -37,45 +27,65 @@
   }
 }
 
-/* Smooth typing animation */
-.text-type__content {
-  animation: fadeIn 0.1s ease-in-out;
+/* Custom cursor styles */
+.text-type__cursor--block {
+  background-color: currentColor;
+  color: transparent;
+  width: 0.6em;
+  height: 1.2em;
+  margin-left: 2px;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+.text-type__cursor--underline {
+  border-bottom: 2px solid currentColor;
+  color: transparent;
+  width: 0.6em;
+  height: 1.2em;
+  margin-left: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .text-type {
+    font-size: 0.9em;
   }
-  to {
+}
+
+/* Animation variants */
+.text-type--smooth .text-type__cursor {
+  animation: smooth-blink 2s infinite;
+}
+
+@keyframes smooth-blink {
+  0%, 40% {
     opacity: 1;
-    transform: translateY(0);
+  }
+  60%, 100% {
+    opacity: 0;
   }
 }
 
-/* Gradient text effect */
-.text-type--gradient .text-type__content {
-  background: linear-gradient(135deg, #C16B32, #A59489);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Color variants */
+.text-type--primary .text-type__cursor {
+  color: var(--primary-color, #007bff);
 }
 
-/* Glow effect */
-.text-type--glow .text-type__content {
-  text-shadow: 0 0 10px rgba(193, 107, 50, 0.5);
+.text-type--secondary .text-type__cursor {
+  color: var(--secondary-color, #6c757d);
 }
 
-/* Pulse effect */
-.text-type--pulse .text-type__content {
-  animation: pulse 2s infinite;
+.text-type--success .text-type__cursor {
+  color: var(--success-color, #28a745);
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
+.text-type--danger .text-type__cursor {
+  color: var(--danger-color, #dc3545);
+}
+
+.text-type--warning .text-type__cursor {
+  color: var(--warning-color, #ffc107);
+}
+
+.text-type--info .text-type__cursor {
+  color: var(--info-color, #17a2b8);
 }

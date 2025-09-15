@@ -192,55 +192,43 @@ const Threads: React.FC<ThreadsProps> = ({
 
     function handleMouseMove(e: MouseEvent) {
       const rect = container.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = 1.0 - (e.clientY - rect.top) / rect.height;
-      targetMouse = [x, y];
+      targetMouse[0] = (e.clientX - rect.left) / rect.width;
+      targetMouse[1] = 1.0 - (e.clientY - rect.top) / rect.height;
     }
-    function handleMouseLeave() {
-      targetMouse = [0.5, 0.5];
-    }
+
     if (enableMouseInteraction) {
       container.addEventListener("mousemove", handleMouseMove);
-      container.addEventListener("mouseleave", handleMouseLeave);
     }
 
-    function update(t: number) {
-      if (enableMouseInteraction) {
-        const smoothing = 0.05;
-        currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
-        currentMouse[1] += smoothing * (targetMouse[1] - currentMouse[1]);
-        program.uniforms.uMouse.value[0] = currentMouse[0];
-        program.uniforms.uMouse.value[1] = currentMouse[1];
-      } else {
-        program.uniforms.uMouse.value[0] = 0.5;
-        program.uniforms.uMouse.value[1] = 0.5;
-      }
-      program.uniforms.iTime.value = t * 0.001;
-
+    function animate() {
+      // Smooth mouse interpolation
+      currentMouse[0] += (targetMouse[0] - currentMouse[0]) * 0.05;
+      currentMouse[1] += (targetMouse[1] - currentMouse[1]) * 0.05;
+      
+      program.uniforms.iTime.value = performance.now() * 0.001;
+      program.uniforms.uMouse.value[0] = currentMouse[0];
+      program.uniforms.uMouse.value[1] = currentMouse[1];
+      
       renderer.render({ scene: mesh });
-      animationFrameId.current = requestAnimationFrame(update);
+      animationFrameId.current = requestAnimationFrame(animate);
     }
-    animationFrameId.current = requestAnimationFrame(update);
+    animate();
 
-      return () => {
-        if (animationFrameId.current)
-          cancelAnimationFrame(animationFrameId.current);
-        window.removeEventListener("resize", resize);
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      window.removeEventListener("resize", resize);
+      if (enableMouseInteraction) {
+        container.removeEventListener("mousemove", handleMouseMove);
+      }
+      if (gl.canvas && container.contains(gl.canvas)) {
+        container.removeChild(gl.canvas);
+      }
+    };
 
-        if (enableMouseInteraction) {
-          container.removeEventListener("mousemove", handleMouseMove);
-          container.removeEventListener("mouseleave", handleMouseLeave);
-        }
-        if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
-        gl.getExtension("WEBGL_lose_context")?.loseContext();
-      };
     } catch (error) {
-      console.warn('WebGL initialization failed:', error);
-      // Fallback: just return a cleanup function
-      return () => {
-        if (animationFrameId.current)
-          cancelAnimationFrame(animationFrameId.current);
-      };
+      console.error("Failed to initialize Threads component:", error);
     }
   }, [color, amplitude, distance, enableMouseInteraction]);
 

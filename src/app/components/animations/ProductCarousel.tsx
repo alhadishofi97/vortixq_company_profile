@@ -150,22 +150,19 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
     const maxSlides = Math.max(1, products.length - visibleCards + 1);
     return (
       <div className="flex justify-center mt-4 sm:mt-6">
-        <div className="flex items-center gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-2">
           {Array.from({ length: maxSlides }, (_, index) => (
-            <button
+            <div
               key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300 ease-out ${
-                index === currentIndex
-                  ? 'bg-orange-500 scale-110 sm:scale-125 shadow-md sm:shadow-lg shadow-orange-500/50'
-                  : 'bg-orange-500/40 hover:bg-orange-500/60 active:bg-orange-500/80'
+              className={`w-2 h-2 rounded-full ${
+                index === currentIndex ? 'bg-orange-500' : 'bg-gray-500'
               }`}
             />
           ))}
         </div>
       </div>
     );
-  }, [products.length, currentIndex, goToSlide, visibleCards]);
+  }, [products.length, currentIndex, visibleCards]);
 
   // Handle drag events
   const handleDragStart = useCallback((event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -265,27 +262,10 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
       </div>
 
       {/* Dots Indicator - hanya tampil jika ada lebih dari 1 produk */}
-      {products.length > 1 && dotsIndicator}
-
-      {/* Swipe Indicator - hanya tampil jika ada lebih dari 1 produk */}
       {products.length > 1 && (
-        <div className="flex justify-center mt-3 sm:mt-4">
-          <div className="flex items-center space-x-1.5 sm:space-x-2 text-white/50 sm:text-white/60 text-xs sm:text-sm">
-            <motion.div
-              className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-500 rounded-full"
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.4, 0.8, 0.4]
-              }}
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
-            <span className="hidden xs:inline">Swipe to navigate</span>
-            <span className="xs:hidden">Swipe</span>
-          </div>
+        <div className="flex flex-col items-center gap-4">
+          {dotsIndicator}
+          <p className="text-white/60 text-sm">Swipe to navigate</p>
         </div>
       )}
     </div>
