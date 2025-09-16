@@ -43,11 +43,11 @@ const About = () => {
           {/* Main Heading */}
           <h2 className="font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
             <span className="text-white">About Our</span><br />
-            <span className="text-white/80">AI Solutions</span>
+            <span className="text-white">AI Solutions</span>
           </h2>
 
           {/* Description */}
-          <p className="text-sm xs:text-base sm:text-lg md:text-xl text-white/90 leading-relaxed mb-8 max-w-1xl text-left justify-center">
+          <p className="text-sm xs:text-base sm:text-lg md:text-xl text-white/90 leading-relaxed mb-8 max-w-1xl text-left justify-center text-center">
             We are dedicated to empowering organizations through strategic AI integration and comprehensive cybersecurity solutions. Our expertise bridges the gap between cutting-edge technology and practical business applications. With a team of industry experts, we deliver tailored consulting services that drive innovation, enhance security posture, and create sustainable competitive advantages for our clients.
           </p>
           {/* Features List */}

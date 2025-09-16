@@ -243,10 +243,8 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
               className="flex-shrink-0"
               style={{ 
                 width: cardWidth,
-                transform: 'translateZ(0)',
-                backfaceVisibility: 'hidden',
-                paddingLeft: index === 0 ? '0px' : '4px',
-                paddingRight: index === products.length - 1 ? '0px' : '4px'
+                maxWidth: cardWidth,
+                minWidth: cardWidth
               }}
             >
               <ProductCard
@@ -261,13 +259,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         </motion.div>
       </div>
 
-      {/* Dots Indicator - hanya tampil jika ada lebih dari 1 produk */}
-      {products.length > 1 && (
-        <div className="flex flex-col items-center gap-4">
-          {dotsIndicator}
-          <p className="text-white/60 text-sm">Swipe to navigate</p>
-        </div>
-      )}
+      {/* No dots indicator needed for 1 page layout */}
     </div>
   );
 };

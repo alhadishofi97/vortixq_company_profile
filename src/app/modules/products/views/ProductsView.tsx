@@ -5,7 +5,6 @@ import AnimatedSection from "../../../components/animations/AnimatedSection";
 import ProductCarousel from "../../../components/animations/ProductCarousel";
 
 const ProductsView: React.FC = () => {
-  
 
   // Product data for carousel - only AIRIS
   const products = [
@@ -39,7 +38,7 @@ const ProductsView: React.FC = () => {
   ];
 
   const handleProductClick = () => {
-    // Redirect ke halaman /products/airis
+    // Redirect ke halaman /products/airis untuk melihat 6 card produk
     window.location.href = '/products/airis';
   };
 

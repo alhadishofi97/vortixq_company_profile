@@ -63,30 +63,30 @@ const ContactView: React.FC = () => {
       </div>
       
       {/* Content Container */}
-      <div className="relative z-20 mx-auto w-[90%] pt-32 pb-24">
+      <div className="relative z-20 mx-auto w-[90%] pt-20 pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
         >
         {/* Contact Information Panel - Left */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="lg:col-span-2 bg-black/60 backdrop-blur-md rounded-2xl p-8 border border-white/10"
+          className="lg:col-span-2 bg-black/60 backdrop-blur-md rounded-2xl p-6 border border-white/10"
         >
-          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-white mb-6">
+          <h2 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-4">
             Contact Information
           </h2>
           
-          <p className="text-slate-300 text-sm xs:text-base sm:text-lg md:text-xl leading-relaxed mb-8">
+          <p className="text-slate-300 text-sm xs:text-base sm:text-lg leading-relaxed mb-6">
             Ready to transform your business with cutting-edge AI and robust cybersecurity solutions? 
             Reach out to our team of experts today.
           </p>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* Email */}
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-lg flex items-center justify-center">
@@ -173,7 +173,7 @@ const ContactView: React.FC = () => {
                 onChange={handleInputChange}
                 required
                 className="w-full px-4 py-3 bg-black/40 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-highlight1 focus:border-transparent transition-all duration-200 "
-                placeholder="your.email@example.com"
+                placeholder="Your email"
               />
             </div>
 

@@ -22,14 +22,27 @@ interface ProductModalProps {
 }
 
 const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product }) => {
+  // Prevent body scroll when modal is open
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   if (!product) return null;
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex justify-center p-4 overflow-y-auto"
-          style={{ alignItems: 'flex-start', paddingTop: '5vh' }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -37,7 +50,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
         >
           {/* Backdrop */}
           <motion.div
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/90 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -46,7 +59,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
 
           {/* Modal Content */}
           <motion.div
-            className="relative w-full max-w-xs sm:max-w-lg md:max-w-3xl lg:max-w-5xl h-fit max-h-[90vh] rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-hidden flex flex-col"
+            className="relative w-full max-w-xs sm:max-w-lg md:max-w-4xl lg:max-w-6xl h-auto max-h-[90vh] rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto lg:overflow-hidden flex flex-col mx-auto"
             style={{ backgroundColor: '#000000' }}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -81,8 +94,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             </div>
 
             {/* Content */}
-            <div className="flex flex-col lg:flex-row flex-1 overflow-hidden min-h-0">
-              {/* Left Side - Single Dashboard Image */}
+            <div className="flex flex-col lg:flex-row flex-1 min-h-0">
+              {/* Dashboard Image - Full width on mobile, 2/3 on desktop */}
               <div className="w-full lg:w-2/3 p-3 sm:p-4 flex-shrink-0">
                 <motion.div
                   className="relative rounded-lg overflow-hidden border border-white/10 w-full h-fit"
@@ -97,18 +110,21 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                     width={800}
                     height={600}
                     className="w-full h-auto object-contain"
+                    style={{ 
+                      maxHeight: 'calc(90vh - 200px)'
+                    }}
                     priority
                   />
                 </motion.div>
               </div>
 
-              {/* Right Side - Features & Capabilities */}
-              <div className="w-full lg:w-1/3 px-3 sm:px-4 pt-3 sm:pt-4 pb-0 lg:border-l border-white/10 flex flex-col min-h-0" style={{ backgroundColor: '#000000' }}>
+              {/* Features & Capabilities - Full width on mobile, 1/3 on desktop */}
+              <div className="w-full lg:w-1/3 px-3 sm:px-4 pt-3 sm:pt-4 pb-3 sm:pb-4 lg:border-l border-white/10 flex flex-col" style={{ backgroundColor: '#000000' }}>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5, duration: 0.4 }}
-                  className="flex-1 overflow-y-auto"
+                  className="flex-1 overflow-y-auto lg:overflow-hidden"
                 >
                   <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 sm:mb-3">Key Features & Capabilities:</h3>
                   
@@ -152,7 +168,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                 </motion.div>
                 
                 {/* Footer inside right panel */}
-                <div className="flex flex-col lg:flex-row items-center justify-center gap-2 pt-2 sm:pt-3 border-t border-white/10 mt-2 sm:mt-3 pb-2 sm:pb-3 flex-shrink-0">
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-2 pt-3 sm:pt-4 border-t border-white/10 mt-3 sm:mt-4 flex-shrink-0">
                   
                   <motion.button
                     onClick={() => {
@@ -164,18 +180,20 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                         window.location.href = '/#contact';
                       } else {
                         // If already on home page, just scroll to contact
-                        const contactSection = document.getElementById("contact");
-                        if (contactSection) {
-                          contactSection.scrollIntoView({ behavior: "smooth" });
-                        }
+                        setTimeout(() => {
+                          const contactSection = document.getElementById("contact");
+                          if (contactSection) {
+                            contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                          }
+                        }, 100);
                       }
                     }}
-                    className="bg-gradient-to-r from-orange-500 to-yellow-500 text-black font-semibold py-1.5 px-3 sm:py-2 sm:px-4 lg:py-2.5 lg:px-5 rounded-lg flex items-center gap-1.5 lg:gap-2 shadow-lg hover:shadow-orange-500/25 transition-all duration-300 text-xs sm:text-sm lg:text-base"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-black font-semibold py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-orange-500/25 transition-all duration-300 text-sm"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <span>Book a Demo</span>
-                    <svg className="w-3 h-3 lg:w-4 lg:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </motion.button>

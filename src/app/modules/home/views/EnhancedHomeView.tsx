@@ -15,19 +15,21 @@ const EnhancedHome = () => {
   
 
   const getData = useCallback(async () => {
-    const data = await getHome();
-    console.log('data', data);
-    type NarasiChild = { text: string; bold?: boolean };
-    type HomeRecord = {
-      Judul?: string;
-      subjudul?: string;
-      narasi?: Array<{ children?: Array<NarasiChild> }>;
-    };
-    type HomeResponse = { data?: Array<HomeRecord> };
     try {
+      const data = await getHome();
+      console.log('data', data);
+      type NarasiChild = { text: string; bold?: boolean };
+      type HomeRecord = {
+        Judul?: string;
+        subjudul?: string;
+        narasi?: Array<{ children?: Array<NarasiChild> }>;
+      };
+      type HomeResponse = { data?: Array<HomeRecord> };
+      
+      // Set judul dengan fallback
       const judulText = (data as HomeResponse).data?.[0]?.Judul || "AI-Powered Cybersecurity Platform for Modern Enterprises";
       setJudul(
-        <div className="font-display text-center mb-6 mt-0">
+        <div className="font-display text-center mb-6 mt-8">
           <BlurText
             text={judulText}
             delay={200}
@@ -40,13 +42,13 @@ const EnhancedHome = () => {
 
       const subjudulText = (data as HomeResponse).data?.[0]?.subjudul || "Transforming businesses through cutting-edge AI integration and robust security solutions";
       const elmSub = (
-        <div className="mt-3 mb-4 font-display text-center flex justify-center items-center">
+        <div className="mt-6 mb-8 font-display text-center">
           <BlurText
             text={subjudulText}
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-full mx-auto px-8 sm:px-12"
+            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
           />
         </div>
       );
@@ -62,27 +64,27 @@ const EnhancedHome = () => {
         }
       });
 
-      const narasiText = elmNarasi.length > 0 ? elmNarasi.join(" ") : "Empowering organizations with cutting-edge AI and cybersecurity solutions for a secure digital future.";
+      const narasiText = elmNarasi.length > 0 ? elmNarasi.join(" ") : "Empowering organizations with cutting-edge AI and cyber&shy;security solutions for a secure digital future.";
       
       setNarasi(
-        <div className="mb-4 mt-2 font-sans text-center w-full flex justify-center">
+        <div className="mb-8 mt-4 font-sans text-center w-full">
           <BlurText
             text={narasiText}
             delay={20}
             animateBy="letters"
             direction="bottom"
-            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-text-secondary leading-relaxed text-center max-w-full mx-auto px-8 sm:px-12 break-words"
+            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-white leading-relaxed text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
           />
         </div>
       );
 
     } catch (error) {
       console.log("err", error);
-      // Fallback content
+      // Fallback content untuk semua
       setJudul(
-        <div className="font-display text-center mb-6 mt-0">
+        <div className="font-display text-center mb-6 mt-8">
           <BlurText
-            text="AI Cybersecurity Platform for Modern Enterprises"
+            text="AI-Powered Cybersecurity Platform for Modern Enterprises"
             delay={200}
             animateBy="words"
             direction="top"
@@ -92,25 +94,25 @@ const EnhancedHome = () => {
       );
       
       setSubJudul(
-        <div className="mt-16 mb-4 font-display text-center flex justify-center items-center">
+        <div className="mt-6 mb-8 font-display text-center">
           <BlurText
             text="Transforming businesses through cutting-edge AI integration and robust security solutions"
             delay={200}
             animateBy="words"
             direction="bottom"
-            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-full mx-auto px-8 sm:px-12"
+            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
           />
         </div>
       );
       
       setNarasi(
-        <div className="mb-10 mt-2 font-sans text-center w-full flex justify-center">
+        <div className="mb-8 mt-4 font-sans text-center w-full">
           <BlurText
-            text="Empowering organizations with cutting-edge AI and cybersecurity solutions for a secure digital future."
+            text="Empowering organizations with cutting-edge AI and cyber&shy;security solutions for a secure digital future."
             delay={20}
             animateBy="letters"
             direction="bottom"
-            className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl font-sans leading-relaxed text-white text-center max-w-full mx-auto px-8 sm:px-12"
+            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-white leading-relaxed text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
           />
         </div>
       );
@@ -124,7 +126,7 @@ const EnhancedHome = () => {
   // Video-related useEffect removed - video background disabled
 
   return (
-    <div className="relative min-h-screen overflow-hidden pt-20 bg-black">
+    <div className="relative min-h-screen overflow-hidden pt-60 bg-black">
       {/* Interactive Particles Background */}
       <Particles 
         className="absolute inset-0 pointer-events-none" 
@@ -151,7 +153,7 @@ const EnhancedHome = () => {
       /> */}
       
       {/* Hero Content with Enhanced Animations */}
-      <div className="relative" style={{ zIndex: 10, position: 'relative' }}>
+      <div className="relative z-10">
         <AnimatedSection animation="scale" duration={1.2}>
         <Box
           sx={{
@@ -168,22 +170,22 @@ const EnhancedHome = () => {
         >
           <Container maxWidth={false} sx={{ py: { xs: 2, md: 4 } }}>
             {/* Animated Title */}
-            <AnimatedSection animation="fadeInUp" delay={0.2}>
+            <AnimatedSection animation="fadeInUp" delay={0.1}>
               {judul}
             </AnimatedSection>
             
             {/* Animated Subtitle */}
-            <AnimatedSection animation="fadeInUp" delay={0.4}>
+            <AnimatedSection animation="fadeInUp" delay={0.2}>
               {subjudul}
             </AnimatedSection>
             
             {/* Animated Description */}
-            <AnimatedSection animation="fadeInUp" delay={0.6}>
+            <AnimatedSection animation="fadeInUp" delay={0.3}>
               {narasi}
             </AnimatedSection>
             
             {/* Animated CTA Button - muncul setelah judul dan narasi */}
-            <AnimatedSection animation="fadeInUp" delay={3.0}>
+            <AnimatedSection animation="fadeInUp" delay={1.0}>
               <div className="mt-12 flex items-center justify-center">
                 <Button
                   variant="outlined"
@@ -210,7 +212,7 @@ const EnhancedHome = () => {
                       backgroundColor: '#FF6B35',
                       boxShadow: '0 4px 12px rgba(255, 107, 53, 0.3)'
                     },
-                    transition: "all 0.3s ease-in-out",
+                    transition: "all 0.10s ease-in-out",
                   }}
                 >
                   LEARN MORE

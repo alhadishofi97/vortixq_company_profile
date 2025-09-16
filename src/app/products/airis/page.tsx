@@ -193,59 +193,59 @@ const AirisProductPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen text-slate-100 font-sans">
-      <div className="relative mx-auto w-[90%] py-24 bg-transparent">
+    <div className="h-screen text-slate-100 font-sans overflow-hidden bg-black">
+      <div className="relative mx-auto w-[95%] h-full py-4 bg-transparent">
         {/* Animated background blobs */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -top-24 -left-16 w-72 h-72 rounded-full bg-brand-highlight1/10 blur-3xl animate-pulse-glow" />
-          <div className="absolute -bottom-20 -right-24 w-80 h-80 rounded-full bg-brand-secondary/10 blur-3xl animate-pulse-glow" />
+          <div className="absolute -top-12 -left-8 w-48 h-48 rounded-full bg-brand-highlight1/10 blur-3xl animate-pulse-glow" />
+          <div className="absolute -bottom-12 -right-12 w-56 h-56 rounded-full bg-brand-secondary/10 blur-3xl animate-pulse-glow" />
         </div>
         
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative z-10"
+          className="relative z-10 h-full flex flex-col"
         >
           {/* Back to Home Button */}
           <motion.button
             onClick={() => {
               window.location.href = '/';
             }}
-            className="flex items-center gap-2 text-orange-500 hover:text-orange-400 mb-8 group transition-all duration-200"
+            className="flex items-center gap-2 text-orange-500 hover:text-orange-400 mb-2 group transition-all duration-200 flex-shrink-0"
             whileHover={{ x: -5 }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <svg className="w-6 h-6 text-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 19-7-7 7-7"/>
             </svg>
-            <span className="text-sm font-medium">Back to Home</span>
+            <span className="text-xs font-medium">Back to Home</span>
           </motion.button>
 
           {/* Header Section */}
-          <div className="mb-12 sm:mb-16 text-center px-4 sm:px-0">
-            <h1 className="font-display text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight mb-4 sm:mb-6">
+          <div className="mb-4 text-center px-2 flex-shrink-0">
+            <h1 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight mb-2">
               One Platform. One Brain.<br />
-              <span className="text-white/80">End-to-End Cyber Resilience</span>
+              <span className="text-white/80 text-lg sm:text-xl md:text-2xl lg:text-3xl">End-to-End Cyber Resilience</span>
             </h1>
             <div className="w-full h-px bg-gradient-to-r from-brand-highlight1 to-brand-secondary animate-gradient-x"></div>
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 flex-1 overflow-hidden">
             {products.map((product, index) => (
                 <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 hover:bg-white/10 transition-all duration-300"
+                className="bg-white/5 border border-white/10 rounded-lg p-2 sm:p-3 hover:bg-white/10 transition-all duration-300 flex flex-col h-full"
               >
                 {/* Product Image */}
-                <div className="relative w-full h-48 sm:h-56 md:h-64 mb-4 rounded-lg overflow-hidden">
+                <div className="relative w-full h-24 sm:h-28 md:h-32 mb-2 rounded-lg overflow-hidden flex-shrink-0">
                   <Image
                     src={product.dashboardImage}
                     alt={product.title}
@@ -255,26 +255,26 @@ const AirisProductPage: React.FC = () => {
             </div>
 
                 {/* Product Icon */}
-                <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-orange-500/20 rounded-lg mb-3 sm:mb-4">
-                  <div className="text-orange-500 w-5 h-5 sm:w-6 sm:h-6">
+                <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-orange-500/20 rounded-lg mb-1 sm:mb-2 flex-shrink-0">
+                  <div className="text-orange-500 w-3 h-3 sm:w-4 sm:h-4">
                     {product.icon}
                   </div>
               </div>
                 
                 {/* Product Title */}
-                <h3 className="font-display text-base sm:text-lg font-bold text-white mb-2 sm:mb-3">
+                <h3 className="font-display text-xs sm:text-sm font-bold text-white mb-1 flex-shrink-0">
                   {product.title}
                 </h3>
                 
                 {/* Product Description */}
-                <p className="text-xs sm:text-sm text-slate-300 mb-4 sm:mb-6 leading-relaxed line-clamp-3">
+                <p className="text-xs text-slate-300 mb-2 leading-tight line-clamp-2 flex-1">
                   {product.description}
                 </p>
                 
                 {/* Learn More Button */}
                 <motion.button
                   onClick={() => handleProductClick(product)}
-                  className="w-full px-3 py-2 sm:px-4 sm:py-2 border border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-200 text-xs sm:text-sm"
+                  className="w-full px-2 py-1 border border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-200 text-xs flex-shrink-0"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
