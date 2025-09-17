@@ -58,7 +58,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-0 sm:p-4"
+          className="fixed inset-0 z-[9999] flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -73,7 +73,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '0'
+            padding: '0',
+            margin: '0'
           }}
         >
           {/* Backdrop */}
@@ -95,14 +96,11 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
 
           {/* Modal Content */}
           <motion.div
-            className="relative w-full h-full sm:max-w-lg md:max-w-4xl lg:max-w-6xl sm:h-auto sm:max-h-[95vh] sm:rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto flex flex-col mx-auto"
+            className="relative w-full h-full sm:max-w-lg md:max-w-4xl lg:max-w-6xl sm:h-auto sm:max-h-[95vh] sm:rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto flex flex-col"
             style={{ 
               backgroundColor: '#000000',
               position: 'relative',
-              zIndex: 10000,
-              transform: 'translate(-50%, -50%)',
-              top: '50%',
-              left: '50%'
+              zIndex: 10000
             }}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
