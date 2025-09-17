@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import ProductModal from "../../components/animations/ProductModal";
+import FlowbiteProductModal from "../../components/animations/FlowbiteProductModal";
 
 const AirisProductPage: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<{
@@ -281,7 +281,7 @@ const AirisProductPage: React.FC = () => {
           </div>
 
           {/* Product Modal */}
-          <ProductModal
+          <FlowbiteProductModal
             isOpen={isModalOpen}
             onClose={handleCloseModal}
             product={selectedProduct}
