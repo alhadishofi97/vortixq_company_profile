@@ -95,7 +95,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             </div>
 
             {/* Body: mempertahankan isi konten sebelumnya (gambar + fitur & kapabilitas) */}
-            <div id="modal-description" className="p-4 md:p-5 space-y-4 flex-1 overflow-y-auto pb-32">
+            <div id="modal-description" className="p-4 md:p-5 space-y-4 flex-1 overflow-y-auto">
               {/* Dashboard Image */}
               <div className="relative overflow-hidden rounded-lg">
                 <Image
@@ -133,8 +133,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
               </div>
             </div>
 
-            {/* Footer: mempertahankan tombol aksi asli (Book a Demo) */}
-            <div className="sticky bottom-0 z-20 flex items-center justify-end gap-3 p-4 md:p-5 border-t border-white/10 sm:rounded-b bg-neutral-900/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-900/80 min-h-[80px]">
+            {/* Footer: tombol Book a Demo di paling bawah */}
+            <div className="flex items-center justify-end p-4 md:p-5 border-t border-white/10 sm:rounded-b bg-neutral-900/95 backdrop-blur">
               <button
                 onClick={() => {
                   onClose();
@@ -151,7 +151,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                     }
                   }
                 }}
-                className="ml-auto text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                className="text-white bg-orange-600 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
                 Book a Demo
               </button>
