@@ -36,7 +36,7 @@ const EnhancedHome = () => {
             delay={50}
             animateBy="words"
             direction="top"
-            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white tracking-tight leading-tight justify-center max-w-full mx-auto px-8 sm:px-12"
+            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white tracking-tight leading-tight text-center max-w-full mx-auto px-8 sm:px-12"
           />
         </div>
       );
@@ -49,7 +49,7 @@ const EnhancedHome = () => {
             delay={100}
             animateBy="words"
             direction="bottom"
-            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
+            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 break-words"
           />
         </div>
       );
@@ -74,7 +74,7 @@ const EnhancedHome = () => {
             delay={10}
             animateBy="words"
             direction="bottom"
-            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-white leading-relaxed text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
+            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-white leading-relaxed text-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 break-words"
           />
         </div>
       );
@@ -90,7 +90,7 @@ const EnhancedHome = () => {
             delay={50}
             animateBy="words"
             direction="top"
-            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white tracking-tight leading-tight justify-center max-w-full mx-auto px-8 sm:px-12"
+            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white tracking-tight leading-tight text-center max-w-full mx-auto px-8 sm:px-12"
           />
         </div>
       );
@@ -102,7 +102,7 @@ const EnhancedHome = () => {
             delay={50}
             animateBy="words"
             direction="bottom"
-            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
+            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 break-words"
           />
         </div>
       );
@@ -114,7 +114,7 @@ const EnhancedHome = () => {
             delay={5}
             animateBy="words"
             direction="bottom"
-            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-white leading-relaxed text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
+            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-white leading-relaxed text-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 break-words"
           />
         </div>
       );
