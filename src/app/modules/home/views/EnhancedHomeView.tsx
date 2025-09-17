@@ -65,7 +65,7 @@ const EnhancedHome = () => {
         }
       });
 
-      const narasiText = elmNarasi.length > 0 ? elmNarasi.join(" ") : "Empowering organizations with cutting-edge AI and cyber&shy;security solutions for a secure digital future.";
+      const narasiText = elmNarasi.length > 0 ? elmNarasi.join(" ") : "Empowering organizations with cutting-edge AI and cybersecurity solutions for a secure digital future.";
       
       setNarasi(
         <div className="mb-8 mt-4 font-sans text-center w-full">
@@ -110,7 +110,7 @@ const EnhancedHome = () => {
       setNarasi(
         <div className="mb-8 mt-4 font-sans text-center w-full">
           <BlurText
-            text="Empowering organizations with cutting-edge AI and cyber&shy;security solutions for a secure digital future."
+            text="Empowering organizations with cutting-edge AI and cybersecurity solutions for a secure digital future."
             delay={10}
             animateBy="words"
             direction="bottom"
