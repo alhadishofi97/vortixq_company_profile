@@ -193,8 +193,8 @@ const AirisProductPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen lg:h-screen text-slate-100 font-sans overflow-y-auto lg:overflow-hidden bg-black">
-      <div className="relative mx-auto w-[95%] min-h-full lg:h-full py-4 bg-transparent">
+    <div className="min-h-screen text-slate-100 font-sans bg-black">
+      <div className="relative mx-auto w-[95%] min-h-screen py-4 bg-transparent">
         {/* Animated background blobs */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-12 -left-8 w-48 h-48 rounded-full bg-brand-highlight1/10 blur-3xl animate-pulse-glow" />
@@ -205,7 +205,7 @@ const AirisProductPage: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative z-10 min-h-full lg:h-full flex flex-col"
+          className="relative z-10 min-h-full flex flex-col"
         >
           {/* Back to Home Button */}
           <motion.button
@@ -235,7 +235,7 @@ const AirisProductPage: React.FC = () => {
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 flex-1 overflow-y-auto lg:overflow-hidden pb-4 lg:pb-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 flex-1 pb-4">
             {products.map((product, index) => (
                 <motion.div
                 key={product.id}
