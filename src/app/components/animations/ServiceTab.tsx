@@ -32,10 +32,10 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
     >
       {/* Background */}
       <div
-        className={`absolute inset-0 rounded-2xl border-2 border-white ${
+        className={`absolute inset-0 rounded-2xl border-2 ${
           isActive 
-            ? "bg-gradient-to-r from-orange-500 to-orange-400 shadow-lg shadow-orange-500/30" 
-            : "bg-black hover:bg-black/80"
+            ? "border-white bg-gradient-to-r from-orange-500 to-orange-400 shadow-lg shadow-orange-500/30" 
+            : "border-orange-500/30 bg-black hover:bg-black/80"
         }`}
       />
       
