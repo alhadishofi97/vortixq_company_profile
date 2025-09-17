@@ -52,33 +52,28 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
 
   if (!product || !mounted) return null;
 
-  // Mengikuti struktur yang Anda berikan: wrapper fixed + container + content
+  // Modal sederhana untuk mobile yang lebih cepat
   const modalTree = (
     <AnimatePresence>
-      {/* Wrapper mengacu ke struktur:
-         id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden
-         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
-      */}
-      <div
-        id="static-modal"
-        data-modal-backdrop="static"
-        tabIndex={-1}
-        aria-hidden={!isOpen}
-        className={`${isOpen ? "block" : "hidden"} fixed inset-0 z-[100000] w-full h-screen`}
-        role="dialog"
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-        aria-modal="true"
-      >
-        {/* Backdrop klik untuk menutup */}
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+      {isOpen && (
+        <div
+          id="static-modal"
+          data-modal-backdrop="static"
+          tabIndex={-1}
+          aria-hidden="false"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          role="dialog"
+          aria-labelledby="modal-title"
+          aria-describedby="modal-description"
+          aria-modal="true"
+        >
+          {/* Backdrop sederhana */}
+          <div className="absolute inset-0 bg-black/80" onClick={onClose} />
 
-        {/* Dialog fixed center agar selalu berada di tengah viewport */}
-        <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[100001] w-[calc(100%-1rem)] sm:w-auto max-w-2xl">
-          {/* Panel konten */}
-          <div className="relative bg-neutral-900/90 sm:rounded-lg shadow-sm border border-white/15 backdrop-blur-md flex flex-col max-h-[90svh] sm:max-h-[85vh]">
-            {/* Header: mempertahankan konten judul yang ada */}
-            <div className="sticky top-0 z-10 flex items-center justify-between p-4 md:p-5 border-b sm:rounded-t border-gray-200/10 bg-neutral-900/90 backdrop-blur-md">
+          {/* Modal content */}
+          <div className="relative w-full max-w-2xl max-h-[90vh] bg-neutral-900 rounded-lg shadow-lg border border-white/20 flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-white/10 bg-neutral-900">
               <h3 id="modal-title" className="text-xl font-semibold text-white">
                 {product.title}
               </h3>
@@ -94,8 +89,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
               </button>
             </div>
 
-            {/* Body: mempertahankan isi konten sebelumnya (gambar + fitur & kapabilitas) */}
-            <div id="modal-description" className="p-4 md:p-5 space-y-4 flex-1 overflow-y-auto">
+            {/* Body */}
+            <div id="modal-description" className="p-4 space-y-4 flex-1 overflow-y-auto">
               {/* Dashboard Image */}
               <div className="relative overflow-hidden rounded-lg">
                 <Image
@@ -133,8 +128,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
               </div>
             </div>
 
-            {/* Footer: tombol Book a Demo di paling bawah */}
-            <div className="flex items-center justify-end p-4 md:p-5 border-t border-white/10 sm:rounded-b bg-neutral-900/95 backdrop-blur">
+            {/* Footer */}
+            <div className="flex items-center justify-end p-4 border-t border-white/10 bg-neutral-900">
               <button
                 onClick={() => {
                   onClose();
@@ -158,7 +153,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             </div>
           </div>
         </div>
-      </div>
+      )}
     </AnimatePresence>
   );
 
