@@ -62,7 +62,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             role="dialog"
             aria-describedby="modal-description"
             aria-labelledby="modal-title"
-            className="relative w-full max-w-sm sm:max-w-lg md:max-w-4xl lg:max-w-6xl h-auto max-h-[90vh] sm:max-h-[95vh] rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto flex flex-col mx-auto"
+            className="relative w-full max-w-sm sm:max-w-lg md:max-w-4xl lg:max-w-6xl h-auto max-h-[95vh] rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-hidden flex flex-col mx-auto"
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -76,20 +76,20 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             </div>
 
             {/* Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-3 sm:p-4 flex-1">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 p-3 sm:p-4 flex-1 overflow-y-auto">
               {/* Dashboard Image */}
-              <div className="flex flex-col">
-                <div className="relative overflow-hidden rounded-lg flex-1 p-2 sm:p-4">
+              <div className="flex flex-col order-1 lg:order-1">
+                <div className="relative overflow-hidden rounded-lg flex-1">
                   <Image
                     src={product.dashboardImage}
                     alt={`${product.title} Dashboard`}
                     width={800}
                     height={600}
-                    className="w-full h-full object-cover rounded-lg"
-                    style={{ maxHeight: 'calc(90vh - 200px)' }}
+                    className="w-full h-auto object-cover rounded-lg"
+                    style={{ maxHeight: '50vh' }}
                     priority
                   />
-                  <div className="absolute inset-2 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
                   <div className="absolute bottom-4 right-4">
                     <div className="text-orange-400">
                       {product.icon}
@@ -99,7 +99,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
               </div>
 
               {/* Features & Capabilities */}
-              <div className="flex flex-col justify-between px-2 sm:px-4 pt-2 sm:pt-4 pb-2 sm:pb-4">
+              <div className="flex flex-col justify-between order-2 lg:order-2 px-2 sm:px-4 pt-2 sm:pt-4 pb-2 sm:pb-4">
                 <div>
                   <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">Key Features & Capabilities:</h3>
                   <ul className="space-y-2 sm:space-y-3">

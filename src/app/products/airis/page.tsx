@@ -239,11 +239,15 @@ const AirisProductPage: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="rounded-lg border bg-card text-card-foreground shadow-sm glass-card group cursor-pointer hover:scale-105 transition-all duration-300"
+                className="rounded-lg border-2 border-orange-500/30 bg-card text-card-foreground shadow-sm glass-card group cursor-pointer hover:scale-105 hover:border-orange-500/60 hover:shadow-orange-500/20 hover:shadow-2xl transition-all duration-300 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/10 before:via-transparent before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 before:pointer-events-none"
                 style={{ animationDelay: `${index * 0.1}s` }}
                 onClick={() => handleProductClick(product)}
               >
-                <div className="p-6">
+                {/* Glossy overlay effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                <div className="p-6 relative z-10">
                   <div className="relative overflow-hidden rounded-lg mb-4">
                     <Image
                       src={product.dashboardImage}
@@ -253,19 +257,19 @@ const AirisProductPage: React.FC = () => {
                       className="w-full h-48 object-cover transition-transform duration-500 scale-100"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
-                    <div className="absolute bottom-4 right-4 text-primary">
+                    <div className="absolute bottom-4 right-4 text-orange-500">
                       <div className="h-8 w-8">
                         {product.icon}
                       </div>
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-semibold mb-3 group-hover:text-orange-500 transition-colors">
                     {product.title}
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {product.description}
                   </p>
-                  <div className="mt-4 flex items-center text-primary text-sm font-medium">
+                  <div className="mt-4 flex items-center text-orange-500 hover:text-orange-400 text-sm font-medium group-hover:translate-x-1 transition-all duration-200">
                     <span>Learn more</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right ml-1 h-4 w-4">
                       <path d="m9 18 6-6-6-6"></path>
