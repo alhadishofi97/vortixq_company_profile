@@ -193,8 +193,8 @@ const AirisProductPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen text-slate-100 font-sans bg-black">
-      <div className="relative mx-auto w-[95%] min-h-screen py-4 bg-transparent">
+    <div className="h-screen text-slate-100 font-sans overflow-hidden bg-black">
+      <div className="relative mx-auto w-[95%] h-full py-4 bg-transparent">
         {/* Animated background blobs */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-12 -left-8 w-48 h-48 rounded-full bg-brand-highlight1/10 blur-3xl animate-pulse-glow" />
@@ -205,7 +205,7 @@ const AirisProductPage: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative z-10 min-h-full flex flex-col"
+          className="relative z-10 h-full flex flex-col"
         >
           {/* Back to Home Button */}
           <motion.button
