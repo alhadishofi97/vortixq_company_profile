@@ -194,7 +194,7 @@ const AirisProductPage: React.FC = () => {
 
   return (
     <div className="min-h-screen text-slate-100 font-sans bg-black">
-      <div className="relative mx-auto w-[95%] min-h-screen py-4 bg-transparent">
+      <div className="max-w-7xl mx-auto min-h-screen py-4 bg-transparent">
         {/* Animated background blobs */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute -top-12 -left-8 w-48 h-48 rounded-full bg-brand-highlight1/10 blur-3xl animate-pulse-glow" />
@@ -226,62 +226,54 @@ const AirisProductPage: React.FC = () => {
           </motion.button>
 
           {/* Header Section */}
-          <div className="mb-4 text-center px-2 flex-shrink-0">
-            <h1 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight mb-2">
-              One Platform. One Brain.<br />
-              <span className="text-white/80 text-lg sm:text-xl md:text-2xl lg:text-3xl">End-to-End Cyber Resilience</span>
-            </h1>
-            <div className="w-full h-px bg-gradient-to-r from-brand-highlight1 to-brand-secondary animate-gradient-x"></div>
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">AIRIS AI-Native Cyber Defense</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">6 Core Modules, One Unified Platform</p>
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 flex-1 pb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product, index) => (
-                <motion.div
+              <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                className="bg-white/5 border border-white/10 rounded-lg p-2 sm:p-3 hover:bg-white/10 transition-all duration-300 flex flex-col h-full"
+                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+                className="rounded-lg border bg-card text-card-foreground shadow-sm glass-card group cursor-pointer hover:scale-105 transition-all duration-300"
+                style={{ animationDelay: `${index * 0.1}s` }}
+                onClick={() => handleProductClick(product)}
               >
-                {/* Product Image */}
-                <div className="relative w-full h-24 sm:h-28 md:h-32 mb-2 rounded-lg overflow-hidden flex-shrink-0">
-                  <Image
-                    src={product.dashboardImage}
-                    alt={product.title}
-                    fill
-                    className="object-cover"
-                  />
-            </div>
-
-                {/* Product Icon */}
-                <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-orange-500/20 rounded-lg mb-1 sm:mb-2 flex-shrink-0">
-                  <div className="text-orange-500 w-3 h-3 sm:w-4 sm:h-4">
-                    {product.icon}
+                <div className="p-6">
+                  <div className="relative overflow-hidden rounded-lg mb-4">
+                    <Image
+                      src={product.dashboardImage}
+                      alt={product.title}
+                      width={400}
+                      height={192}
+                      className="w-full h-48 object-cover transition-transform duration-500 scale-100"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+                    <div className="absolute bottom-4 right-4 text-primary">
+                      <div className="h-8 w-8">
+                        {product.icon}
+                      </div>
+                    </div>
                   </div>
-              </div>
-                
-                {/* Product Title */}
-                <h3 className="font-display text-xs sm:text-sm font-bold text-white mb-1 flex-shrink-0">
-                  {product.title}
-                </h3>
-                
-                {/* Product Description */}
-                <p className="text-xs text-slate-300 mb-2 leading-tight line-clamp-2 flex-1">
-                  {product.description}
-                </p>
-                
-                {/* Learn More Button */}
-                <motion.button
-                  onClick={() => handleProductClick(product)}
-                  className="w-full px-2 py-1 border border-orange-500 text-orange-500 font-semibold rounded-lg hover:bg-orange-500 hover:text-white transition-all duration-200 text-xs flex-shrink-0"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Learn more →
-                </motion.button>
-                </motion.div>
-              ))}
+                  <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                    {product.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {product.description}
+                  </p>
+                  <div className="mt-4 flex items-center text-primary text-sm font-medium">
+                    <span>Learn more</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right ml-1 h-4 w-4">
+                      <path d="m9 18 6-6-6-6"></path>
+                    </svg>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
           {/* Product Modal */}
