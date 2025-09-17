@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import ReactDOM from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -22,27 +23,42 @@ interface ProductModalProps {
 }
 
 const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product }) => {
-  // Prevent body scroll when modal is open
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent body scroll when modal is open (also lock html for iOS)
   React.useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      // Prevent overscroll bounce on iOS
+      (document.documentElement as HTMLElement).style.overscrollBehavior = "none";
+      (document.body as HTMLElement).style.overscrollBehavior = "none";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "unset";
+      (document.documentElement as HTMLElement).style.overscrollBehavior = "";
+      (document.body as HTMLElement).style.overscrollBehavior = "";
     }
-    
-    // Cleanup on unmount
+
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
+      document.documentElement.style.overflow = "unset";
+      (document.documentElement as HTMLElement).style.overscrollBehavior = "";
+      (document.body as HTMLElement).style.overscrollBehavior = "";
     };
   }, [isOpen]);
 
-  if (!product) return null;
+  if (!product || !mounted) return null;
 
-  return (
+  const modalTree = (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100000] flex items-center justify-center p-2 sm:p-4 pointer-events-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -62,10 +78,12 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             role="dialog"
             aria-describedby="modal-description"
             aria-labelledby="modal-title"
-            className="relative w-full max-w-sm sm:max-w-lg md:max-w-4xl lg:max-w-6xl h-auto max-h-[95vh] rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-hidden flex flex-col mx-auto"
-            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            aria-modal="true"
+            className="relative w-full sm:max-w-lg md:max-w-4xl lg:max-w-6xl max-h-[90vh] sm:max-h-[95vh] rounded-none sm:rounded-xl border border-white/20 shadow-2xl overflow-hidden flex flex-col mx-auto bg-neutral-900/80 backdrop-blur-md"
+            style={{ maxHeight: "90svh" }}
+            initial={{ scale: 0.94, opacity: 0, y: 16 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            exit={{ scale: 0.94, opacity: 0, y: 16 }}
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             {/* Header */}
@@ -75,18 +93,18 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
               </h2>
             </div>
 
-            {/* Content */}
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 p-3 sm:p-4 flex-1 overflow-y-auto">
+            {/* Content (scroll only inside this area) */}
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 p-3 sm:p-4 flex-1 overflow-y-auto overscroll-contain">
               {/* Dashboard Image */}
               <div className="flex flex-col order-1 lg:order-1">
-                <div className="relative overflow-hidden rounded-lg flex-1">
+                <div className="relative overflow-hidden rounded-lg">
                   <Image
                     src={product.dashboardImage}
                     alt={`${product.title} Dashboard`}
                     width={800}
                     height={600}
-                    className="w-full h-auto object-cover rounded-lg"
-                    style={{ maxHeight: '50vh' }}
+                    className="w-full h-auto rounded-lg object-contain sm:object-cover max-h-[40vh]"
+                    style={{ maxHeight: "40svh" }}
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
@@ -117,14 +135,14 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="pt-4 sm:pt-6 mt-4 border-t border-white/10">
                   <div className="flex justify-end">
                     <button
                       onClick={() => {
                         onClose();
-                        if (window.location.pathname !== '/') {
-                          window.location.href = '/#contact';
+                        if (window.location.pathname !== "/") {
+                          window.location.href = "/#contact";
                         } else {
                           setTimeout(() => {
                             const contactSection = document.getElementById("contact");
@@ -142,7 +160,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                 </div>
               </div>
             </div>
-            
+
             {/* Close Button */}
             <button
               type="button"
@@ -160,6 +178,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
       )}
     </AnimatePresence>
   );
+
+  return ReactDOM.createPortal(modalTree, document.body);
 };
 
 export default ProductModal;
