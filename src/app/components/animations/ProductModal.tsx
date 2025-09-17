@@ -58,7 +58,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center"
+          className="fixed inset-0 z-[9999]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -69,12 +69,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             left: 0,
             right: 0,
             bottom: 0,
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '0',
-            margin: '0'
+            zIndex: 9999
           }}
         >
           {/* Backdrop */}
@@ -96,10 +91,9 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
 
           {/* Modal Content */}
           <motion.div
-            className="relative w-full h-full sm:max-w-lg md:max-w-4xl lg:max-w-6xl sm:h-auto sm:max-h-[95vh] sm:rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto flex flex-col"
+            className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg md:max-w-4xl lg:max-w-6xl max-h-[90vh] sm:max-h-[95vh] translate-x-[-50%] translate-y-[-50%] overflow-hidden bg-background border border-white/20 shadow-2xl flex flex-col"
             style={{ 
               backgroundColor: '#000000',
-              position: 'relative',
               zIndex: 10000
             }}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
