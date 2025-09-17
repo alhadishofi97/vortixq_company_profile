@@ -59,7 +59,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
 
           {/* Modal Content */}
           <motion.div
-            className="relative w-full max-w-xs sm:max-w-lg md:max-w-4xl lg:max-w-6xl h-auto max-h-[95vh] rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto lg:overflow-hidden flex flex-col mx-auto"
+            className="relative w-full max-w-sm sm:max-w-lg md:max-w-4xl lg:max-w-6xl h-auto max-h-[90vh] sm:max-h-[95vh] rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto flex flex-col mx-auto"
             style={{ backgroundColor: '#000000' }}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -96,7 +96,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             {/* Content */}
             <div className="flex flex-col lg:flex-row flex-1 min-h-0">
               {/* Dashboard Image - Full width on mobile, 2/3 on desktop */}
-              <div className="w-full lg:w-2/3 p-3 sm:p-4 flex-shrink-0">
+              <div className="w-full lg:w-2/3 p-2 sm:p-4 flex-shrink-0">
                 <motion.div
                   className="relative rounded-lg overflow-hidden border border-white/10 w-full h-fit"
                   style={{ backgroundColor: '#000000' }}
@@ -119,18 +119,18 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
               </div>
 
               {/* Features & Capabilities - Full width on mobile, 1/3 on desktop */}
-              <div className="w-full lg:w-1/3 px-3 sm:px-4 pt-3 sm:pt-4 pb-3 sm:pb-4 lg:border-l border-white/10 flex flex-col" style={{ backgroundColor: '#000000' }}>
+              <div className="w-full lg:w-1/3 px-2 sm:px-4 pt-2 sm:pt-4 pb-2 sm:pb-4 lg:border-l border-white/10 flex flex-col" style={{ backgroundColor: '#000000' }}>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5, duration: 0.4 }}
                   className="flex-1 overflow-y-auto lg:overflow-hidden"
                 >
-                  <h3 className="text-base sm:text-lg font-bold text-orange-400 mb-2 sm:mb-3">Key Features & Capabilities:</h3>
+                  <h3 className="text-sm sm:text-lg font-bold text-orange-400 mb-2 sm:mb-3">Key Features & Capabilities:</h3>
                   
                   <div className="space-y-2 sm:space-y-3">
                     <div>
-                      <h4 className="text-sm sm:text-base font-semibold text-white mb-1.5">Core Features</h4>
+                      <h4 className="text-xs sm:text-base font-semibold text-white mb-1.5">Core Features</h4>
                       <ul className="space-y-1">
                         {product.details.features.map((feature, index) => (
                           <motion.li
@@ -148,7 +148,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                     </div>
 
                     <div>
-                      <h4 className="text-sm sm:text-base font-semibold text-white mb-1.5">Advanced Capabilities</h4>
+                      <h4 className="text-xs sm:text-base font-semibold text-white mb-1.5">Advanced Capabilities</h4>
                       <ul className="space-y-1">
                         {product.details.capabilities.map((capability, index) => (
                           <motion.li
@@ -168,7 +168,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                 </motion.div>
                 
                 {/* Footer inside right panel */}
-                <div className="flex flex-col lg:flex-row items-center justify-center gap-2 pt-3 sm:pt-4 border-t border-white/10 mt-3 sm:mt-4 flex-shrink-0">
+                <div className="flex flex-col lg:flex-row items-center justify-center gap-2 pt-2 sm:pt-4 border-t border-white/10 mt-2 sm:mt-4 flex-shrink-0">
                   
                   <motion.button
                     onClick={() => {
