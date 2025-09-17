@@ -91,10 +91,16 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
 
           {/* Modal Content */}
           <motion.div
-            className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-sm sm:max-w-lg md:max-w-4xl lg:max-w-6xl max-h-[90vh] sm:max-h-[95vh] translate-x-[-50%] translate-y-[-50%] overflow-hidden bg-background border border-white/20 shadow-2xl flex flex-col"
+            role="dialog"
+            aria-describedby="modal-description"
+            aria-labelledby="modal-title"
+            data-state="open"
+            className="fixed left-[50%] top-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 border p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg max-w-5xl max-h-[90vh] overflow-hidden bg-background border-border"
+            tabIndex={-1}
             style={{ 
               backgroundColor: '#000000',
-              zIndex: 10000
+              zIndex: 10000,
+              pointerEvents: 'auto'
             }}
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -102,139 +108,95 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-4 sm:p-4 border-b border-white/10 flex-shrink-0">
-              <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 flex-1">
-                <motion.div
-                  className="text-orange-400 flex-shrink-0"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, duration: 0.3 }}
-                >
-                  <div className="w-5 h-5 sm:w-6 sm:h-6">
-                    {product.icon}
-                  </div>
-                </motion.div>
-                <h2 className="text-base sm:text-lg md:text-xl font-bold text-white truncate">{product.title}</h2>
-              </div>
-              <motion.button
-                onClick={onClose}
-                className="text-white/60 hover:text-white p-1 sm:p-2 rounded-lg hover:bg-white/10 transition-colors duration-200 flex-shrink-0"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </motion.button>
+            <div className="flex flex-col space-y-1.5 text-center sm:text-left">
+              <h2 id="modal-title" className="tracking-tight text-2xl font-bold text-primary mb-4">
+                {product.title}
+              </h2>
             </div>
 
             {/* Content */}
-            <div className="flex flex-col lg:flex-row flex-1 min-h-0">
-              {/* Dashboard Image - Full width on mobile, 2/3 on desktop */}
-              <div className="w-full lg:w-2/3 p-4 sm:p-4 flex-shrink-0">
-                <motion.div
-                  className="relative rounded-lg overflow-hidden border border-white/10 w-full h-fit"
-                  style={{ backgroundColor: '#000000' }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.4 }}
-                >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(90vh-180px)]">
+              {/* Dashboard Image */}
+              <div className="flex flex-col">
+                <div className="relative overflow-hidden rounded-lg flex-1">
                   <Image
                     src={product.dashboardImage}
                     alt={`${product.title} Dashboard`}
                     width={800}
                     height={600}
-                    className="w-full h-auto object-contain"
-                    style={{ 
-                      maxHeight: 'calc(90vh - 200px)'
-                    }}
+                    className="w-full h-full object-cover"
                     priority
                   />
-                </motion.div>
-              </div>
-
-              {/* Features & Capabilities - Full width on mobile, 1/3 on desktop */}
-              <div className="w-full lg:w-1/3 px-4 sm:px-4 pt-4 sm:pt-4 pb-4 sm:pb-4 lg:border-l border-white/10 flex flex-col" style={{ backgroundColor: '#000000' }}>
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5, duration: 0.4 }}
-                  className="flex-1 overflow-y-auto lg:overflow-hidden"
-                >
-                  <h3 className="text-sm sm:text-lg font-bold text-orange-400 mb-2 sm:mb-3">Key Features & Capabilities:</h3>
-                  
-                  <div className="space-y-2 sm:space-y-3">
-                    <div>
-                      <h4 className="text-xs sm:text-base font-semibold text-white mb-1.5">Core Features</h4>
-                      <ul className="space-y-1">
-                        {product.details.features.map((feature, index) => (
-                          <motion.li
-                            key={index}
-                            className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-slate-300"
-                            initial={{ opacity: 0, x: 10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.6 + index * 0.1, duration: 0.3 }}
-                          >
-                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-orange-400 rounded-full mt-1.5 sm:mt-2 flex-shrink-0" />
-                            <span className="leading-relaxed">{feature}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="text-xs sm:text-base font-semibold text-white mb-1.5">Advanced Capabilities</h4>
-                      <ul className="space-y-1">
-                        {product.details.capabilities.map((capability, index) => (
-                          <motion.li
-                            key={index}
-                            className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-slate-300"
-                            initial={{ opacity: 0, x: 10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.7 + index * 0.1, duration: 0.3 }}
-                          >
-                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-400 rounded-full mt-1.5 sm:mt-2 flex-shrink-0" />
-                            <span className="leading-relaxed">{capability}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent"></div>
+                  <div className="absolute bottom-4 right-4">
+                    <div className="text-orange-400">
+                      {product.icon}
                     </div>
                   </div>
-                </motion.div>
+                </div>
+              </div>
+
+              {/* Features & Capabilities */}
+              <div className="flex flex-col justify-between">
+                <div>
+                  <h3 className="text-lg font-semibold mb-4 text-foreground">Key Features & Capabilities:</h3>
+                  <ul className="space-y-3">
+                    {product.details.features.map((feature, index) => (
+                      <li key={index} className="flex items-start space-x-3">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <span className="text-muted-foreground leading-relaxed text-sm">{feature}</span>
+                      </li>
+                    ))}
+                    {product.details.capabilities.map((capability, index) => (
+                      <li key={`cap-${index}`} className="flex items-start space-x-3">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <span className="text-muted-foreground leading-relaxed text-sm">{capability}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 
-                {/* Footer inside right panel */}
-                <div className="flex flex-col lg:flex-row items-center justify-center gap-2 pt-2 sm:pt-4 border-t border-white/10 mt-2 sm:mt-4 flex-shrink-0">
-                  
-                  <motion.button
-                    onClick={() => {
-                      // Close modal first
-                      onClose();
-                      // Navigate to home page and then contact section immediately
-                      // If we're not on home page, navigate to home first
-                      if (window.location.pathname !== '/') {
-                        window.location.href = '/#contact';
-                      } else {
-                        // If already on home page, just scroll to contact
-                        setTimeout(() => {
-                          const contactSection = document.getElementById("contact");
-                          if (contactSection) {
-                            contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                          }
-                        }, 100);
-                      }
-                    }}
-                    className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-black font-semibold py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-orange-500/25 transition-all duration-300 text-sm"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <span>Book a Demo</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </motion.button>
+                <div className="pt-6 mt-4 border-t border-border/50">
+                  <div className="flex justify-end">
+                    <button
+                      onClick={() => {
+                        onClose();
+                        if (window.location.pathname !== '/') {
+                          window.location.href = '/#contact';
+                        } else {
+                          setTimeout(() => {
+                            const contactSection = document.getElementById("contact");
+                            if (contactSection) {
+                              contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                            }
+                          }, 100);
+                        }
+                      }}
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-6 py-3"
+                    >
+                      Book a Demo
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right ml-2 h-4 w-4">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
+            
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x h-4 w-4">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+              </svg>
+              <span className="sr-only">Close</span>
+            </button>
           </motion.div>
         </motion.div>
       )}
