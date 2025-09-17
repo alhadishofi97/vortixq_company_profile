@@ -117,7 +117,7 @@ const Home = () => {
       {/* <Silk
         speed={5}
         scale={1}
-        color="#818669"
+        color="#FF6B35"
         noiseIntensity={1.5}
         rotation={0}
       /> */}
