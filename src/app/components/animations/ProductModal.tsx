@@ -58,7 +58,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-0 sm:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -73,7 +73,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '1rem'
+            padding: '0'
           }}
         >
           {/* Backdrop */}
@@ -95,7 +95,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
 
           {/* Modal Content */}
           <motion.div
-            className="relative w-full max-w-sm sm:max-w-lg md:max-w-4xl lg:max-w-6xl h-auto max-h-[90vh] sm:max-h-[95vh] rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto flex flex-col mx-auto"
+            className="relative w-full h-full sm:max-w-lg md:max-w-4xl lg:max-w-6xl sm:h-auto sm:max-h-[95vh] sm:rounded-lg sm:rounded-xl border border-white/20 shadow-2xl overflow-y-auto flex flex-col mx-auto"
             style={{ 
               backgroundColor: '#000000',
               position: 'relative',
@@ -110,7 +110,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-3 sm:p-4 border-b border-white/10 flex-shrink-0">
+            <div className="flex items-center justify-between p-4 sm:p-4 border-b border-white/10 flex-shrink-0">
               <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 flex-1">
                 <motion.div
                   className="text-orange-400 flex-shrink-0"
@@ -139,7 +139,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
             {/* Content */}
             <div className="flex flex-col lg:flex-row flex-1 min-h-0">
               {/* Dashboard Image - Full width on mobile, 2/3 on desktop */}
-              <div className="w-full lg:w-2/3 p-2 sm:p-4 flex-shrink-0">
+              <div className="w-full lg:w-2/3 p-4 sm:p-4 flex-shrink-0">
                 <motion.div
                   className="relative rounded-lg overflow-hidden border border-white/10 w-full h-fit"
                   style={{ backgroundColor: '#000000' }}
@@ -162,7 +162,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
               </div>
 
               {/* Features & Capabilities - Full width on mobile, 1/3 on desktop */}
-              <div className="w-full lg:w-1/3 px-2 sm:px-4 pt-2 sm:pt-4 pb-2 sm:pb-4 lg:border-l border-white/10 flex flex-col" style={{ backgroundColor: '#000000' }}>
+              <div className="w-full lg:w-1/3 px-4 sm:px-4 pt-4 sm:pt-4 pb-4 sm:pb-4 lg:border-l border-white/10 flex flex-col" style={{ backgroundColor: '#000000' }}>
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
