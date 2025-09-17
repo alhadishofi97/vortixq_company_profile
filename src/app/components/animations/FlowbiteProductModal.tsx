@@ -36,9 +36,9 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
       />
       
       {/* Modal Card */}
-      <div className="relative w-full max-w-6xl max-h-[90vh] bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="relative w-full max-w-6xl max-h-[90vh] bg-white dark:bg-black rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+        <div className="flex items-center justify-between p-6 border-b border-black dark:border-black bg-gray-50 dark:bg-black">
           <div className="flex items-center gap-3">
             <div className="text-orange-500">
               {product.icon}
@@ -112,7 +112,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
         </div>
         
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+        <div className="flex items-center justify-end gap-3 p-6 border-t border-black dark:border-black bg-black dark:bg-black">
           <button
             onClick={() => {
               onClose();
