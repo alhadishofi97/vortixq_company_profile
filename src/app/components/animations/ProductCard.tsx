@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       {/* Image with fixed height */}
       <div className="relative z-10 mb-3 flex-shrink-0">
         <motion.div
-          className="relative rounded-lg overflow-hidden bg-black/50 border border-white/10 h-32"
+          className="relative rounded-lg overflow-hidden bg-black/50 border border-white/10 h-48"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3 }}
         >
