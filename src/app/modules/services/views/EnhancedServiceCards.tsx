@@ -469,7 +469,7 @@ const EnhancedServiceCards: React.FC = () => {
       {/* Optimized LiquidEther Background - Always visible */}
       <div className="absolute inset-0" style={{ zIndex: 1 }}>
         <LiquidEther
-          colors={["#FF6B35", "#FF9FFC", "#B19EEF", "#5227FF"]}
+          colors={["#FF6B35", "#FF8C42", "#FFA726", "#FFB74D"]}
           mouseForce={deviceType === 'mobile' ? 15 : deviceType === 'tablet' ? 25 : 35}
           cursorSize={deviceType === 'mobile' ? 50 : deviceType === 'tablet' ? 80 : 120}
           isViscous={deviceType === 'mobile' ? false : deviceType === 'tablet' ? true : true}

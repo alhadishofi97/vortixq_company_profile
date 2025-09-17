@@ -60,7 +60,7 @@ const ConsultingServiceView = () => {
       {/* LiquidEther Background */}
       <div className="absolute inset-0 w-full h-full z-0">
         <LiquidEther
-          colors={['#5227FF', '#FF9FFC', '#B19EEF']}
+          colors={['#FF6B35', '#FF8C42', '#FFA726']}
           mouseForce={20}
           cursorSize={100}
           isViscous={false}
