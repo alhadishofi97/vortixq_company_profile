@@ -1,20 +1,54 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
 import Orb from "../../../components/animations/Orb";
+import { getAbout } from "../controllers/AboutController";
+
+interface Quote {
+  __component: string;
+  id: number;
+  title: string;
+  body: string | null;
+  icon: string | null;
+}
+
+interface AboutData {
+  id: number;
+  documentId: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  narasi: string;
+  list: Quote[];
+}
+
+interface AboutResponse {
+  data: AboutData;
+  meta: [];
+}
+
 
 const About = () => {
+  
   const { scrollYProgress } = useScroll();
   const videoScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.1, 1]);
 
-  const features = [
-    "Data Driven",
-    "Future Ready", 
-    "Client-Focused",
-    "Security-First"
-  ];
+const [aboutList, setAboutList] = useState<AboutData | null>(null);
 
+useEffect(() => {
+  async function fetchData() {
+    const data = await getAbout(); // AboutData[] | null
+    setAboutList(data); // ✅ cocok
+
+    console.log('datadatadatadatadatadatadata',data?.list)
+  }
+  fetchData();
+}, []);
+   
+
+ 
   return (
     <div className="relative w-full min-h-screen bg-black overflow-hidden">
       {/* Black Background - Full Width */}
@@ -42,20 +76,22 @@ const About = () => {
 
           {/* Main Heading */}
           <h2 className="font-display text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
-            <span className="text-white">About Our</span><br />
-            <span className="text-white">AI Solutions</span>
+            <span className="text-white">{aboutList?.title}</span>
           </h2>
 
           {/* Description */}
           <p className="text-sm xs:text-base sm:text-lg md:text-xl text-white/90 leading-relaxed mb-8 max-w-1xl text-left justify-center text-center">
-            We are dedicated to empowering organizations through strategic AI integration and comprehensive cybersecurity solutions. Our expertise bridges the gap between cutting-edge technology and practical business applications. With a team of industry experts, we deliver tailored consulting services that drive innovation, enhance security posture, and create sustainable competitive advantages for our clients.
+            {aboutList?.narasi}
           </p>
           {/* Features List */}
           <AnimatedSection animation="stagger" staggerChildren={0.1} delay={0.4}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {features.map((feature, index) => {
+              {/* {features.map((feature, index) => { */}
+              {}
+           {aboutList?.list?.map((feature, index) => {
+       
               let icon;
-              switch (feature) {
+              switch (feature.title) {
                 case "Data Driven":
                   icon = (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -119,7 +155,7 @@ const About = () => {
                       {icon}
         </div>
                   </motion.div>
-                  <span className="text-white text-sm xs:text-base font-medium">{feature}</span>
+                  <span className="text-white text-sm xs:text-base font-medium">{feature.title}</span>
                 </motion.div>
               );
             })}
