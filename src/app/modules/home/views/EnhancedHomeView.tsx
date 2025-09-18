@@ -12,40 +12,37 @@ const EnhancedHome = () => {
   const [narasi,setNarasi] = useState<ReactNode>(null);
   const [isLoading, setIsLoading] = useState(true);
   // Video state removed - video background disabled
-  
-  
-
-  const getData = useCallback(async () => {
-    try {
-      const data = await getHome();
-      console.log('data', data);
-      type NarasiChild = { text: string; bold?: boolean };
-      type HomeRecord = {
+   type HomeRecord = {
         Judul?: string;
         subjudul?: string;
         narasi?: Array<{ children?: Array<NarasiChild> }>;
       };
-      type HomeResponse = { data?: Array<HomeRecord> };
-      
-      // Set judul dengan fallback
-      const judulText = (data as HomeResponse).data?.[0]?.Judul || "AI-Powered Cybersecurity Platform for Modern Enterprises";
-      setJudul(
-        <div className="font-display text-center mb-6 mt-8">
-          <BlurText
-            text={judulText}
-            delay={50}
-            animateBy="words"
-            direction="top"
-            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white tracking-tight leading-tight justify-center max-w-full mx-auto px-8 sm:px-12"
-          />
-        </div>
-      );
+ type NarasiChild = { text: string; bold?: boolean };
+type HomeResponse = { data?: Array<HomeRecord> };
 
-      const subjudulText = (data as HomeResponse).data?.[0]?.subjudul || "Transforming businesses through advanced AI integration and robust security solutions";
-      const elmSub = (
+
+ useEffect(() => {
+  async function fetchData() {
+    const data = await getHome();
+
+    if (!data || data.length === 0) return; // ✅ cek data null atau kosong
+
+    setJudul(
+      <div className="font-display text-center mb-6 mt-8">
+        <BlurText
+          text={data[0].Judul}
+          delay={50}
+          animateBy="words"
+          direction="top"
+          className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white tracking-tight leading-tight justify-center max-w-full mx-auto px-8 sm:px-12"
+        />
+      </div>
+    );
+
+    const elmSub = (
         <div className="mt-6 mb-8 font-display text-center">
           <BlurText
-            text={subjudulText}
+            text={data[0].subjudul}
             delay={100}
             animateBy="words"
             direction="bottom"
@@ -55,15 +52,17 @@ const EnhancedHome = () => {
       );
       setSubJudul(elmSub);
 
-      const narasiData = (data as HomeResponse).data?.[0]?.narasi || [];
+      
+      const narasiData = data[0].narasi
       const elmNarasi: string[] = [];
       narasiData.forEach((item) => {
-        if (item.children) {
-          item.children.forEach((child) => {
-            elmNarasi.push(child.text);
-          });
-        }
-      });
+    if (item.children) {
+      // gabungkan semua text children menjadi satu string tanpa spasi ekstra
+      const paragraph = item.children.map(child => child.text).join("");
+      elmNarasi.push(paragraph);
+    }
+  });
+      
 
       const narasiText = elmNarasi.length > 0 ? elmNarasi.join(" ") : "Empowering organizations with advanced AI and cybersecurity solutions for a secure digital future.";
       
@@ -78,6 +77,17 @@ const EnhancedHome = () => {
           />
         </div>
       );
+  }
+
+  fetchData();
+}, []);
+
+  const getData = useCallback(async () => {
+    try {
+      const data = await getHome();
+      console.log('datagetHomegetHomegetHome', data);
+     
+
 
       setIsLoading(false);
     } catch (error) {
