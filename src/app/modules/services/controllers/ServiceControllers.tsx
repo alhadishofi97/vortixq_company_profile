@@ -4,9 +4,16 @@ import client from "@/app/util/strepiClient";
 export const getService = async () => {
     try {
         console.log('process.env.REACT_APP_STREPI_CLIENT', process.env.REACT_APP_STREPI_CLIENT);
-        const response = await client.fetch('/api/services?populate=*');
-        const data = await response.json();
-        return data;
+        const services = client.collection('ourservices');
+        console.log('servicesservices',services)
+        const response = await services.find({
+           populate: { data: { populate: { cards: '*' } } }
+        });
+         
+        console.log('response service',response)
+        return response;
+
+        
     } catch (error) {
         console.error('Error fetching services data:', error);
         return null;
