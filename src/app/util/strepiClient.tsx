@@ -1,12 +1,9 @@
-// StrepiClient utility
-export const strepiClient = {
-  // Add your Strepi client implementation here
-  baseURL: process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337',
-  
-  async fetch(endpoint: string, options?: RequestInit) {
-    const url = `${this.baseURL}${endpoint}`;
-    return fetch(url, options);
-  }
-};
+import { strapi } from '@strapi/client';
 
-export default strepiClient;
+const client = strapi({
+  baseURL: process.env.REACT_APP_STREPI_HOST as string,
+  auth: process.env.REACT_APP_STREPI_CLIENT
+  // opsional: auth, headers, dsb.
+});
+
+export default client
