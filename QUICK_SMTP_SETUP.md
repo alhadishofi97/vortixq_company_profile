@@ -10,17 +10,18 @@ Buka file `.env.local` di root project dan ganti `your_larksuite_email@larksuite
 # LarkSuite SMTP Configuration
 SMTP_HOST=smtp.larksuite.com
 SMTP_PORT=465
-SMTP_USER=your_actual_larksuite_email@larksuite.com  # ← GANTI INI
+SMTP_USER=web.marketing@vortiqx.com  # ← Email sender
 SMTP_PASS=2ld1pkSCpIWAVwj5
 CONTACT_TO=contact@vortiqx.com
-CONTACT_FROM=website@vortiqx.com
+CONTACT_FROM=web.marketing@vortiqx.com
 ```
 
-### 2. Ganti Email yang Benar
+### 2. Konfigurasi Email
 
-**Contoh:**
-- Jika email LarkSuite Anda adalah `admin@company.com`
-- Maka ganti menjadi: `SMTP_USER=admin@company.com`
+**Email yang sudah dikonfigurasi:**
+- **Sender**: `web.marketing@vortiqx.com` (untuk mengirim email)
+- **Recipient**: `contact@vortiqx.com` (untuk menerima email)
+- **SMTP User**: `web.marketing@vortiqx.com` (untuk autentikasi)
 
 ### 3. Restart Server
 
@@ -62,12 +63,12 @@ cat .env.local
 # - Environments: .env.local
 ```
 
-## Email yang Perlu Diganti
+## Konfigurasi Email Saat Ini
 
-**WAJIB DIGANTI:**
-- `SMTP_USER`: Email LarkSuite yang sebenarnya
-- `SMTP_PASS`: Password SMTP yang benar (jika berbeda)
+**SUDAH DIKONFIGURASI:**
+- `SMTP_USER`: web.marketing@vortiqx.com (untuk autentikasi SMTP)
+- `SMTP_PASS`: 2ld1pkSCpIWAVwj5 (password SMTP)
+- `CONTACT_TO`: contact@vortiqx.com (email penerima)
+- `CONTACT_FROM`: web.marketing@vortiqx.com (email pengirim)
 
-**OPSIONAL:**
-- `CONTACT_TO`: Email tujuan (default: contact@vortiqx.com)
-- `CONTACT_FROM`: Email pengirim (default: website@vortiqx.com)
+**TIDAK PERLU DIGANTI** - Konfigurasi sudah lengkap dan siap digunakan!
