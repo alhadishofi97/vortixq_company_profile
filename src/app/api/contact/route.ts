@@ -5,18 +5,95 @@ function isValidEmail(email: string) {
   return /.+@.+\..+/.test(email);
 }
 
+// Anti-spam protection
+function isSpamEmail(email: string): boolean {
+  const spamDomains = [
+    '10minutemail.com', 'tempmail.org', 'guerrillamail.com', 
+    'mailinator.com', 'throwaway.email', 'temp-mail.org',
+    'yopmail.com', 'sharklasers.com', 'grr.la', 'guerrillamailblock.com'
+  ];
+  
+  const domain = email.split('@')[1]?.toLowerCase();
+  return spamDomains.includes(domain || '');
+}
+
+function isSpamContent(message: string): boolean {
+  const spamKeywords = [
+    'viagra', 'casino', 'lottery', 'winner', 'congratulations',
+    'click here', 'free money', 'make money', 'work from home',
+    'bitcoin', 'cryptocurrency', 'investment', 'loan', 'credit',
+    'weight loss', 'diet pills', 'pharmacy', 'medication'
+  ];
+  
+  const lowerMessage = message.toLowerCase();
+  return spamKeywords.some(keyword => lowerMessage.includes(keyword));
+}
+
+function isRepeatedSubmission(ip: string, userAgent: string): boolean {
+  // Simple in-memory rate limiting (in production, use Redis or database)
+  const key = `${ip}-${userAgent}`;
+  const now = Date.now();
+  const windowMs = 5 * 60 * 1000; // 5 minutes
+  const maxRequests = 3;
+  
+  // This is a simple implementation - in production use proper rate limiting
+  return false; // For now, we'll implement proper rate limiting later
+}
+
+function validateInput(input: string, maxLength: number = 1000): boolean {
+  return input.length <= maxLength && input.trim().length > 0;
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json().catch(() => ({}));
     const name = String(body?.name || "").trim();
     const email = String(body?.email || "").trim();
     const message = String(body?.message || "").trim();
+    const honeypot = String(body?.website || "").trim(); // Honeypot field
 
+    // Get client IP and User Agent for rate limiting
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded ? forwarded.split(',')[0] : req.headers.get("x-real-ip") || "unknown";
+    const userAgent = req.headers.get("user-agent") || "unknown";
+
+    // Basic validation
     if (!name || !email || !message) {
       return NextResponse.json({ ok: false, error: "Semua field wajib diisi" }, { status: 400 });
     }
+
+    // Honeypot check (if filled, it's likely spam)
+    if (honeypot) {
+      console.log("Spam detected: Honeypot filled", { ip, userAgent });
+      return NextResponse.json({ ok: false, error: "Invalid submission" }, { status: 400 });
+    }
+
+    // Email validation
     if (!isValidEmail(email)) {
       return NextResponse.json({ ok: false, error: "Email tidak valid" }, { status: 400 });
+    }
+
+    // Spam email domain check
+    if (isSpamEmail(email)) {
+      console.log("Spam detected: Spam email domain", { email, ip, userAgent });
+      return NextResponse.json({ ok: false, error: "Email domain tidak diperbolehkan" }, { status: 400 });
+    }
+
+    // Input length validation
+    if (!validateInput(name, 100) || !validateInput(message, 2000)) {
+      return NextResponse.json({ ok: false, error: "Input terlalu panjang" }, { status: 400 });
+    }
+
+    // Spam content check
+    if (isSpamContent(message)) {
+      console.log("Spam detected: Spam content", { message: message.substring(0, 100), ip, userAgent });
+      return NextResponse.json({ ok: false, error: "Pesan mengandung konten yang tidak diperbolehkan" }, { status: 400 });
+    }
+
+    // Rate limiting check
+    if (isRepeatedSubmission(ip, userAgent)) {
+      console.log("Spam detected: Rate limiting", { ip, userAgent });
+      return NextResponse.json({ ok: false, error: "Terlalu banyak permintaan. Silakan coba lagi nanti." }, { status: 429 });
     }
 
     // SMTP Configuration with fallback values

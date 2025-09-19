@@ -7,7 +7,8 @@ const ContactView: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    website: '' // Honeypot field - hidden from users
   });
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<null | { ok: boolean; message: string }>(null);
@@ -29,6 +30,12 @@ const ContactView: React.FC = () => {
       return;
     }
 
+    // Honeypot validation (should be empty)
+    if (formData.website) {
+      setStatus({ ok: false, message: 'Invalid submission.' });
+      return;
+    }
+
     setSubmitting(true);
     try {
       const res = await fetch('/api/contact', {
@@ -39,7 +46,7 @@ const ContactView: React.FC = () => {
       const data = await res.json();
       if (res.ok && data?.ok) {
         setStatus({ ok: true, message: 'Terima kasih! Pesan Anda sudah terkirim.' });
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', message: '', website: '' });
       } else {
         setStatus({ ok: false, message: data?.error || 'Gagal mengirim pesan.' });
       }
@@ -191,6 +198,20 @@ const ContactView: React.FC = () => {
                 rows={4}
                 className="w-full px-4 py-3 bg-black/40 backdrop-blur-sm border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-highlight1 focus:border-transparent transition-all duration-200 resize-none "
                 placeholder="Tell us about your project..."
+              />
+            </div>
+
+            {/* Honeypot Field - Hidden from users */}
+            <div style={{ display: 'none' }}>
+              <label htmlFor="website">Website (leave empty)</label>
+              <input
+                type="text"
+                id="website"
+                name="website"
+                value={formData.website}
+                onChange={handleInputChange}
+                tabIndex={-1}
+                autoComplete="off"
               />
             </div>
 
