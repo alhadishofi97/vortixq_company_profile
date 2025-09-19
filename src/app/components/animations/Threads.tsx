@@ -30,9 +30,9 @@ uniform vec2 uMouse;
 
 #define PI 3.1415926538
 
-const int u_line_count = 40;
-const float u_line_width = 7.0;
-const float u_line_blur = 10.0;
+    const int u_line_count = 20;
+    const float u_line_width = 5.0;
+    const float u_line_blur = 6.0;
 
 float Perlin2D(vec2 P) {
     vec2 Pi = floor(P);
@@ -206,6 +206,11 @@ const Threads: React.FC<ThreadsProps> = ({
     // Optimize for performance
     if (isLowPerformance) {
       gl.disable(gl.DITHER);
+    }
+    
+    // Reduce precision for better performance on mobile
+    if (deviceType === 'mobile') {
+      gl.getExtension('OES_element_index_uint');
     }
     
     container.appendChild(gl.canvas);

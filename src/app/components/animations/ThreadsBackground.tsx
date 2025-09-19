@@ -140,8 +140,8 @@ export default function ThreadsBackground({
           Math.pow((mouseRef.current.y - height/2) / (height/2), 2)
         )) : 0
 
-      // Thread parameters - dense threads like the image
-      const threadCount = isLowPerformance ? 8 : (deviceType === 'mobile' ? 12 : 16)
+      // Thread parameters - optimized for performance
+      const threadCount = isLowPerformance ? 4 : (deviceType === 'mobile' ? 6 : 8)
       const time = timeRef.current * speed
 
       // Draw main horizontal threads with full width coverage
@@ -234,7 +234,7 @@ export default function ThreadsBackground({
       timeRef.current += isLowPerformance ? 24 : 16
       
       // Frame rate limiting for performance
-      if (isLowPerformance && frameCount.current % 2 === 0) {
+      if (isLowPerformance && frameCount.current % 3 === 0) {
         animationRef.current = requestAnimationFrame(drawThreads)
         return
       }

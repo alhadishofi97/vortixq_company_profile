@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg sm:text-xl font-semibold text-white mb-3">Contact</h4>
             <ul className="space-y-2 text-sm sm:text-base">
-              <li className="text-white/80">Email: jane.teh@vortiqx.com</li>
+              <li className="text-white/80">Email: contact@vortiqx.com</li>
               <li className="text-white/80">Phone: +60-123 563 137</li>
               <li className="text-white/80">Malaysia</li>
             </ul>
