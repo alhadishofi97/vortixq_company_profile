@@ -19,27 +19,31 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "Email tidak valid" }, { status: 400 });
     }
 
-    const host = process.env.SMTP_HOST;
-    const port = Number(process.env.SMTP_PORT || 587);
-    const user = process.env.SMTP_USER;
-    const pass = process.env.SMTP_PASS;
-    const to = process.env.CONTACT_TO || user;
-    const from = process.env.CONTACT_FROM || user;
+    // SMTP Configuration with fallback values
+    const host = process.env.SMTP_HOST || "smtp.larksuite.com";
+    const port = Number(process.env.SMTP_PORT || 465);
+    const user = process.env.SMTP_USER || "web.marketing@vortiqx.com";
+    const pass = process.env.SMTP_PASS || "2ld1pkSCpIWAVwj5";
+    const to = process.env.CONTACT_TO || "contact@vortiqx.com";
+    const from = process.env.CONTACT_FROM || "web.marketing@vortiqx.com";
 
-    // Debug logging (remove in production)
+    // Debug logging
     console.log("SMTP Config:", { 
       host: host ? "✓" : "✗", 
       port, 
       user: user ? "✓" : "✗", 
       pass: pass ? "✓" : "✗", 
       to: to ? "✓" : "✗", 
-      from: from ? "✓" : "✗" 
+      from: from ? "✓" : "✗",
+      env: process.env.NODE_ENV
     });
 
+    // Check if we have valid configuration
     if (!host || !user || !pass || !to || !from) {
+      console.error("SMTP Configuration missing:", { host, user, pass, to, from });
       return NextResponse.json({ 
         ok: false, 
-        error: "Konfigurasi SMTP belum lengkap. Silakan buat file .env.local dengan konfigurasi SMTP yang valid. Lihat EMAIL_CONFIGURATION.md untuk panduan." 
+        error: "Konfigurasi SMTP belum lengkap. Silakan hubungi administrator." 
       }, { status: 500 });
     }
 
