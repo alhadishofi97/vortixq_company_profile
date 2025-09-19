@@ -26,8 +26,21 @@ export async function POST(req: Request) {
     const to = process.env.CONTACT_TO || user;
     const from = process.env.CONTACT_FROM || user;
 
+    // Debug logging (remove in production)
+    console.log("SMTP Config:", { 
+      host: host ? "✓" : "✗", 
+      port, 
+      user: user ? "✓" : "✗", 
+      pass: pass ? "✓" : "✗", 
+      to: to ? "✓" : "✗", 
+      from: from ? "✓" : "✗" 
+    });
+
     if (!host || !user || !pass || !to || !from) {
-      return NextResponse.json({ ok: false, error: "Konfigurasi SMTP belum lengkap" }, { status: 500 });
+      return NextResponse.json({ 
+        ok: false, 
+        error: "Konfigurasi SMTP belum lengkap. Silakan buat file .env.local dengan konfigurasi SMTP yang valid. Lihat EMAIL_CONFIGURATION.md untuk panduan." 
+      }, { status: 500 });
     }
 
     const transporter = nodemailer.createTransport({
