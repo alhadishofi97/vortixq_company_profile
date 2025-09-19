@@ -95,7 +95,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
                 onClick={() => onNavClick(s.id)}
                 className={[
                   "relative px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-sm sm:text-base md:text-lg font-medium transition-all duration-300",
-                  isActive ? "text-white bg-white/10" : "text-white/80 hover:text-white hover:bg-white/5"
+                  isActive ? "text-white bg-gradient-to-r from-orange-500 to-orange-400 shadow-lg shadow-orange-500/30 border-2 border-orange-400" : "text-white/80 hover:text-white hover:bg-white/5 border-2 border-transparent"
                 ].join(" ")}
                 aria-current={isActive ? "page" : undefined}
                 whileHover={{ scale: 1.05 }}
@@ -172,7 +172,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
                 }}
                 className={[
                   "w-full text-left px-4 py-3 rounded-xl text-base font-medium transition-colors",
-                  isActive ? "text-white bg-white/10" : "text-white/80 hover:text-white hover:bg-white/5"
+                  isActive ? "text-white bg-gradient-to-r from-orange-500 to-orange-400 shadow-lg shadow-orange-500/30 border-2 border-orange-400" : "text-white/80 hover:text-white hover:bg-white/5 border-2 border-transparent"
                 ].join(" ")}
                 whileHover={{ scale: 1.02, x: 4 }}
                 whileTap={{ scale: 0.98 }}

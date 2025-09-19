@@ -6,10 +6,11 @@ interface AnimatedButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
-  variant?: "primary" | "secondary" | "outline" | "ghost";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "orange";
   size?: "sm" | "md" | "lg";
   disabled?: boolean;
   showIndicator?: boolean;
+  isSelected?: boolean;
 }
 
 const AnimatedButton: React.FC<AnimatedButtonProps> = ({
@@ -19,13 +20,15 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
   variant = "primary",
   size = "md",
   disabled = false,
-  showIndicator = true
+  showIndicator = true,
+  isSelected = false
 }) => {
   const variants = {
     primary: "bg-gradient-to-r from-brand-highlight1 to-brand-secondary text-white border-0",
     secondary: "bg-gradient-to-r from-brand-secondary to-brand-highlight1 text-white border-0",
     outline: "border border-white/20 text-white bg-transparent hover:bg-white/10",
-    ghost: "text-white bg-transparent hover:bg-white/5"
+    ghost: "text-white bg-transparent hover:bg-white/5",
+    orange: "bg-gradient-to-r from-orange-500 to-orange-400 text-white border-2 border-orange-400 shadow-lg shadow-orange-500/30"
   };
 
   const sizes = {
@@ -40,10 +43,10 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
     <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`${baseClasses} ${isSelected ? variants.orange : variants[variant]} ${sizes[size]} ${className} ${isSelected ? 'border-2 border-orange-400' : ''}`}
       whileHover={{ 
         scale: 1.05,
-        boxShadow: "0 10px 30px rgba(124, 58, 237, 0.3)"
+        boxShadow: isSelected ? "0 10px 30px rgba(249, 115, 22, 0.4)" : "0 10px 30px rgba(124, 58, 237, 0.3)"
       }}
       whileTap={{ scale: 0.95 }}
       initial={{ opacity: 0, y: 20 }}
@@ -53,7 +56,7 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({
       {/* Button Indicator */}
       {showIndicator && (
         <motion.div
-          className="absolute -top-1 -right-1 w-3 h-3 bg-brand-highlight1 rounded-full"
+          className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${isSelected ? 'bg-orange-400' : 'bg-brand-highlight1'}`}
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.7, 1, 0.7]

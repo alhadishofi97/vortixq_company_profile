@@ -47,7 +47,9 @@ const BlurText: React.FC<BlurTextProps> = ({
   onAnimationComplete,
   stepDuration = 0.35,
 }) => {
-  const elements = animateBy === "words" ? text.split(" ") : text.split("");
+  const elements = animateBy === "words" ? 
+    text.replace(/cutting-edge/g, "cutting\u00A0edge").split(" ") : 
+    text.split("");
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLParagraphElement>(null);
 

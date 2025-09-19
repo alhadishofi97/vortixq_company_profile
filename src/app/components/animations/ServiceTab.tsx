@@ -34,7 +34,7 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
       <div
         className={`absolute inset-0 rounded-2xl border-2 ${
           isActive 
-            ? "border-white bg-gradient-to-r from-orange-500 to-orange-400 shadow-lg shadow-orange-500/30" 
+            ? "border-orange-400 bg-gradient-to-r from-orange-500 to-orange-400 shadow-lg shadow-orange-500/30" 
             : "border-orange-500/30 bg-black hover:bg-black/80"
         }`}
       />
@@ -46,7 +46,7 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
 
       {/* Ripple Effect */}
       {isActive && (
-        <div className="absolute inset-0 rounded-2xl border-2 border-white" />
+        <div className="absolute inset-0 rounded-2xl border-2 border-orange-300" />
       )}
       
       {/* Content */}

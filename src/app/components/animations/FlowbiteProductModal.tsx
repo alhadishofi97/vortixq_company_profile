@@ -20,43 +20,55 @@ interface FlowbiteProductModalProps {
   product: ProductDetails | null;
 }
 
-const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({ 
-  isOpen, 
-  onClose, 
-  product 
+const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
+  isOpen,
+  onClose,
+  product,
 }) => {
   if (!product) return null;
 
   return (
-    <div className={`fixed inset-0 z-50 ${isOpen ? 'flex' : 'hidden'} items-center justify-center p-4`}>
+    <div
+      className={`fixed inset-0 z-50 ${
+        isOpen ? "flex" : "hidden"
+      } items-center justify-center p-4`}
+    >
       {/* Backdrop */}
-      <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm" 
+      <div
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       />
-      
+
       {/* Modal Card */}
-      <div className="relative w-full max-w-6xl max-h-[90vh] bg-white dark:bg-black rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="relative w-full max-w-6xl bg-black rounded-lg shadow-2xl border border-orange-500/30 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-black dark:border-black bg-gray-50 dark:bg-black">
+        <div className="flex items-center justify-between p-6 border-b border-orange-500/30 bg-black/50">
           <div className="flex items-center gap-3">
-            <div className="text-orange-500">
-              {product.icon}
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+            <div className="text-orange-500">{product.icon}</div>
+            <h3 className="text-xl font-semibold text-white">
               {product.title}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            className="text-white/70 hover:text-white transition-colors"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
-        
+
         {/* Body */}
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -79,28 +91,31 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
             {/* Content Section */}
             <div className="space-y-4">
               {/* Description */}
-              <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+              <p className="text-white/80 text-base leading-relaxed">
                 {product.description}
               </p>
 
               {/* Features & Capabilities */}
               <div>
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
+                <h4 className="text-lg font-semibold text-white mb-3">
                   Key Features & Capabilities:
                 </h4>
                 <ul className="space-y-2">
                   {product.details.features.map((feature, index) => (
                     <li key={index} className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                      <span className="text-white/70 text-sm leading-relaxed">
                         {feature}
                       </span>
                     </li>
                   ))}
                   {product.details.capabilities.map((capability, index) => (
-                    <li key={`cap-${index}`} className="flex items-start space-x-3">
+                    <li
+                      key={`cap-${index}`}
+                      className="flex items-start space-x-3"
+                    >
                       <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                      <span className="text-white/70 text-sm leading-relaxed">
                         {capability}
                       </span>
                     </li>
@@ -110,9 +125,9 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
             </div>
           </div>
         </div>
-        
+
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-black dark:border-black bg-black dark:bg-black">
+        <div className="flex items-center justify-end gap-3 p-6 border-t border-orange-500/30 bg-black/50">
           <button
             onClick={() => {
               onClose();
@@ -123,7 +138,10 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
                   setTimeout(() => {
                     const contactSection = document.getElementById("contact");
                     if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                      contactSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
                     }
                   }, 100);
                 }
@@ -132,13 +150,25 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-orange-600 rounded-lg hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300 transition-colors"
           >
             Book a Demo
-            <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            <svg
+              className="w-3.5 h-3.5 ml-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
             </svg>
           </button>
           <button
             onClick={onClose}
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-transparent border border-white/30 rounded-lg hover:bg-white/10 focus:ring-4 focus:outline-none focus:ring-white/20 transition-colors"
           >
             Close
           </button>

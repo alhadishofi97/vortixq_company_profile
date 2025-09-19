@@ -71,11 +71,11 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
           <div className="absolute inset-0 bg-black/80" onClick={onClose} />
 
           {/* Modal content - Flowbite Card structure */}
-          <div className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-lg shadow dark:bg-gray-800">
+          <div className="relative w-full max-w-4xl max-h-[90vh] bg-black border border-orange-500/30 rounded-lg shadow-xl">
             {/* Close button */}
             <button
               type="button"
-              className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              className="absolute top-3 right-2.5 text-white/70 bg-transparent hover:bg-white/10 hover:text-white rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center"
               onClick={onClose}
             >
               <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -105,29 +105,29 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
               {/* Content section */}
               <div className="flex-1 p-6">
                 {/* Header */}
-                <h3 id="modal-title" className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                <h3 id="modal-title" className="mb-4 text-2xl font-bold text-white">
                   {product.title}
                 </h3>
 
                 {/* Description */}
-                <p className="mb-4 text-gray-500 dark:text-gray-400">
+                <p className="mb-4 text-white/80">
                   {product.description}
                 </p>
 
                 {/* Features & Capabilities */}
                 <div id="modal-description" className="mb-6">
-                  <h4 className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">Key Features & Capabilities:</h4>
+                  <h4 className="mb-3 text-lg font-semibold text-white">Key Features & Capabilities:</h4>
                   <ul className="space-y-2">
                     {product.details.features.map((feature, index) => (
                       <li key={index} className="flex items-start space-x-3">
                         <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-gray-600 dark:text-gray-300 text-sm">{feature}</span>
+                        <span className="text-white/70 text-sm">{feature}</span>
                       </li>
                     ))}
                     {product.details.capabilities.map((capability, index) => (
                       <li key={`cap-${index}`} className="flex items-start space-x-3">
                         <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-gray-600 dark:text-gray-300 text-sm">{capability}</span>
+                        <span className="text-white/70 text-sm">{capability}</span>
                       </li>
                     ))}
                   </ul>
@@ -160,7 +160,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                   </button>
                   <button
                     onClick={onClose}
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-transparent border border-white/30 rounded-lg hover:bg-white/10 focus:ring-4 focus:outline-none focus:ring-white/20"
                   >
                     Close
                   </button>

@@ -33,17 +33,6 @@ type Service = {
   data: ServiceDetail[];
 };
 
-type GetServiceResponse = {
-  data: Service[];
-  meta: {
-    pagination: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
-};
 
 
 interface ServiceItem {
@@ -51,7 +40,7 @@ interface ServiceItem {
   title: string;
   shortDescription: string;
   fullDescription: string;
-  icon: string;
+  icon: string | React.ReactNode;
   className: string;
 }
 const EnhancedServiceCards: React.FC = () => {
@@ -68,8 +57,67 @@ const EnhancedServiceCards: React.FC = () => {
 useEffect(() => {
   async function fetchData() {
     const data = await getService();
-    setActiveTab(data[0].documentId)
-    setServices(data); // ✅ langsung array of Service
+    console.log('Fetched services data:', data);
+    
+    // Fallback data if API doesn't return all services
+    const fallbackServices = [
+      {
+        id: 1,
+        documentId: "csa",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        publishedAt: new Date().toISOString(),
+        data: [{
+          id: 1,
+          judul: "Cyber Security Advisory (CSA)",
+          desc: "Comprehensive cybersecurity advisory services to help organizations build robust security frameworks and maintain compliance with industry standards.",
+          cards: []
+        }]
+      },
+      {
+        id: 2,
+        documentId: "cdo",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        publishedAt: new Date().toISOString(),
+        data: [{
+          id: 2,
+          judul: "Cyber Defense and Operation (CDO)",
+          desc: "Advanced cyber defense strategies and operational security services to protect against evolving threats.",
+          cards: []
+        }]
+      },
+      {
+        id: 3,
+        documentId: "aisa",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        publishedAt: new Date().toISOString(),
+        data: [{
+          id: 3,
+          judul: "AI Security Advisory (AISA)",
+          desc: "Specialized AI security consulting to ensure safe and secure implementation of artificial intelligence systems.",
+          cards: []
+        }]
+      }
+    ];
+    
+    if (data && data.length > 0) {
+      setActiveTab(data[0].documentId);
+      setServices(data);
+      
+      // Debug: Check if CDO service exists
+      const cdoService = data.find(s => 
+        s.data[0]?.judul?.toLowerCase().includes('cdo') || 
+        s.data[0]?.judul?.toLowerCase().includes('cyber defense')
+      );
+      console.log('CDO Service found:', cdoService);
+    } else {
+      // Use fallback data if API returns empty
+      console.log('Using fallback services data');
+      setActiveTab(fallbackServices[0].documentId);
+      setServices(fallbackServices);
+    }
   }
   fetchData();
 }, []);
@@ -100,15 +148,117 @@ useEffect(() => {
   }, []);
   
  function mapCardsToServiceItems(cards: Card[] = []): ServiceItem[] {
-  return cards.map((card) => ({
-    id: String(card.id),
-    title: card.title,
-    shortDescription: card.shortDescription ?? "",
-    fullDescription: card.fullDescription ?? "",
-    description: card.fullDescription ?? "",
-    icon: card.icon ?? "",  // pastikan selalu string
-    className: card.className ?? "bg-black",
-  }));
+  return cards.map((card) => {
+    // Theme-based SVG icons that match the web design
+    const getThemeIcon = (title: string) => {
+      const titleLower = title.toLowerCase();
+      
+      if (titleLower.includes('security') || titleLower.includes('advisory')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" 
+                  fill="url(#securityGradient)" />
+            <defs>
+              <linearGradient id="securityGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#C16B32" />
+                <stop offset="100%" stopColor="#A59489" />
+              </linearGradient>
+            </defs>
+          </svg>
+        );
+      } else if (titleLower.includes('ai') || titleLower.includes('artificial')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" 
+                  fill="url(#aiGradient)" />
+            <defs>
+              <linearGradient id="aiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#C16B32" />
+                <stop offset="100%" stopColor="#969696" />
+              </linearGradient>
+            </defs>
+          </svg>
+        );
+      } else if (titleLower.includes('defense') || titleLower.includes('operation')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" 
+                  fill="url(#defenseGradient)" />
+            <circle cx="12" cy="12" r="3" fill="#C16B32" />
+            <defs>
+              <linearGradient id="defenseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#A59489" />
+                <stop offset="100%" stopColor="#C16B32" />
+              </linearGradient>
+            </defs>
+          </svg>
+        );
+      } else if (titleLower.includes('assessment') || titleLower.includes('maturity')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" 
+                  fill="url(#assessmentGradient)" />
+            <defs>
+              <linearGradient id="assessmentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#C16B32" />
+                <stop offset="100%" stopColor="#ECE9E3" />
+              </linearGradient>
+            </defs>
+          </svg>
+        );
+      } else if (titleLower.includes('compliance') || titleLower.includes('iso')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path fillRule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" 
+                  clipRule="evenodd" fill="url(#complianceGradient)" />
+            <defs>
+              <linearGradient id="complianceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#C16B32" />
+                <stop offset="100%" stopColor="#A59489" />
+              </linearGradient>
+            </defs>
+          </svg>
+        );
+      } else if (titleLower.includes('enterprise') || titleLower.includes('corporate')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10z" 
+                  fill="url(#enterpriseGradient)" />
+            <defs>
+              <linearGradient id="enterpriseGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#A59489" />
+                <stop offset="100%" stopColor="#C16B32" />
+              </linearGradient>
+            </defs>
+          </svg>
+        );
+      } else {
+        // Default theme icon
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" 
+                  fill="url(#defaultGradient)" />
+            <defs>
+              <linearGradient id="defaultGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#C16B32" />
+                <stop offset="100%" stopColor="#969696" />
+              </linearGradient>
+            </defs>
+          </svg>
+        );
+      }
+    };
+
+    return {
+      id: String(card.id),
+      title: card.title,
+      shortDescription: card.shortDescription ?? "",
+      fullDescription: card.fullDescription ?? "",
+      description: card.fullDescription ?? "",
+      icon: card.icon ? card.icon : getThemeIcon(card.title),  // Use theme icon if none provided
+      className: card.className ?? "bg-black",
+    };
+  });
 }
 
 
@@ -287,23 +437,80 @@ useEffect(() => {
                 </svg>
               }
             /> */}
-       {services?.map((servicex: Service, idx: number) => {
-          console.log('-------------', servicex.id);
+       {services?.map((servicex: Service) => {
+          const isActive = activeTab === servicex.documentId;
+          const serviceTitle = servicex.data[0]?.judul?.toLowerCase() || '';
+          console.log('Service:', servicex.data[0]?.judul, 'DocumentId:', servicex.documentId, 'ActiveTab:', activeTab, 'IsActive:', isActive);
+          
+          // Theme-based icons for service buttons
+          const getServiceIcon = (title: string) => {
+            if (title.includes('aisa') || title.includes('ai security')) {
+              return (
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" 
+                        fill="url(#aisaGradient)" />
+                  <defs>
+                    <linearGradient id="aisaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#C16B32" />
+                      <stop offset="100%" stopColor="#969696" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              );
+            } else if (title.includes('csa') || title.includes('cyber security advisory')) {
+              return (
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path fillRule="evenodd" d="M12.516 2.17a.75.75 0 0 0-1.032 0 11.209 11.209 0 0 1-7.877 3.08.75.75 0 0 0-.722.515A12.74 12.74 0 0 0 2.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 0 0 .374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 0 0-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08Zm3.094 8.016a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" 
+                        clipRule="evenodd" fill="url(#csaGradient)" />
+                  <defs>
+                    <linearGradient id="csaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#C16B32" />
+                      <stop offset="100%" stopColor="#A59489" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              );
+            } else if (title.includes('cdo') || title.includes('cyber defense')) {
+              return (
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" 
+                        fill="url(#cdoGradient)" />
+                  <circle cx="12" cy="12" r="3" fill="#C16B32" />
+                  <defs>
+                    <linearGradient id="cdoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#A59489" />
+                      <stop offset="100%" stopColor="#C16B32" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              );
+            } else {
+              // Default theme icon for unknown services
+              return (
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" 
+                        fill="url(#defaultServiceGradient)" />
+                  <defs>
+                    <linearGradient id="defaultServiceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#C16B32" />
+                      <stop offset="100%" stopColor="#969696" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              );
+            }
+          };
+
           return (
             <ServiceTab
               key={servicex.id}
               label={servicex.data[0]?.judul}
-              isActive={activeTab === servicex.data[0]?.judul.toLowerCase()}
-              onClick={() => setActiveTab(servicex.documentId)}
-              icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
-                </svg>
-              }
+              isActive={isActive}
+              onClick={() => {
+                console.log('Clicking service:', servicex.data[0]?.judul, 'Setting activeTab to:', servicex.documentId);
+                setActiveTab(servicex.documentId);
+              }}
+              icon={getServiceIcon(serviceTitle)}
             />
           );
         })}

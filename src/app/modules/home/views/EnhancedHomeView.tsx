@@ -64,7 +64,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
   });
       
 
-      const narasiText = elmNarasi.length > 0 ? elmNarasi.join(" ") : "Empowering organizations with advanced AI and cybersecurity solutions for a secure digital future.";
+      const narasiText = elmNarasi.length > 0 ? elmNarasi.join(" ") : "Empowering organizations with cutting\u00A0edge AI and cybersecurity solutions for a secure digital future.";
       
       setNarasi(
         <div className="mb-8 mt-4 font-sans text-center w-full">
@@ -108,11 +108,11 @@ type HomeResponse = { data?: Array<HomeRecord> };
       setSubJudul(
         <div className="mt-6 mb-8 font-display text-center">
           <BlurText
-            text="Transforming businesses through advanced AI integration and robust security solutions"
+            text="Transforming businesses through cutting\u00A0edge AI integration and robust security solutions"
             delay={50}
             animateBy="words"
             direction="bottom"
-            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
+            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap [&_span]:whitespace-nowrap"
           />
         </div>
       );
@@ -120,11 +120,11 @@ type HomeResponse = { data?: Array<HomeRecord> };
       setNarasi(
         <div className="mb-8 mt-4 font-sans text-center w-full">
           <BlurText
-            text="Empowering organizations with advanced AI and cybersecurity solutions for a secure digital future."
+            text="Empowering organizations with cutting\u00A0edge AI and cybersecurity solutions for a secure digital future."
             delay={5}
             animateBy="words"
             direction="bottom"
-            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-white leading-relaxed text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
+            className="font-sans text-sm xs:text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl text-white leading-relaxed text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap [&_span]:whitespace-nowrap"
           />
         </div>
       );
@@ -251,7 +251,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
                         backgroundColor: '#FF6B35',
                         boxShadow: '0 4px 12px rgba(255, 107, 53, 0.3)'
                       },
-                      transition: "all 0.20s ease-in-out",
+                      transition: "all 0.50s ease-in-out",
                     }}
                   >
                     LEARN MORE
