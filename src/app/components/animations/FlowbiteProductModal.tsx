@@ -133,15 +133,22 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
               onClose();
               if (typeof window !== "undefined") {
                 if (window.location.pathname !== "/") {
-                  window.location.href = "/#contact";
+                  window.location.href = "/#contact-form";
                 } else {
                   setTimeout(() => {
-                    const contactSection = document.getElementById("contact");
-                    if (contactSection) {
-                      contactSection.scrollIntoView({
+                    const contactForm = document.getElementById("contact-form");
+                    if (contactForm) {
+                      contactForm.scrollIntoView({
                         behavior: "smooth",
-                        block: "start",
+                        block: "center",
                       });
+                      // Focus pada field pertama setelah scroll
+                      setTimeout(() => {
+                        const nameField = contactForm.querySelector('input[name="name"]') as HTMLInputElement;
+                        if (nameField) {
+                          nameField.focus();
+                        }
+                      }, 500);
                     }
                   }, 100);
                 }
@@ -166,12 +173,12 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
               />
             </svg>
           </button>
-          <button
+          {/* <button
             onClick={onClose}
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-transparent border border-white/30 rounded-lg hover:bg-white/10 focus:ring-4 focus:outline-none focus:ring-white/20 transition-colors"
           >
             Close
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

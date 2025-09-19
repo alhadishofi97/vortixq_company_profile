@@ -142,7 +142,7 @@ const ContactView: React.FC = () => {
             Send us a message
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form id="contact-form" onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>
               <label htmlFor="name" className="block text-white font-medium mb-2 ">

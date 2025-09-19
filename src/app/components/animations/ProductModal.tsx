@@ -140,12 +140,22 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onClose, product })
                       onClose();
                       if (typeof window !== "undefined") {
                         if (window.location.pathname !== "/") {
-                          window.location.href = "/#contact";
+                          window.location.href = "/#contact-form";
                         } else {
                           setTimeout(() => {
-                            const contactSection = document.getElementById("contact");
-                            if (contactSection) {
-                              contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                            const contactForm = document.getElementById("contact-form");
+                            if (contactForm) {
+                              contactForm.scrollIntoView({
+                                behavior: "smooth",
+                                block: "center",
+                              });
+                              // Focus pada field pertama setelah scroll
+                              setTimeout(() => {
+                                const nameField = contactForm.querySelector('input[name="name"]') as HTMLInputElement;
+                                if (nameField) {
+                                  nameField.focus();
+                                }
+                              }, 500);
                             }
                           }, 100);
                         }
