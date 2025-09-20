@@ -8,7 +8,7 @@ interface ProductItem {
   title: string;
   description: string;
   dashboardImage: string;
-  icon: React.ReactNode;
+  icon: string;
   details: {
     features: string[];
     capabilities: string[];

@@ -1,11 +1,27 @@
 "use client";
-import React from "react";
+import React ,{useState,useEffect} from "react";
 import { motion } from "framer-motion";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
 import ProductCarousel from "../../../components/animations/ProductCarousel";
-
+import { ProductResponse,Product2 } from "../controllers/productInterface";
+import { getProduct } from "../controllers/ProductController";
 const ProductsView: React.FC = () => {
 
+
+  // const [listproducts, setlistproducts] = useState<Product2[] | null>(null);
+  const [listproducts, setlistproducts] = useState<Product2[]>([]);
+
+  
+  
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getProduct();
+      setlistproducts(data?? []); // ✅ langsung object
+
+      console.log('getProductgetProductgetProductgetProduct',data)
+    }
+    fetchData();
+  }, []);
   // Product data for carousel - only AIRIS
   const products = [
     {
@@ -114,7 +130,7 @@ const ProductsView: React.FC = () => {
         <AnimatedSection animation="fadeInUp" delay={0.2}>
           <div className="relative rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl">
             <ProductCarousel
-              products={products}
+              products={listproducts}
               onProductClick={handleProductClick}
               className="w-full"
             />

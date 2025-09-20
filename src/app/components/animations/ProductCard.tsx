@@ -2,12 +2,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import SvgRenderer from "@/app/util/svgRendered";
 
 interface ProductCardProps {
   title: string;
   description: string;
   dashboardImage: string;
-  icon: React.ReactNode;
+  icon: string;
   onLearnMore: () => void;
   className?: string;
 }
@@ -39,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             {title}
           </h3>
           <motion.div className="text-orange-400 group-hover:scale-110 transition-transform duration-300" whileHover={{ rotate: 5 }}>
-            {icon}
+            <SvgRenderer svgString={icon} />
           </motion.div>
         </div>
         <p className="text-xs text-slate-300 leading-relaxed group-hover:text-slate-100 transition-colors duration-300 line-clamp-2">

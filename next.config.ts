@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     eslint: {
     ignoreDuringBuilds: true, // ⬅️ disable eslint check saat build
   },
+  images: {
+    domains: ['phenomenal-dream-766a1aa65b.media.strapiapp.com'],
+  },
 };
 
 export default nextConfig;
