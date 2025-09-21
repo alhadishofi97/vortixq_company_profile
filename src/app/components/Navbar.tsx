@@ -2,7 +2,37 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import client from "@/app/util/strepiClient";
+import { BrandData } from "./LogoInterface";
 
+export const getLogo = async (): Promise<BrandData | null> => {
+  try {
+    const res = client.collection("logo");
+    const response = await res.find({ populate: "*" });
+
+      if (!response.data) return null;
+
+    // Jika data berupa array, ambil elemen pertama
+   const doc = Array.isArray(response.data) ? response.data[0] : [response.data][0];
+
+    if (!doc) return null; // jika array kosong
+
+    const logo: BrandData = {
+      id: doc.id,
+      documentId: doc.documentId,
+      logo:doc.logo,
+      createdAt: doc.createdAt,
+      updatedAt: doc.updatedAt,
+      publishedAt: doc.publishedAt
+    };
+
+    return logo;
+
+  } catch (error) {
+    console.error("Error fetching getLogo data:", error);
+    return null;
+  }
+};
 
 type Section = { id: string; label: string; emoji?: string };
 
@@ -16,6 +46,34 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  const [logo, setLogo] = useState(
+          <Image
+            src="/Black_Full_Name-removebg-preview-cropped.svg"
+            width={160}
+            height={32}
+            alt="logo"
+            className="w-28 sm:w-36 md:w-44 h-auto"
+          />);
+  
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getLogo(); // AboutData[] | null
+      // setLogo(data); // ✅ cocok
+      setLogo(
+        <Image
+            src={data?.logo.url as string}
+            width={160}
+            height={32}
+            alt="logo"
+            className="w-28 sm:w-36 md:w-44 h-auto"
+          />
+      )
+  
+      console.log('datadatadatadatadatadatadata',data?.logo)
+    }
+    fetchData();
+  }, []);
 
   // Hide navbar saat scroll down, show saat scroll up
   useEffect(() => {
@@ -63,13 +121,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
             ease: [0.25, 0.46, 0.45, 0.94]
           }}
         >
-          <Image
-            src="/Black_Full_Name-removebg-preview-cropped.svg"
-            width={160}
-            height={32}
-            alt="logo"
-            className="w-28 sm:w-36 md:w-44 h-auto"
-          />
+          {logo}
         </motion.div>
 
         {/* Desktop Menu */}
