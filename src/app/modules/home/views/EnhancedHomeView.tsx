@@ -41,12 +41,12 @@ type HomeResponse = { data?: Array<HomeRecord> };
 
     const elmSub = (
         <div className="mt-6 mb-8 font-display text-center">
-          <BlurText
+         <BlurText
             text={data[0].subjudul}
             delay={100}
             animateBy="words"
             direction="bottom"
-            className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center justify-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex flex-wrap sm:flex-nowrap md:flex-nowrap lg:flex-nowrap xl:flex-nowrap break-words"
+            className="flex flex-wrap justify-center text-base xs:text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-semibold leading-relaxed text-white text-center max-w-md xs:max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12"
           />
         </div>
       );
@@ -54,22 +54,12 @@ type HomeResponse = { data?: Array<HomeRecord> };
 
       
       const narasiData = data[0].narasi
-      const elmNarasi: string[] = [];
-      narasiData.forEach((item) => {
-    if (item.children) {
-      // gabungkan semua text children menjadi satu string tanpa spasi ekstra
-      const paragraph = item.children.map(child => child.text).join("");
-      elmNarasi.push(paragraph);
-    }
-  });
-      
-
-      const narasiText = elmNarasi.length > 0 ? elmNarasi.join(" ") : "Empowering organizations with advanced AI and cybersecurity solutions for a secure digital future.";
+      const narasiText = narasiData ? narasiData : "looding...";
       
       setNarasi(
         <div className="mb-8 mt-4 font-sans text-center w-full">
           <BlurText
-            text={narasiText}
+            text={narasiText as string}
             delay={10}
             animateBy="words"
             direction="bottom"
@@ -108,7 +98,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
       setSubJudul(
         <div className="mt-6 mb-8 font-display text-center">
           <BlurText
-            text="Transforming businesses through advanced AI integration and robust security solutions"
+            text="xTransforming businesses through advanced AI integration and robust security solutions"
             delay={50}
             animateBy="words"
             direction="bottom"
@@ -120,7 +110,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
       setNarasi(
         <div className="mb-8 mt-4 font-sans text-center w-full">
           <BlurText
-            text="Empowering organizations with advanced AI and cybersecurity solutions for a secure digital future."
+            text="xEmpowering organizations with advanced AI and cybersecurity solutions for a secure digital future."
             delay={5}
             animateBy="words"
             direction="bottom"
