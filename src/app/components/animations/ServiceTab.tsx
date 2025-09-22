@@ -46,7 +46,7 @@ const ServiceTab: React.FC<ServiceTabProps> = ({
 
       {/* Ripple Effect */}
       {isActive && (
-        <div className="absolute inset-0 rounded-2xl border-2 border-white" />
+        <div className="absolute inset-0 rounded-2xl border-2 border-orange-500" />
       )}
       
       {/* Content */}

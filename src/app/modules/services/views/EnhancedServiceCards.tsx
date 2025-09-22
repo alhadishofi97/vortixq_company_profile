@@ -293,7 +293,7 @@ useEffect(() => {
             <ServiceTab
               key={servicex.id}
               label={servicex.data[0]?.judul}
-              isActive={activeTab === servicex.data[0]?.judul.toLowerCase()}
+              isActive={activeTab === servicex.documentId}
               onClick={() => setActiveTab(servicex.documentId)}
               icon={
                 <svg
