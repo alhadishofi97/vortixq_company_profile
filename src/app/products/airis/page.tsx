@@ -23,11 +23,22 @@ const AirisProductPage: React.FC = () => {
     {
       id: "ai-grc",
       title: "AI GRC",
-      description: "Automate governance, risk, and compliance processes with AI-powered controls and real-time policy enforcement.",
+      description:
+        "Automate governance, risk, and compliance processes with AI-powered controls and real-time policy enforcement.",
       dashboardImage: "/ai-grc.jpg",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          />
         </svg>
       ),
       details: {
@@ -35,24 +46,35 @@ const AirisProductPage: React.FC = () => {
           "Automated compliance monitoring across multiple frameworks (ISO 27001, SOC 2, PCI DSS, GDPR)",
           "Real-time policy enforcement with AI-driven rule validation",
           "Intelligent risk assessment with predictive risk scoring",
-          "Automated evidence collection and audit trail generation"
+          "Automated evidence collection and audit trail generation",
         ],
         capabilities: [
           "Dynamic policy updates based on regulatory changes",
           "AI-powered gap analysis and remediation recommendations",
           "Multi-framework compliance mapping and reporting",
-          "Automated workflow orchestration for compliance tasks"
-        ]
-      }
+          "Automated workflow orchestration for compliance tasks",
+        ],
+      },
     },
     {
       id: "ai-red-team",
       title: "AI Red Team Simulation",
-      description: "Simulate sophisticated AI-driven attack scenarios to test and strengthen your defenses.",
+      description:
+        "Simulate sophisticated AI-driven attack scenarios to test and strengthen your defenses.",
       dashboardImage: "/red-team-module.jpg",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+          />
         </svg>
       ),
       details: {
@@ -60,24 +82,35 @@ const AirisProductPage: React.FC = () => {
           "AI-powered attack simulation and penetration testing",
           "Advanced threat modeling with machine learning algorithms",
           "Automated vulnerability assessment and exploitation",
-          "Real-time attack scenario generation and execution"
+          "Real-time attack scenario generation and execution",
         ],
         capabilities: [
           "Custom attack vector development and testing",
           "Social engineering simulation with AI chatbots",
           "Network and application security testing automation",
-          "Comprehensive security posture evaluation and reporting"
-        ]
-      }
+          "Comprehensive security posture evaluation and reporting",
+        ],
+      },
     },
     {
       id: "ai-threat-intel",
       title: "AI Threat Intelligence (MITRE ATLAS-based)",
-      description: "Leverage cutting-edge adversarial AI threat intelligence mapped to MITRE ATLAS for proactive defense.",
+      description:
+        "Leverage cutting-edge adversarial AI threat intelligence mapped to MITRE ATLAS for proactive defense.",
       dashboardImage: "/threat-intel-module.jpg",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+          />
         </svg>
       ),
       details: {
@@ -85,24 +118,35 @@ const AirisProductPage: React.FC = () => {
           "MITRE ATLAS framework integration for AI threat mapping",
           "Real-time threat intelligence aggregation and analysis",
           "Adversarial AI attack pattern recognition and classification",
-          "Global threat landscape monitoring and trend analysis"
+          "Global threat landscape monitoring and trend analysis",
         ],
         capabilities: [
           "Automated threat hunting and detection rule generation",
           "Predictive threat modeling and risk assessment",
           "Custom threat intelligence feed creation and management",
-          "Integration with existing security tools and platforms"
-        ]
-      }
+          "Integration with existing security tools and platforms",
+        ],
+      },
     },
     {
       id: "ai-risk-quantification",
       title: "AI Risk Quantification",
-      description: "Transform complex cyber risk data into quantified, actionable business insights.",
+      description:
+        "Transform complex cyber risk data into quantified, actionable business insights.",
       dashboardImage: "/risk-quantification-module.jpg",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+          />
         </svg>
       ),
       details: {
@@ -110,24 +154,35 @@ const AirisProductPage: React.FC = () => {
           "Financial risk quantification and impact analysis",
           "AI-driven risk modeling and scenario planning",
           "Automated risk assessment and scoring algorithms",
-          "Real-time risk monitoring and alerting systems"
+          "Real-time risk monitoring and alerting systems",
         ],
         capabilities: [
           "Custom risk metrics and KPI development",
           "Integration with business intelligence platforms",
           "Automated risk reporting and executive dashboards",
-          "Machine learning-based risk prediction and forecasting"
-        ]
-      }
+          "Machine learning-based risk prediction and forecasting",
+        ],
+      },
     },
     {
       id: "airis-ciso-bot",
       title: "AIRIS CISO Bot",
-      description: "Your virtual AI security advisor providing instant guidance and decision support to security leadership.",
+      description:
+        "Your virtual AI security advisor providing instant guidance and decision support to security leadership.",
       dashboardImage: "/ciso-bot-module.jpg",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+          />
         </svg>
       ),
       details: {
@@ -135,24 +190,35 @@ const AirisProductPage: React.FC = () => {
           "AI-powered security advisory and decision support",
           "Natural language processing for security queries",
           "Automated security policy recommendations",
-          "Real-time threat analysis and response guidance"
+          "Real-time threat analysis and response guidance",
         ],
         capabilities: [
           "Custom security knowledge base and training",
           "Integration with security tools and platforms",
           "Automated incident response and escalation",
-          "Executive-level security reporting and insights"
-        ]
-      }
+          "Executive-level security reporting and insights",
+        ],
+      },
     },
     {
       id: "executive-dashboard",
       title: "Real-Time Executive Dashboard",
-      description: "Unified, AI-powered view of your organization's cybersecurity posture and risk landscape.",
+      description:
+        "Unified, AI-powered view of your organization's cybersecurity posture and risk landscape.",
       dashboardImage: "/executive-dashboard-module.jpg",
       icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h2a2 2 0 002-2z" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h2a2 2 0 002-2z"
+          />
         </svg>
       ),
       details: {
@@ -160,17 +226,19 @@ const AirisProductPage: React.FC = () => {
           "Comprehensive security posture visualization",
           "Real-time threat monitoring and alerting",
           "Executive-level security metrics and KPIs",
-          "Automated security reporting and analytics"
+          "Automated security reporting and analytics",
         ],
         capabilities: [
           "Custom dashboard creation and configuration",
           "Integration with multiple security data sources",
           "Automated report generation and distribution",
-          "Mobile and desktop responsive design"
-        ]
-      }
-    }
+          "Mobile and desktop responsive design",
+        ],
+      },
+    },
   ];
+
+  const [tempScrollY, setTempScrollY] = useState(0);
 
   const handleProductClick = (product: {
     id: string;
@@ -185,11 +253,17 @@ const AirisProductPage: React.FC = () => {
   }) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
+    setTempScrollY(window.scrollY);
+    const pageHeight = document.documentElement.scrollHeight;
+    const viewportHeight = window.innerHeight;
+    const middle = (pageHeight - viewportHeight) / 2 - 75;
+    window.scrollTo(0, middle);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
+    window.scrollTo(0, tempScrollY);
   };
 
   return (
@@ -200,7 +274,7 @@ const AirisProductPage: React.FC = () => {
           <div className="absolute -top-12 -left-8 w-48 h-48 rounded-full bg-brand-highlight1/10 blur-3xl animate-pulse-glow" />
           <div className="absolute -bottom-12 -right-12 w-56 h-56 rounded-full bg-brand-secondary/10 blur-3xl animate-pulse-glow" />
         </div>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -210,7 +284,7 @@ const AirisProductPage: React.FC = () => {
           {/* Back to Home Button */}
           <motion.button
             onClick={() => {
-              window.location.href = '/';
+              window.location.href = "/";
             }}
             className="flex items-center gap-2 text-orange-500 hover:text-orange-400 mb-2 group transition-all duration-200 flex-shrink-0"
             whileHover={{ x: -5 }}
@@ -219,16 +293,34 @@ const AirisProductPage: React.FC = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <svg className="w-4 h-4 text-current" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 19-7-7 7-7"/>
+            <svg
+              className="w-4 h-4 text-current"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m15 19-7-7 7-7"
+              />
             </svg>
             <span className="text-xs font-medium">Back to Home</span>
           </motion.button>
 
           {/* Header Section */}
           <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">AIRIS AI-Native Cyber Defense</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">6 Core Modules, One Unified Platform</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              AIRIS AI-Native Cyber Defense
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              6 Core Modules, One Unified Platform
+            </p>
           </div>
 
           {/* Products Grid */}
@@ -258,9 +350,7 @@ const AirisProductPage: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
                     <div className="absolute bottom-4 right-4 text-orange-500">
-                      <div className="h-8 w-8">
-                        {product.icon}
-                      </div>
+                      <div className="h-8 w-8">{product.icon}</div>
                     </div>
                   </div>
                   <h3 className="text-xl font-semibold mb-3 group-hover:text-orange-500 transition-colors">
@@ -271,7 +361,18 @@ const AirisProductPage: React.FC = () => {
                   </p>
                   <div className="mt-4 flex items-center text-orange-500 hover:text-orange-400 text-sm font-medium group-hover:translate-x-1 transition-all duration-200">
                     <span>Learn more</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right ml-1 h-4 w-4">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-chevron-right ml-1 h-4 w-4"
+                    >
                       <path d="m9 18 6-6-6-6"></path>
                     </svg>
                   </div>
