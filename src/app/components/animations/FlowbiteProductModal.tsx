@@ -44,7 +44,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
 
           {/* Modal Card */}
           <motion.div
-            className="relative w-full max-w-6xl bg-white dark:bg-gray-800 rounded-lg shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+            className="relative w-full max-w-6xl bg-black rounded-lg shadow-2xl border border-gray-700 overflow-hidden"
             initial={{ 
               opacity: 0, 
               scale: 0.7, 
@@ -73,7 +73,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
           >
         {/* Header */}
         <motion.div 
-          className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+          className="flex items-center justify-between p-6 border-b border-gray-700 bg-black"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4, ease: "easeOut" }}
@@ -88,7 +88,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
               {product.icon}
             </motion.div>
             <motion.h3 
-              className="text-xl font-semibold text-gray-900 dark:text-white"
+              className="text-xl font-semibold text-white"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4, duration: 0.3 }}
@@ -96,29 +96,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
               {product.title}
             </motion.h3>
           </div>
-          <motion.button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-            whileHover={{ scale: 1.1, rotate: 90 }}
-            whileTap={{ scale: 0.9 }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.3, type: "spring" }}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </motion.button>
+          {/* Close button hidden */}
         </motion.div>
 
         {/* Body */}
@@ -170,7 +148,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
             >
               {/* Description */}
               <motion.p 
-                className="text-gray-600 dark:text-gray-300 text-base leading-relaxed"
+                className="text-gray-300 text-base leading-relaxed"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.4 }}
@@ -185,7 +163,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
                 transition={{ delay: 0.7, duration: 0.4 }}
               >
                 <motion.h4 
-                  className="text-lg font-semibold text-gray-900 dark:text-white mb-3"
+                  className="text-lg font-semibold text-white mb-3"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8, duration: 0.3 }}
@@ -216,7 +194,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
                           stiffness: 200
                         }}
                       ></motion.div>
-                      <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                      <span className="text-gray-300 text-sm leading-relaxed">
                         {feature}
                       </span>
                     </motion.li>
@@ -244,7 +222,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
                           stiffness: 200
                         }}
                       ></motion.div>
-                      <span className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                      <span className="text-gray-300 text-sm leading-relaxed">
                         {capability}
                       </span>
                     </motion.li>
@@ -257,7 +235,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
 
         {/* Footer */}
         <motion.div 
-          className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900"
+          className="flex items-center justify-end gap-3 p-6 border-t border-gray-700 bg-black"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.4, ease: "easeOut" }}
@@ -311,17 +289,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
               />
             </motion.svg>
           </motion.button>
-          <motion.button
-            onClick={onClose}
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 transition-colors"
-            whileHover={{ scale: 1.05, y: -1 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, scale: 0.8, x: 20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ delay: 1.4, duration: 0.4, type: "spring", stiffness: 200 }}
-          >
-            Close
-          </motion.button>
+          {/* Close button hidden */}
         </motion.div>
           </motion.div>
         </div>
