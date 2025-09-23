@@ -241,6 +241,17 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
           transition={{ delay: 1.2, duration: 0.4, ease: "easeOut" }}
         >
           <motion.button
+            onClick={onClose}
+            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-800 border border-gray-600 rounded-lg hover:bg-gray-700 hover:border-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-700 transition-colors"
+            whileHover={{ scale: 1.05, y: -1 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.8, x: 20 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ delay: 1.3, duration: 0.4, type: "spring", stiffness: 200 }}
+          >
+            Close
+          </motion.button>
+          <motion.button
             onClick={() => {
               onClose();
               if (typeof window !== "undefined") {
@@ -268,7 +279,7 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, scale: 0.8, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ delay: 1.3, duration: 0.4, type: "spring", stiffness: 200 }}
+            transition={{ delay: 1.4, duration: 0.4, type: "spring", stiffness: 200 }}
           >
             Book a Demo
             <motion.svg
@@ -289,7 +300,6 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
               />
             </motion.svg>
           </motion.button>
-          {/* Close button hidden */}
         </motion.div>
           </motion.div>
         </div>
