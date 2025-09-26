@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import FlowbiteProductModal from "../../components/animations/FlowbiteProductModal";
+import { Data,Product } from "@/app/modules/products/controllers/productInterface";
+import { useRouter } from "next/navigation";
 
-const AirisProductPage: React.FC = () => {
-  const [selectedProduct, setSelectedProduct] = useState<{
+interface details {
     id: string;
     title: string;
     description: string;
@@ -15,8 +16,45 @@ const AirisProductPage: React.FC = () => {
       features: string[];
       capabilities: string[];
     };
-  } | null>(null);
+  }
+const AirisProductPage: React.FC = () => {
+  const [selectedProduct, setSelectedProduct] = useState<details | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [listproducts, setlistproducts] = useState<details[]>([]);
+  const [judul, setJudul] = useState('');
+  const [subjudul, setSubJudul] = useState('');
+   const router = useRouter();
+  useEffect(() => {
+    try {
+       if(localStorage.getItem('productDetail')==''){
+        router.replace('/')
+      }
+
+     const data = JSON.parse(localStorage.getItem('productDetail') as string) as Product;
+
+     setJudul(data.judul2)
+     setSubJudul(data.subjudul2)
+     console.log('local datadatadatadatadatadata',data.data)
+      if (Array.isArray(data.data)) {
+        const mapped: details[] = data.data.map((val) => ({
+          id: val.id.toString(),       // mapping ke field yang sesuai
+          title: val.judul,
+          description: val.narasi,
+          dashboardImage: val.img.url,
+          icon:'',
+          details:{
+            features:[val.fitur],
+            capabilities:['']
+          }
+        }));
+
+        setlistproducts(mapped);
+      } 
+    } catch (error) {
+      router.replace('/')
+    }
+   
+  }, []);
 
   // Product data based on demo-airis.vortiqx.com
   const products = [
@@ -210,7 +248,9 @@ const AirisProductPage: React.FC = () => {
           {/* Back to Home Button */}
           <motion.button
             onClick={() => {
-              window.location.href = '/';
+              // window.location.href = '/';
+              localStorage.setItem('productDetail','')
+              router.back()
             }}
             className="flex items-center gap-2 text-orange-500 hover:text-orange-400 mb-2 group transition-all duration-200 flex-shrink-0"
             whileHover={{ x: -5 }}
@@ -227,13 +267,13 @@ const AirisProductPage: React.FC = () => {
 
           {/* Header Section */}
           <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">AIRIS AI-Native Cyber Defense</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">6 Core Modules, One Unified Platform</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{judul}</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">{subjudul}</p>
           </div>
 
           {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product, index) => (
+            {listproducts.map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}

@@ -3,13 +3,15 @@ import React ,{useState,useEffect} from "react";
 import { motion } from "framer-motion";
 import AnimatedSection from "../../../components/animations/AnimatedSection";
 import ProductCarousel from "../../../components/animations/ProductCarousel";
-import { ProductResponse,Product2 } from "../controllers/productInterface";
+import { ProductResponse,Product2,Product } from "../controllers/productInterface";
 import { getProduct } from "../controllers/ProductController";
+import { useRouter } from "next/navigation";
 const ProductsView: React.FC = () => {
 
 
   // const [listproducts, setlistproducts] = useState<Product2[] | null>(null);
   const [listproducts, setlistproducts] = useState<Product2[]>([]);
+  const router = useRouter();
 
   
   
@@ -80,9 +82,13 @@ const ProductsView: React.FC = () => {
     }
   ];
 
-  const handleProductClick = () => {
+  const handleProductClick = (produk:Product2):void => {
     // Redirect ke halaman /products/airis untuk melihat 6 card produk
-    window.location.href = '/products/airis';
+    // window.location.href = '/products/airis';
+    console.log('produkproduk',produk)
+    
+    localStorage.setItem("productDetail", JSON.stringify(produk));
+    router.push("/products/airis"); // pindah ke /about
   };
 
 
