@@ -10,7 +10,7 @@ const EnhancedHome = () => {
   const [judul,setJudul] = useState<ReactNode>(null);
   const [subjudul,setSubJudul] = useState<ReactNode>(null);
   const [narasi,setNarasi] = useState<ReactNode>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   // Video state removed - video background disabled
    type HomeRecord = {
         Judul?: string;
@@ -79,7 +79,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
      
 
 
-      setIsLoading(false);
+      // setIsLoading(false);
     } catch (error) {
       console.log("err", error);
       // Fallback content untuk semua
@@ -119,7 +119,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
         </div>
       );
       
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   }, []);
 
@@ -158,7 +158,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
       
       {/* Hero Content with Enhanced Animations */}
       <div className="relative z-10">
-        {isLoading ? (
+        {/* {isLoading ? ( */}
           <Box
             sx={{
               textAlign: "center",
@@ -182,7 +182,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
               </div>
             </Container>
           </Box>
-        ) : (
+        {/* ) : ( */}
           <AnimatedSection animation="fadeInUp" duration={0.6}>
           <Box
             sx={{
@@ -251,7 +251,7 @@ type HomeResponse = { data?: Array<HomeRecord> };
             </Container>
           </Box>
           </AnimatedSection>
-        )}
+        {/* )} */}
       </div>
     </div>
   );

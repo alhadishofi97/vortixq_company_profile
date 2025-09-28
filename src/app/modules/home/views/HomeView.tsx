@@ -86,7 +86,7 @@ const Home = () => {
   }, [getData]);
 
   const handleAnimationComplete = () => {
-    console.log('Animation completed!');
+    // console.log('Animation completed!');
   };
 
 
