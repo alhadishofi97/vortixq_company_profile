@@ -1,5 +1,5 @@
 import client from "@/app/util/strepiClient";
-import { ProductResponse,Product2 } from "./productInterface";
+import { ProductResponse,Product2,Data } from "./productInterface";
 
 
 
@@ -10,7 +10,8 @@ export const getProduct = async (): Promise<Product2[] | null> => {
         
         populate: {
             dashboardImage: { populate: "*" },
-            details: { populate: { features: "*", capabilities: "*" } }
+            details: { populate: { features: "*", capabilities: "*" } },
+            data: { populate:"*" }
         }
     });
 
@@ -24,6 +25,7 @@ export const getProduct = async (): Promise<Product2[] | null> => {
         const listfeatures: string[] = val.details.features.map(feature => feature.list);
         const listcapabilities: string[] = val.details.capabilities.map(capability => capability.list);
 
+
         resp.push({
             id: val.id_content,
             title: val.title,
@@ -33,7 +35,10 @@ export const getProduct = async (): Promise<Product2[] | null> => {
             details: {
             features: listfeatures,
             capabilities: listcapabilities,
-            }
+            },
+            data:val.data,
+            judul2:val.judul2,
+            subjudul2:val.subjudul2
         });
     });
 

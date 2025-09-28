@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, PanInfo } from "framer-motion";
 import ProductCard from "./ProductCard";
+import { Product2 } from "@/app/modules/products/controllers/productInterface";
 
 interface ProductItem {
   id: string;
@@ -16,8 +17,8 @@ interface ProductItem {
 }
 
 interface ProductCarouselProps {
-  products: ProductItem[];
-  onProductClick: (product: ProductItem) => void;
+  products: Product2[];
+  onProductClick: (product: Product2) => void;
   className?: string;
   autoSlideInterval?: number;
   pauseOnHover?: boolean;
