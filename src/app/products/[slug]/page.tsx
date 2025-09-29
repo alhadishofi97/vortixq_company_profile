@@ -42,15 +42,21 @@ const DynamicProductPage: React.FC = () => {
         }
 
         // Find product by slug (id_content)
+        console.log('Available products:', products.map(p => ({ id: p.id, title: p.title })));
+        console.log('Looking for slug:', slug);
+        
         const currentProduct = products.find(p => p.id === slug);
         
         if (!currentProduct) {
+          console.log('Product not found for slug:', slug);
           router.replace('/');
           return;
         }
 
-        setJudul(currentProduct.judul2);
-        setSubJudul(currentProduct.subjudul2);
+        console.log('Found product:', currentProduct);
+
+        setJudul(currentProduct.judul2 || currentProduct.title);
+        setSubJudul(currentProduct.subjudul2 || currentProduct.description);
 
         // Parse features dari string dengan line breaks menjadi array
         const parseFeatures = (fiturText: string) => {
@@ -65,17 +71,29 @@ const DynamicProductPage: React.FC = () => {
         };
 
         // Map data untuk current product
-        const mapped: details[] = currentProduct.data.map((val) => ({
-          id: val.id.toString(),
-          title: val.judul,
-          description: val.narasi,
-          dashboardImage: val.img.url,
-          icon: '',
-          details: {
-            features: parseFeatures(val.fitur),
-            capabilities: parseCapabilities(val.capabilities || '')
-          }
-        }));
+        const mapped: details[] = currentProduct.data && currentProduct.data.length > 0 
+          ? currentProduct.data.map((val) => ({
+              id: val.id.toString(),
+              title: val.judul || 'Module',
+              description: val.narasi || 'Description not available',
+              dashboardImage: val.img?.url || '/placeholder-image.jpg',
+              icon: '',
+              details: {
+                features: parseFeatures(val.fitur || ''),
+                capabilities: parseCapabilities(val.capabilities || '')
+              }
+            }))
+          : [{
+              id: '1',
+              title: currentProduct.title,
+              description: currentProduct.description,
+              dashboardImage: currentProduct.dashboardImage,
+              icon: '',
+              details: {
+                features: currentProduct.details.features,
+                capabilities: currentProduct.details.capabilities
+              }
+            }];
 
         setlistproducts(mapped);
         setIsLoading(false);
