@@ -24,71 +24,22 @@ const ProductsView: React.FC = () => {
     }
     fetchData();
   }, []);
-  // Product data for carousel - only AIRIS
-  const products = [
-    {
-      id: "airis",
-      title: "AIRIS",
-      description: "AI-driven, GPU-powered cybersecurity platform that unifies GRC automation with advanced threat detection and defense.",
-      dashboardImage: "/airis_dsb.png",
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      ),
-      details: {
-        features: [
-          "AI-driven cybersecurity platform with GPU acceleration",
-          "Unified GRC automation and threat detection",
-          "Advanced threat defense capabilities",
-          "Real-time security monitoring and response"
-        ],
-        capabilities: [
-          "AI-powered threat detection",
-          "GRC automation",
-          "GPU-accelerated processing",
-          "Real-time monitoring",
-          "Advanced defense systems",
-          "Unified security platform"
-        ]
-      }
-    },
-    {
-      id: "airis",
-      title: "AIRIS",
-      description: "AI-driven, GPU-powered cybersecurity platform that unifies GRC automation with advanced threat detection and defense.",
-      dashboardImage: "/airis_dsb.png",
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      ),
-      details: {
-        features: [
-          "AI-driven cybersecurity platform with GPU acceleration",
-          "Unified GRC automation and threat detection",
-          "Advanced threat defense capabilities",
-          "Real-time security monitoring and response"
-        ],
-        capabilities: [
-          "AI-powered threat detection",
-          "GRC automation",
-          "GPU-accelerated processing",
-          "Real-time monitoring",
-          "Advanced defense systems",
-          "Unified security platform"
-        ]
-      }
-    }
-  ];
+  // Convert Strapi products to carousel format
+  const products = listproducts.map(product => ({
+    id: product.id,
+    title: product.title,
+    description: product.description,
+    dashboardImage: product.dashboardImage,
+    icon: product.icon, // Icon sudah dalam format string SVG dari Strapi
+    details: product.details
+  }));
 
   const handleProductClick = (produk:Product2):void => {
-    // Redirect ke halaman /products/airis untuk melihat 6 card produk
-    // window.location.href = '/products/airis';
+    // Redirect ke halaman dynamic product berdasarkan ID
     console.log('produkproduk',produk)
     
     localStorage.setItem("productDetail", JSON.stringify(produk));
-    router.push("/products/airis"); // pindah ke /about
+    router.push(`/products/${produk.id}`); // Dynamic routing berdasarkan ID
   };
 
 

@@ -8,7 +8,7 @@ interface ProductDetails {
   title: string;
   description: string;
   dashboardImage: string;
-  icon: React.ReactNode;
+  icon: string | React.ReactNode; // Support both string (from Strapi) and ReactNode
   details: {
     features: string[];
     capabilities: string[];
@@ -85,7 +85,11 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.3, duration: 0.5, type: "spring", stiffness: 200 }}
             >
-              {product.icon}
+              {typeof product.icon === 'string' ? (
+                <div dangerouslySetInnerHTML={{ __html: product.icon }} />
+              ) : (
+                product.icon
+              )}
             </motion.div>
             <motion.h3 
               className="text-xl font-semibold text-white"
@@ -135,7 +139,11 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
                 animate={{ scale: 1, rotate: 0 }}
                 transition={{ delay: 0.8, duration: 0.5, type: "spring", stiffness: 200 }}
               >
-                {product.icon}
+                {typeof product.icon === 'string' ? (
+                  <div dangerouslySetInnerHTML={{ __html: product.icon }} />
+                ) : (
+                  product.icon
+                )}
               </motion.div>
             </motion.div>
 
