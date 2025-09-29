@@ -3,7 +3,7 @@ import React, { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import FlowbiteProductModal from "../../components/animations/FlowbiteProductModal";
-import { Data,Product } from "@/app/modules/products/controllers/productInterface";
+import { Product } from "@/app/modules/products/controllers/productInterface";
 import { useRouter } from "next/navigation";
 
 interface details {
@@ -36,25 +36,40 @@ const AirisProductPage: React.FC = () => {
      setSubJudul(data.subjudul2)
      console.log('local datadatadatadatadatadata',data.data)
       if (Array.isArray(data.data)) {
-        const mapped: details[] = data.data.map((val) => ({
-          id: val.id.toString(),       // mapping ke field yang sesuai
-          title: val.judul,
-          description: val.narasi,
-          dashboardImage: val.img.url,
-          icon:'',
-          details:{
-            features:[val.fitur],
-            capabilities:['']
-          }
-        }));
+        const mapped: details[] = data.data.map((val) => {
+          // Parse fitur dari string dengan line breaks menjadi array
+          const parseFeatures = (fiturText: string) => {
+            if (!fiturText) return [];
+            return fiturText.split('\n').filter(line => line.trim());
+          };
+
+          // Parse capabilities dari string dengan line breaks menjadi array
+          const parseCapabilities = (capabilitiesText: string) => {
+            if (!capabilitiesText) return [];
+            return capabilitiesText.split('\n').filter(line => line.trim());
+          };
+
+          return {
+            id: val.id.toString(),       // mapping ke field yang sesuai
+            title: val.judul,
+            description: val.narasi,
+            dashboardImage: val.img.url,
+            icon:'',
+            details:{
+              features: parseFeatures(val.fitur),
+              capabilities: parseCapabilities(val.capabilities || '') // capabilities dari Strapi
+            }
+          };
+        });
 
         setlistproducts(mapped);
       } 
     } catch (error) {
+      console.error('Error loading product data:', error);
       router.replace('/')
     }
    
-  }, []);
+  }, [router]);
 
   // Static product data removed - now using dynamic data from Strapi
 

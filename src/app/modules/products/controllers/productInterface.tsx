@@ -127,6 +127,7 @@ export interface Data {
   judul: string;
   narasi: string;
   fitur: string;
+  capabilities?: string; // Optional field untuk capabilities
 }
 
 export interface Img {
