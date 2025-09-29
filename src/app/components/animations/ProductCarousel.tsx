@@ -209,11 +209,11 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
         style={{ width: '100%' }}
       >
         <motion.div
-          className={`flex cursor-grab active:cursor-grabbing ${products.length === 1 ? 'justify-center' : ''}`}
+          className={`flex cursor-grab active:cursor-grabbing gap-6 ${products.length === 1 ? 'justify-center' : ''}`}
           animate={{ 
             x: products.length === 1 
               ? 0 // Untuk 1 produk, posisikan di tengah (x = 0)
-              : isDragging ? -currentIndex * cardWidth + dragX : -currentIndex * cardWidth 
+              : isDragging ? -currentIndex * (cardWidth + 24) + dragX : -currentIndex * (cardWidth + 24)
           }}
           transition={{ 
             type: "spring", 
@@ -223,12 +223,12 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({
             duration: isDragging ? 0 : 0.6
           }}
           style={{ 
-            width: products.length === 1 ? '100%' : `${products.length * cardWidth}px`,
+            width: products.length === 1 ? '100%' : `${products.length * (cardWidth + 24)}px`,
             willChange: isDragging ? 'transform' : 'auto'
           }}
           drag={products.length > 1 ? "x" : false} // Disable drag untuk 1 produk
           dragConstraints={{ 
-            left: -Math.max(0, products.length - visibleCards) * cardWidth, 
+            left: -Math.max(0, products.length - visibleCards) * (cardWidth + 24), 
             right: 0 
           }}
           onDragStart={handleDragStart}

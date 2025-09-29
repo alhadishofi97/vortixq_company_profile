@@ -134,7 +134,7 @@ const ProductsView: React.FC = () => {
         </div>
             
         <AnimatedSection animation="fadeInUp" delay={0.2}>
-          <div className="relative rounded-3xl border border-white/10 p-6 sm:p-8 shadow-xl">
+          <div className="relative rounded-3xl border border-white/10 p-8 sm:p-12 shadow-xl">
             <ProductCarousel
               products={listproducts}
               onProductClick={handleProductClick}

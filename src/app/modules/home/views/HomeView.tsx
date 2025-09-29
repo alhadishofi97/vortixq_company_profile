@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState, ReactNode } from "react";
 import { getHome } from "../controllers/HomeController";
 import { Container, Typography, Box, Button } from "@mui/material";
 import BlurText from "../../../util/reactBits/BlurText";
-import { motion, useScroll, useTransform } from "framer-motion";
+// import { motion, useScroll, useTransform } from "framer-motion";
 
 
 const Home = () => {
@@ -11,8 +11,8 @@ const Home = () => {
   const [subjudul,setSubJudul] = useState<ReactNode>(null);
   const [narasi,setNarasi] = useState<ReactNode>(null);
   
-  const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  // const { scrollYProgress } = useScroll();
+  // const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   const getData = useCallback(async () => {
     const data = await getHome();
@@ -27,7 +27,7 @@ const Home = () => {
     try {
       const judulText = (data as HomeResponse).data?.[0]?.Judul || "Welcome to Vortiqx";
       setJudul(
-        <div className="font-display text-center mb-10 mt-12">
+        <div className="font-display text-center mb-12 mt-16">
           <BlurText
             text={judulText}
             delay={200}
@@ -40,7 +40,7 @@ const Home = () => {
 
       const subjudulText = (data as HomeResponse).data?.[0]?.subjudul || "Innovative AI & Cybersecurity Solutions";
       const elmSub = (
-        <div className="mt-6 font-display text-center">
+        <div className="mt-8 font-display text-center">
           <BlurText
             text={subjudulText}
             delay={200}
@@ -138,7 +138,7 @@ const Home = () => {
           padding: "20px",
         }}>
       {/* Hero Section */}
-      <Container maxWidth={false} sx={{ textAlign: "center", width: "90%", mx: "auto", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "100vh", py: 4 }}>
+      <Container maxWidth={false} sx={{ textAlign: "center", width: "95%", mx: "auto", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", minHeight: "100vh", py: 6 }}>
 
     {judul}
     {subjudul}
