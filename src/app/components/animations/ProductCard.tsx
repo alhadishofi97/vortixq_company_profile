@@ -23,7 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   return (
     <motion.div
-      className={`relative w-full h-[32rem] bg-black/80 p-6 shadow-2xl rounded-xl border-2 border-white/20 overflow-hidden group flex flex-col mx-3 my-4 ${className}`}
+      className={`relative w-full h-[32rem] bg-black/80 p-6 shadow-2xl rounded-xl border-2 border-orange-500/30 overflow-hidden group flex flex-col mx-3 my-4 ${className}`}
       whileHover={{ y: -4, scale: 1.01 }}
       transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
@@ -33,25 +33,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         style={{ zIndex: 0 }}
       />
 
-      {/* Header with proper spacing - Fixed height */}
-      <div className="relative z-10 mb-3 flex-shrink-0 h-20">
-        <div className="flex items-center justify-between mb-2">
-          <h3 
-            className="text-base font-bold text-white group-hover:text-orange-400 transition-colors duration-300 line-clamp-1 flex-1 mr-2"
-          >
-            {title}
-          </h3>
-          <motion.div className="text-orange-400 group-hover:scale-110 transition-transform duration-300 flex-shrink-0" whileHover={{ rotate: 5 }}>
-            <SvgRenderer svgString={icon} />
-          </motion.div>
-        </div>
-        <p className="text-xs text-slate-300 leading-relaxed group-hover:text-slate-100 transition-colors duration-300 line-clamp-3">
-          {description}
-        </p>
-      </div>
-
-      {/* Image with fixed height */}
-      <div className="relative z-10 mb-3 flex-shrink-0">
+      {/* Image with fixed height - Moved to top */}
+      <div className="relative z-10 mb-4 flex-shrink-0">
         <motion.div
           className="relative rounded-lg overflow-hidden bg-black/50 border border-white/10 h-60"
           whileHover={{ scale: 1.02 }}
@@ -59,7 +42,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
         >
           <Image src={dashboardImage} alt={`${title} Dashboard`} fill className="object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+          <div className="absolute bottom-4 right-4 text-orange-500">
+            <div className="h-8 w-8">
+              <SvgRenderer svgString={icon} />
+            </div>
+          </div>
         </motion.div>
+      </div>
+
+      {/* Header with title and description - Moved below image */}
+      <div className="relative z-10 mb-4 flex-shrink-0">
+        <h3 className="text-xl font-semibold mb-3 group-hover:text-orange-500 transition-colors line-clamp-1">
+          {title}
+        </h3>
+        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">
+          {description}
+        </p>
       </div>
 
       {/* Button pinned to bottom */}
