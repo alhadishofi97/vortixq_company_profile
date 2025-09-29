@@ -18,7 +18,7 @@ const EnhancedHome = () => {
         narasi?: Array<{ children?: Array<NarasiChild> }>;
       };
  type NarasiChild = { text: string; bold?: boolean };
-type HomeResponse = { data?: Array<HomeRecord> };
+// type HomeResponse = { data?: Array<HomeRecord> };
 
 
  useEffect(() => {
@@ -158,31 +158,6 @@ type HomeResponse = { data?: Array<HomeRecord> };
       
       {/* Hero Content with Enhanced Animations */}
       <div className="relative z-10">
-        {/* {isLoading ? ( */}
-          <Box
-            sx={{
-              textAlign: "center",
-              width: "95%",
-              mx: "auto",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              minHeight: "100vh",
-              py: 4,
-            }}
-          >
-            <Container maxWidth={false} sx={{ py: { xs: 2, md: 4 } }}>
-              {/* Loading Skeleton */}
-              <div className="animate-pulse">
-                <div className="h-16 bg-gray-700 rounded-lg mb-6 mx-auto max-w-4xl"></div>
-                <div className="h-8 bg-gray-700 rounded-lg mb-8 mx-auto max-w-3xl"></div>
-                <div className="h-6 bg-gray-700 rounded-lg mb-12 mx-auto max-w-2xl"></div>
-                <div className="h-12 bg-gray-700 rounded-lg mx-auto w-32"></div>
-              </div>
-            </Container>
-          </Box>
-        {/* ) : ( */}
           <AnimatedSection animation="fadeInUp" duration={0.6}>
           <Box
             sx={{
@@ -251,7 +226,6 @@ type HomeResponse = { data?: Array<HomeRecord> };
             </Container>
           </Box>
           </AnimatedSection>
-        {/* )} */}
       </div>
     </div>
   );
