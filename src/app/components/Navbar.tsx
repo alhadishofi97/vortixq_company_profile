@@ -58,19 +58,31 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
   
   useEffect(() => {
     async function fetchData() {
-      const data = await getLogo(); // AboutData[] | null
-      // setLogo(data); // ✅ cocok
-      setLogo(
-        <Image
-            src={data?.logo.url as string}
-            width={160}
-            height={32}
-            alt="logo"
-            className="w-28 sm:w-36 md:w-44 h-auto"
-          />
-      )
-  
-      console.log('datadatadatadatadatadatadata',data?.logo)
+      try {
+        const data = await getLogo(); // AboutData[] | null
+        
+        // Cek apakah data logo ada dan valid
+        if (data?.logo?.url) {
+          setLogo(
+            <Image
+              src={data.logo.url as string}
+              width={160}
+              height={32}
+              alt="logo"
+              className="w-28 sm:w-36 md:w-44 h-auto"
+            />
+          );
+        } else {
+          // Jika gambar dihapus atau tidak ada, tampilkan string kosong
+          setLogo(<></>);
+        }
+    
+        console.log('datadatadatadatadatadatadata',data?.logo)
+      } catch (error) {
+        console.error('Error fetching logo:', error);
+        // Jika terjadi error, tampilkan string kosong
+        setLogo(<></>);
+      }
     }
     fetchData();
   }, []);
@@ -102,7 +114,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
 
   return (
     <header 
-      className={`sticky top-0 z-50 bg-black/80 backdrop-blur-md transition-transform duration-300 ${
+      className={`sticky top-0 z-50 bg-black transition-transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
@@ -126,7 +138,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
 
         {/* Desktop Menu */}
         <motion.div 
-          className="hidden md:flex items-center gap-2 p-2 bg-black/30 backdrop-blur-sm rounded-full"
+          className="hidden md:flex items-center gap-2 p-2 bg-black rounded-full"
           initial={{ opacity: 0, y: -10, scale: 0.95 }}
           animate={{ 
             opacity: 1,
