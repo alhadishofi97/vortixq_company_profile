@@ -1,0 +1,36 @@
+/* Import key fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
+
+/* Alternative: If you have local Iosevka font files, use this instead:
+@font-face {
+  font-family: 'Iosevka';
+  src: url('./fonts/Iosevka-Regular.woff2') format('woff2'),
+       url('./fonts/Iosevka-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Iosevka';
+  src: url('./fonts/Iosevka-Bold.woff2') format('woff2'),
+       url('./fonts/Iosevka-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Iosevka';
+  src: url('./fonts/Iosevka-Light.woff2') format('woff2'),
+       url('./fonts/Iosevka-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+/* Define CSS custom properties for monospace font */
+:root {
+  --font-iosevka: 'Iosevka', 'JetBrains Mono', 'Courier New', monospace;
+}
