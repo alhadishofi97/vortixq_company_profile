@@ -2,16 +2,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   env:{
-    REACT_APP_STREPI_CLIENT:'3aca2d0f11698d5a8eaeed954ff3fe21592ed093161fb895f8171219bfcad710642f37737c08c52eeadbce6e506efac975d7ea847f36aa48473d1143653532e55ada78641da88052261675a71d9154c6a522474ff11e623eeafb345ce79c5f0dfc094f57d3b79bcb8a2978a30bd8cf5fa4719ec165be46817e9b82ddb95eff3a',
+    REACT_APP_STREPI_CLIENT:'7cc730bdd281c547720872ecee8d4b6462c150c72f98594f99e6b1c19164459a5d5041a3ef5d8403cc646d97600508c5b4cc4a2a07636bb1a12e9c2bf7d6e125463785121e684ec8aa10d6d84a0d08af80f387a466b31c9fad4f43e89714ebd964149855125599ad0f72400b68a7edc1ba9dafcbb90ffd7fd5322f4b3f444f73',
     // REACT_APP_STREPI_CLIENT:'8b3ea3ce389c827f6af9fc3c64cf0aab0e1f0bce06f5589b6c04efaf3c681442fa77f73f385a54857fdeeba43372925e254ad94b9ea359518c6b1483ea480f67ca78291d2be043dc3844ec8154a63bd3af96b6dd48b488f180d0401b0217a6c52fd09f09bb6fa78fcf9785fb12565dea9126c40ac0c9c78a14d2c490db981a7e',
-    REACT_APP_STREPI_HOST:'https://phenomenal-dream-766a1aa65b.strapiapp.com/api',
+    REACT_APP_STREPI_HOST:'https://heroic-whisper-e00f6bdb76.strapiapp.com/api',
     // REACT_APP_STREPI_HOST:'http://localhost:1337/api',
   },
     eslint: {
     ignoreDuringBuilds: true, // ⬅️ disable eslint check saat build
   },
   images: {
-    domains: ['phenomenal-dream-766a1aa65b.media.strapiapp.com'],
+    domains: ['heroic-whisper-e00f6bdb76.media.strapiapp.com'],
   },
 };
 
