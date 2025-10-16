@@ -19,7 +19,7 @@ export const getProduct = async (): Promise<Product2[] | null> => {
 
    const resp: Product2[] = [];
 
-   console.log('resx.dataresx.data',resx.data)
+// console.log('resx.dataresx.data',resx.data)
 
     resx.data.forEach((val) => {
         // Handle missing or incomplete data gracefully
@@ -42,7 +42,7 @@ export const getProduct = async (): Promise<Product2[] | null> => {
         });
     });
 
-    console.log('respresprespresp',resp)
+// console.log('respresprespresp',resp)
     return resp
     // response.data itu array, wrap jadi object
   } catch (error) {

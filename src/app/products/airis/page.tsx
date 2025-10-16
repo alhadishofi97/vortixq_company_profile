@@ -34,7 +34,7 @@ const AirisProductPage: React.FC = () => {
 
      setJudul(data.judul2)
      setSubJudul(data.subjudul2)
-     console.log('local datadatadatadatadatadata',data.data)
+// console.log('local datadatadatadatadatadata',data.data)
       if (Array.isArray(data.data)) {
         const mapped: details[] = data.data.map((val) => {
           // Parse fitur dari string dengan line breaks menjadi array
