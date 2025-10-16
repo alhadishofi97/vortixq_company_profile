@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
 
 export default nextConfig;
 
+// Updated by aldi - token kedua
+
 
 
 
