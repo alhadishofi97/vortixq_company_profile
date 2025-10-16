@@ -20,7 +20,7 @@ const ProductsView: React.FC = () => {
       const data = await getProduct();
       setlistproducts(data?? []); // ✅ langsung object
 
-      console.log('getProductgetProductgetProductgetProduct',data)
+      // console.log('getProductgetProductgetProductgetProduct',data)
     }
     fetchData();
   }, []);
@@ -36,7 +36,7 @@ const ProductsView: React.FC = () => {
 
   const handleProductClick = (produk:Product2):void => {
     // Redirect ke halaman dynamic product berdasarkan ID
-    console.log('produkproduk',produk)
+    // console.log('produkproduk',produk)
     
     localStorage.setItem("productDetail", JSON.stringify(produk));
     router.push(`/products/${produk.id}`); // Dynamic routing berdasarkan ID

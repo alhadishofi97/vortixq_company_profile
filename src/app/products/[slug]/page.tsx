@@ -44,18 +44,18 @@ const DynamicProductPage: React.FC = () => {
         }
 
         // Find product by slug (id_content)
-        console.log('Available products:', products.map(p => ({ id: p.id, title: p.title })));
-        console.log('Looking for slug:', slug);
+        // console.log('Available products:', products.map(p => ({ id: p.id, title: p.title })));
+        // console.log('Looking for slug:', slug);
         
         const currentProduct = products.find(p => p.id === slug);
         
         if (!currentProduct) {
-          console.log('Product not found for slug:', slug);
+          // console.log('Product not found for slug:', slug);
           router.replace('/');
           return;
         }
 
-        console.log('Found product:', currentProduct);
+        // console.log('Found product:', currentProduct);
 
         setJudul(currentProduct.judul2 || currentProduct.title);
         setSubJudul(currentProduct.subjudul2 || currentProduct.description);
@@ -100,7 +100,7 @@ const DynamicProductPage: React.FC = () => {
         setlistproducts(mapped);
         setIsLoading(false);
       } catch (error) {
-        console.error('Error loading product data:', error);
+        // console.error('Error loading product data:', error);
         router.replace('/');
       }
     }

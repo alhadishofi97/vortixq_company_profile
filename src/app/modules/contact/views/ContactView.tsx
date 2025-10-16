@@ -34,7 +34,7 @@ useEffect(() => {
   async function fetchData() {
     const data = await getContact();
     setContact(data); // ✅ langsung object
-    console.log('datacontactcontactcontactcontact',data)
+    // console.log('datacontactcontactcontactcontact',data)
   }
   fetchData();
 }, []);

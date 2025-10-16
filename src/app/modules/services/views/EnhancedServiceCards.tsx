@@ -288,7 +288,7 @@ useEffect(() => {
               }
             /> */}
        {services?.map((servicex: Service, idx: number) => {
-          console.log('-------------', servicex.id);
+          // console.log('-------------', servicex.id);
           return (
             <ServiceTab
               key={servicex.id}

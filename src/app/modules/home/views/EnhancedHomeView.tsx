@@ -75,13 +75,13 @@ const EnhancedHome = () => {
   const getData = useCallback(async () => {
     try {
       const data = await getHome();
-      console.log('datagetHomegetHomegetHome', data);
+      // console.log('datagetHomegetHomegetHome', data);
      
 
 
       // setIsLoading(false);
     } catch (error) {
-      console.log("err", error);
+      // console.log("err", error);
       // Fallback content untuk semua
       setJudul(
         <div className="font-display text-center mb-6 mt-8">
