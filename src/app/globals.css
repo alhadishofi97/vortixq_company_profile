@@ -4,23 +4,29 @@
 @tailwind utilities;
 
 /* Mobile viewport fixes */
+.mobile-modal {
+  max-height: calc(100vh - 2rem);
+}
+
 @supports (height: 100dvh) {
   .mobile-modal {
     max-height: calc(100dvh - 2rem);
   }
 }
 
-@supports not (height: 100dvh) {
-  .mobile-modal {
-    max-height: calc(100vh - 2rem);
-  }
-}
-
 /* Safe area insets for mobile */
 @supports (padding: max(0px)) {
   .mobile-modal {
-    top: max(1rem, env(safe-area-inset-top, 1rem));
-    max-height: calc(100vh - max(2rem, env(safe-area-inset-top, 1rem)) - env(safe-area-inset-bottom, 0px));
+    top: max(1rem, env(safe-area-inset-top, 1rem)) !important;
+    max-height: calc(100vh - max(2rem, env(safe-area-inset-top, 1rem)) - env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* Ensure modal starts at top on mobile */
+@media (max-width: 640px) {
+  .mobile-modal {
+    top: 1rem !important;
+    margin-top: 0 !important;
   }
 }
 

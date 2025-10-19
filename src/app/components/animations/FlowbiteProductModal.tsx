@@ -25,20 +25,41 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
   onClose,
   product,
 }) => {
-  // Kunci scroll halaman saat modal terbuka, kembalikan saat tertutup
+  // Scroll to top dan kunci scroll halaman saat modal terbuka
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
     
     if (isOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
+      // Scroll window to top terlebih dahulu
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      
+      // Simpan posisi scroll saat ini
+      const scrollY = window.scrollY;
+      
+      // Lock body scroll
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
+      // Restore body scroll
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      
+      // Restore scroll position
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
     }
+    
     return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
