@@ -57,7 +57,9 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
       />
 
       {/* Modal Card */}
-      <div className="fixed top-6 sm:top-12 left-0 right-0 mx-auto w-[92%] max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl bg-black rounded-lg shadow-2xl border border-orange-500/40 overflow-hidden sm:mt-8 sm:mb-4 flex flex-col max-h-[90svh] sm:max-h-none">
+      <div 
+        className="fixed top-4 left-0 right-0 mx-auto w-[92%] max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl bg-black rounded-lg shadow-2xl border border-orange-500/40 overflow-hidden sm:mt-8 sm:mb-4 flex flex-col mobile-modal sm:max-h-none"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-orange-500/20 bg-black">
           <div className="flex items-center gap-3">
