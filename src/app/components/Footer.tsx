@@ -15,7 +15,7 @@ export const getFooter = async (): Promise<BrandResponse | null> => {
       data: response.data as BrandItem[], // cast tiap item ke BrandItem
     };
 
-    console.log('resultresultresult',result)
+    // console.log('resultresultresult',result)
     return result;
   } catch (error) {
     console.error("Error fetching footer data:", error);
@@ -33,7 +33,7 @@ export const getfooter2 = async (): Promise<BrandResponse2 | null>  => {
       data: response.data as BrandItem2[], // cast tiap item ke BrandItem
     };
 
-    console.log('resultresultresult2',result)
+    // console.log('resultresultresult2',result)
     return result;
   } catch (error) {
     console.error("Error fetching about data:", error);
@@ -50,12 +50,12 @@ const Footer: React.FC = () => {
     async function fetchData() {
       const data = await getFooter(); // AboutData[] | null
       setFooter(data); // ✅ cocok
-      console.log('datadatadata',data)
+      // console.log('datadatadata',data)
     }
     async function fetchData2() {
       const data = await getfooter2(); // AboutData[] | null
       setFooter2(data); // ✅ cocok
-      console.log('datadatadata',data)
+      // console.log('datadatadata',data)
     }
     fetchData();
     fetchData2();

@@ -25,13 +25,30 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
   onClose,
   product,
 }) => {
-  if (!product) return null;
+  // Kunci scroll halaman saat modal terbuka, kembalikan saat tertutup
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !product) return null;
 
   return (
     <div
       className={`fixed inset-0 z-50 ${
         isOpen ? "flex" : "hidden"
-      } items-center justify-center p-4`}
+      } items-start justify-center p-0 sm:p-4 overflow-hidden`}
     >
       {/* Backdrop */}
       <div
@@ -40,37 +57,20 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
       />
 
       {/* Modal Card */}
-      <div className="relative w-full max-w-6xl bg-black rounded-lg shadow-2xl border border-gray-700 overflow-hidden">
+      <div className="fixed top-6 sm:top-12 left-0 right-0 mx-auto w-[92%] max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl bg-black rounded-lg shadow-2xl border border-orange-500/40 overflow-hidden sm:mt-8 sm:mb-4 flex flex-col max-h-[90svh] sm:max-h-none">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-700 bg-black">
+        <div className="flex items-center justify-between p-6 border-b border-orange-500/20 bg-black">
           <div className="flex items-center gap-3">
             <div className="text-orange-500">{product.icon}</div>
             <h3 className="text-xl font-semibold text-white">
               {product.title}
             </h3>
           </div>
-          {/* <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-300 transition-colors"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button> */}
+          {/* Close icon removed as requested */}
         </div>
 
         {/* Body */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
+        <div className="p-6 overflow-y-auto flex-1 min-h-0 overscroll-contain">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Image Section */}
             <div className="relative">
@@ -127,10 +127,10 @@ const FlowbiteProductModal: React.FC<FlowbiteProductModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-700 bg-black">
+        <div className="flex items-center justify-end gap-4 px-6 pt-8 pb-6 border-t border-orange-500/20 bg-black">
           <button
             onClick={onClose}
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-300 bg-gray-800 border border-gray-600 rounded-lg hover:bg-gray-700 hover:border-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-700 transition-colors"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-slate-800 border border-slate-500/30 rounded-lg hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-700 transition-colors"
           >
             Close
           </button>

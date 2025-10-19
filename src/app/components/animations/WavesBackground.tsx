@@ -92,7 +92,7 @@ export default function WavesBackground({
 
     const init = () => {
       resizeCanvas()
-      console.log('WavesBackground initialized', { width: canvas.width, height: canvas.height })
+      // console.log('WavesBackground initialized', { width: canvas.width, height: canvas.height })
       setIsReady(true)
       drawWaves()
     }

@@ -1,11 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import FlowbiteProductModal from "../../components/animations/FlowbiteProductModal";
 import ProductCard from "../../components/animations/ProductCard";
-import SvgRenderer from "../../util/svgRendered";
-// import { Product2 } from "@/app/modules/products/controllers/productInterface";
 import { getProduct } from "@/app/modules/products/controllers/ProductController";
 import { useRouter, useParams } from "next/navigation";
 
@@ -21,7 +19,7 @@ interface details {
   };
 }
 
-const DynamicProductPage: React.FC = () => {
+const DynamicProductPageInner: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<details | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listproducts, setlistproducts] = useState<details[]>([]);
@@ -44,18 +42,14 @@ const DynamicProductPage: React.FC = () => {
         }
 
         // Find product by slug (id_content)
-        // console.log('Available products:', products.map(p => ({ id: p.id, title: p.title })));
-        // console.log('Looking for slug:', slug);
         
         const currentProduct = products.find(p => p.id === slug);
         
         if (!currentProduct) {
-          // console.log('Product not found for slug:', slug);
           router.replace('/');
           return;
         }
 
-        // console.log('Found product:', currentProduct);
 
         setJudul(currentProduct.judul2 || currentProduct.title);
         setSubJudul(currentProduct.subjudul2 || currentProduct.description);
@@ -78,7 +72,7 @@ const DynamicProductPage: React.FC = () => {
               id: val.id.toString(),
               title: val.judul || 'Module',
               description: val.narasi || 'Description not available',
-              dashboardImage: val.img?.url || '/placeholder-image.jpg',
+              dashboardImage: val.img?.url ? encodeURI(val.img.url) : '/placeholder-image.jpg',
               icon: '',
               details: {
                 features: parseFeatures(val.fitur || ''),
@@ -99,8 +93,7 @@ const DynamicProductPage: React.FC = () => {
 
         setlistproducts(mapped);
         setIsLoading(false);
-      } catch (error) {
-        // console.error('Error loading product data:', error);
+      } catch {
         router.replace('/');
       }
     }
@@ -149,8 +142,10 @@ const DynamicProductPage: React.FC = () => {
           {/* Back to Home Button */}
           <motion.button
             onClick={() => {
-              localStorage.setItem('productDetail','')
-              router.back()
+              if (typeof window !== 'undefined') {
+                localStorage.setItem('productDetail','');
+              }
+              router.back();
             }}
             className="flex items-center gap-2 text-orange-500 hover:text-orange-400 mb-2 group transition-all duration-200 flex-shrink-0 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16"
             whileHover={{ x: -5 }}
@@ -204,4 +199,4 @@ const DynamicProductPage: React.FC = () => {
   );
 };
 
-export default DynamicProductPage;
+export default dynamic(() => Promise.resolve(DynamicProductPageInner), { ssr: false });

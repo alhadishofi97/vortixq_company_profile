@@ -96,7 +96,7 @@ const KeyFeatures: React.FC = () => {
           baseScale={0.98}
           rotationAmount={0.5}
           blurAmount={0.3}
-          onStackComplete={() => console.log('Stack animation completed!')}
+          onStackComplete={() => {/* console.log('Stack animation completed!') */}}
         >
           {features.map((feature, index) => (
             <ScrollStackItem

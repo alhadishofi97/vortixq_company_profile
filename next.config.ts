@@ -13,7 +13,24 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true, // ⬅️ disable eslint check saat build
   },
   images: {
-    domains: ['skilled-success-bdc67f0b83.media.strapiapp.com'],
+    domains: [
+      'skilled-success-bdc67f0b83.media.strapiapp.com',
+      'skilled-success-bdc67f0b83.strapiapp.com'
+    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'skilled-success-bdc67f0b83.media.strapiapp.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'skilled-success-bdc67f0b83.strapiapp.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 

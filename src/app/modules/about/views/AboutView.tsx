@@ -42,7 +42,6 @@ useEffect(() => {
     const data = await getAbout(); // AboutData[] | null
     setAboutList(data); // ✅ cocok
 
-    // console.log('datadatadatadatadatadatadata',data?.list)
   }
   fetchData();
 }, []);

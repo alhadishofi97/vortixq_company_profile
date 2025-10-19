@@ -46,7 +46,7 @@ export const getHome = async () => {
         const response = await home.find({
         populate: "*"
         });
-        console.log('response.data',response.data)
+        // console.log('response.data',response.data)
         return response.data as HomeDocument[]; // ✅ langsung ar
     } catch (error) {
         console.error('Error fetching home data:', error);

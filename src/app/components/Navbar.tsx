@@ -77,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ sections, activeId, onNavClick }) => {
           setLogo(<></>);
         }
     
-        console.log('datadatadatadatadatadatadata',data?.logo)
+        // console.log('datadatadatadatadatadatadata',data?.logo)
       } catch (error) {
         console.error('Error fetching logo:', error);
         // Jika terjadi error, tampilkan string kosong
